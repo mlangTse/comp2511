@@ -1,0 +1,58 @@
+{
+  "venue": "Zoo",
+  "rooms": [
+    "Penguin",
+    "Hippo"
+  ],
+  "status": "success"
+}
+{
+  "venue": "Zoo",
+  "rooms": ["Elephant"],
+  "status": "success"
+}
+{
+  "venue": "Gardens",
+  "rooms": ["Figtree"],
+  "status": "success"
+}
+{
+  "venue": "Zoo",
+  "rooms": ["Penguin"],
+  "status": "success"
+}
+{
+  "venue": "Zoo",
+  "rooms": ["Penguin"],
+  "status": "success"
+}
+{"status": "rejected"}
+[
+  {
+    "reservations": [
+      {
+        "start": "2019-03-25",
+        "end": "2019-03-26",
+        "id": "CSE Autumn Ball"
+      },
+      {
+        "start": "2019-03-27",
+        "end": "2019-03-29",
+        "id": "Annual Meeting"
+      }
+    ],
+    "room": "Penguin"
+  },
+  {
+    "reservations": [],
+    "room": "Hippo"
+  },
+  {
+    "reservations": [{
+      "start": "2019-03-24",
+      "end": "2019-03-27",
+      "id": "Mattress Convention"
+    }],
+    "room": "Elephant"
+  }
+]
