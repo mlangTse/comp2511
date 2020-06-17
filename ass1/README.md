@@ -1,4 +1,4 @@
-# Assignment 1 - Venue Hire System
+.# Assignment 1 - Venue Hire System
 
 ## Due: Week 4, Sunday, 5 PM (28th June)
 

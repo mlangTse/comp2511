@@ -10,3 +10,10 @@
 { "command": "cancel", "id": "Dance Party" }
 { "command": "request", "id": "Vivid", "start": "2019-03-26", "end": "2019-03-26", "small": 1, "medium": 0, "large": 0 }
 { "command": "list", "venue": "Zoo" }
+
+// check change
+{ "command": "room", "venue": "Zoo", "room": "Penguin", "size": "small" }
+{ "command": "request", "id": "Annual Meeting", "start": "2019-03-26", "end": "2019-03-26", "small": 1, "medium": 0, "large": 0 }
+{ "command": "list", "venue": "Zoo" }
+{ "command": "change", "id": "Annual Meeting", "start": "2019-03-26", "end": "2019-03-26", "small": 0, "medium": 0, "large": 1 }
+{ "command": "list", "venue": "Zoo" }
