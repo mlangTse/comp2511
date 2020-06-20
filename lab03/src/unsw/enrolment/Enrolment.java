@@ -25,8 +25,8 @@ public class Enrolment {
         return grade.getGrade();
     }
 
-    public void setGrade(String grade) {
-        this.grade.setGrade(grade);
+    public void setGrade(Grade grade) {
+        this.grade = grade;
     }
 
     public CourseOffering getOffering() {

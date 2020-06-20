@@ -16,11 +16,12 @@ public class Course {
     private List<CourseOffering> courseOfferings;
 
 
-    public Course(String courseCode, String title, int uoc) {
+    public Course(String courseCode, String title) {
         this.courseCode = courseCode;
         this.title = title;
         this.uoc = uoc;
         this.prereqs = new ArrayList<Course>();
+        this.courseOfferings = new ArrayList<CourseOffering>();
     }
 
     public void addPrereq(Course course) {
@@ -33,6 +34,10 @@ public class Course {
 
     public String getCourseCode() {
         return courseCode;
+    }
+
+    public void setUOC(int uoc){
+        this.uoc = uoc;
     }
 
     public int getUOC() {
