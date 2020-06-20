@@ -39,11 +39,11 @@ public class Course {
         return uoc;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public List<Course> getPrereqs() {
         return prereqs;
+    }
+
+    public List<CourseOffering> getCourseOfferings() {
+        return courseOfferings;
     }
 }

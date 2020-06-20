@@ -32,4 +32,20 @@ public class CourseOffering {
     public List<Enrolment> getEnrolments() {
         return enrolments;
     }
+
+    public void addEnrolment(Enrolment enrolment) {
+        enrolments.add(enrolment);
+    }
+
+    public ArrayList<Session> allocateSessions(){
+        ArrayList<Session> allocated = new ArrayList<Session>();
+        int count = 3;
+        for (Session s: sessions){
+            if (count > 0) {
+                allocated.add(s);
+                count -= 1;
+            }
+        }
+        return allocated;
+    }
 }

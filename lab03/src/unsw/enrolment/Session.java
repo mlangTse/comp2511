@@ -32,4 +32,9 @@ public class Session {
         return end;
     }
 
+	@Override
+	public String toString() {
+		return "Location: "+location+" day: "+day+" start: "+start+" end: "+ end;
+	}
+
 }
