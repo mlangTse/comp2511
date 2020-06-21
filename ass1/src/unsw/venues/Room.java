@@ -65,10 +65,6 @@ public class Room {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     /**
      * getter method to extract room's size
      *
@@ -78,14 +74,32 @@ public class Room {
         return size;
     }
 
+    /**
+     * getter method to extract room's booking list
+     *
+     * @return the booking list of this room
+     */
     public List<Booking> getBooking_list() {
         return booking_list;
     } 
 
-    public void removeBooking(Booking b) {
-        this.booking_list.remove(b);
+    /**
+     * This function cancel a booking which already in the room
+     * 
+     * @param booking a Booking object
+     */
+    public void removeBooking(Booking booking) {
+        this.booking_list.remove(booking);
     }
 
+    /**
+     * This function create a new booking for this room
+     * 
+     * @param id the name of the customer
+     * @param start the start time of the booking
+     * @param end the end time of the booking
+     * @return a new Booking object
+     */
     public Booking createBooking(String id, LocalDate start, LocalDate end){
         Booking new_Booking = new Booking(name, size, id, start, end);
         booking_list.add(new_Booking);
@@ -104,7 +118,15 @@ public class Room {
         return new_Booking;
     }
 
-    public boolean reservation_availavle(String id, LocalDate start, LocalDate end){
+    /**
+     * This function check if customer's request clash with the other booking
+     * 
+     * @param id the name of the customer
+     * @param start the start time of the booking
+     * @param end the end time of the booking
+     * @return a new Booking object
+     */
+    public boolean is_clash(String id, LocalDate start, LocalDate end){
         for (Booking b: booking_list){
             if ((start.isBefore(b.getEnd()) && end.isAfter(b.getStart())) || end.isAfter(b.getStart())) {
                 return false;

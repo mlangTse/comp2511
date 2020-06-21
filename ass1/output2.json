@@ -1,0 +1,30 @@
+{
+  "venue": "Zoo",
+  "rooms": ["Penguin"],
+  "status": "success"
+}
+[
+  {
+    "reservations": [{
+      "start": "2019-03-25",
+      "end": "2019-03-26",
+      "id": "Annual Meeting"
+    }],
+    "room": "Penguin"
+  },
+  {
+    "reservations": [],
+    "room": "Hippo"
+  }
+]
+{"status": "rejected"}
+[
+  {
+    "reservations": [],
+    "room": "Penguin"
+  },
+  {
+    "reservations": [],
+    "room": "Hippo"
+  }
+]

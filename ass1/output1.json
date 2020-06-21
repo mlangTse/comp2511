@@ -1,0 +1,45 @@
+{
+  "venue": "Zoo",
+  "rooms": ["Penguin"],
+  "status": "success"
+}
+[
+  {
+    "reservations": [{
+      "start": "2019-03-26",
+      "end": "2019-03-26",
+      "id": "Annual Meeting"
+    }],
+    "room": "Penguin"
+  }
+]
+{"status": "rejected"}
+[
+  {
+    "reservations": [{
+      "start": "2019-03-26",
+      "end": "2019-03-26",
+      "id": "Annual Meeting"
+    }],
+    "room": "Penguin"
+  }
+]
+{
+  "venue": "Zoo",
+  "rooms": ["Hippo"],
+  "status": "success"
+}
+[
+  {
+    "reservations": [],
+    "room": "Penguin"
+  }
+  {
+    "reservations": [{
+      "start": "2019-03-26",
+      "end": "2019-03-26",
+      "id": "Annual Meeting"
+    }],
+    "room": "Hippo"
+  }
+]

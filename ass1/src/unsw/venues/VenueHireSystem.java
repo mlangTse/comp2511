@@ -79,6 +79,7 @@ public class VenueHireSystem {
             break;
 
         case "cancel":
+            cancel(json.getString("id"));
             break;
 
         case "list":
@@ -128,24 +129,28 @@ public class VenueHireSystem {
 
 
         for (Venue v: venue_list){
-            if(v.getSmall().size() >= small && v.getMedium().size() >= medium &&
-            v.getLarge().size() >= large){
+            List<Room> smallRoom = v.getRoom("small");
+            List<Room> mediumRoom = v.getRoom("medium");
+            List<Room> largeRoom = v.getRoom("large");
+
+            if(smallRoom.size() >= small && mediumRoom.size() >= medium &&
+            largeRoom.size() >= large){
                 List<Room> availavle_rooms = new ArrayList<Room>();
                 List<Room> tmp = new ArrayList<Room>();
 
                 // satisfy customer's need for small room
-                tmp = v.available(v.getSmall(), id, start, end, small);
+                tmp = v.available(smallRoom, id, start, end, small);
                 if (tmp != null){availavle_rooms.addAll(tmp);}
 
                 // satisfy customer's need for medium room
-                tmp = v.available(v.getMedium(), id, start, end, medium);
+                tmp = v.available(mediumRoom, id, start, end, medium);
                 if (tmp != null){availavle_rooms.addAll(tmp);}
 
                 // satisfy customer's need for large room
-                tmp = v.available(v.getLarge(), id, start, end, large);
+                tmp = v.available(largeRoom, id, start, end, large);
                 if (tmp != null){availavle_rooms.addAll(tmp);}
 
-                if (availavle_rooms.size() == 0) {continue;}
+                if (availavle_rooms.size() < (small+medium+large)) {continue;}
 
                 Customer c = new Customer(id);
                 JSONArray assigned_room = new JSONArray();
@@ -190,10 +195,8 @@ public class VenueHireSystem {
         int medium = json.getInt("medium");
         int large = json.getInt("large");
 
-        cancel(id, start, end, small, medium, large);
         Customer c = find_customer(id);
-        List<Booking> canceled = new ArrayList<Booking>(c.getBooking_list());
-        c.emptyBookingList(canceled);
+        List<Booking> canceled = cancel(id);
         JSONObject result = request(id, start, end, small, medium, large);
 
         if (result.getString("status").equals("rejected")){
@@ -206,13 +209,21 @@ public class VenueHireSystem {
         return result;
     }
 
-    public void cancel(String id, LocalDate start, LocalDate end,
-    int small, int medium, int large) {
+    /**
+     * This function cancel the cooking
+     *
+     * @param id name of the customer
+     */
+    public List<Booking> cancel(String id) {
         Customer c = find_customer(id);
+        List<Booking> canceled = new ArrayList<Booking>();
+        canceled.addAll(c.getBooking_list());
         for (Booking b: c.getBooking_list()){
             Room r = find_room(b.name);
             r.removeBooking(b);
         }
+        c.emptyBookingList(canceled);
+        return canceled;
     }
 
     /**
@@ -225,7 +236,7 @@ public class VenueHireSystem {
         JSONArray result = new JSONArray();
         Venue v = find_venue(venue);
 
-        for(Room r: v.getTotal_room()){
+        for(Room r: v.getRoom("total")){
             JSONObject room_info = r.getInfo();
             result.put(room_info);
         }
@@ -283,7 +294,7 @@ public class VenueHireSystem {
      * @return true or false
      */
     public boolean roomExist(Venue v, String room){
-        for (Room r: v.getTotal_room()){
+        for (Room r: v.getRoom("total")){
             if (r.getName().equals(room)){
                 return true;
             }

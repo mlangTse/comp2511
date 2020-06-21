@@ -47,20 +47,21 @@ public class Booking extends Room {
         return info;
     }
 
+    /**
+     * getter method to extract start time of the booking
+     *
+     * @return the start time of the booking
+     */
     public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(LocalDate start) {
-        this.start = start;
-    }
-
+    /**
+     * getter method to extract end time of the booking
+     *
+     * @return the end time of the booking
+     */
     public LocalDate getEnd() {
         return end;
     }
-
-    public void setEnd(LocalDate end) {
-        this.end = end;
-    }
-
 }
