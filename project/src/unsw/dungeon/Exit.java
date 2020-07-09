@@ -1,10 +1,14 @@
 package unsw.dungeon;
 
-public class Exit extends Entity{
+import java.io.File;
+
+import javafx.scene.image.Image;
+
+public class Exit extends Entity {
 
     public Exit(int x, int y) {
         super(x, y);
-        // TODO Auto-generated constructor stub
+        super.setImage(new Image((new File("images/exit.png")).toURI().toString()));
     }
 
 }

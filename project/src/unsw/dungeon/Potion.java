@@ -1,10 +1,14 @@
 package unsw.dungeon;
 
-public class Potion extends Entity{
+import java.io.File;
+
+import javafx.scene.image.Image;
+
+public class Potion extends Entity {
 
     public Potion(int x, int y) {
         super(x, y);
-        // TODO Auto-generated constructor stub
+        super.setImage(new Image((new File("images/brilliant_blue_new.png")).toURI().toString()));
     }
 
 }

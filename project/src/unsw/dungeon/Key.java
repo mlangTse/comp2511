@@ -1,10 +1,14 @@
 package unsw.dungeon;
 
-public class Key extends Entity{
+import java.io.File;
+
+import javafx.scene.image.Image;
+
+public class Key extends Entity {
 
     public Key(int x, int y) {
         super(x, y);
-        // TODO Auto-generated constructor stub
+        super.setImage(new Image((new File("images/key.png")).toURI().toString()));
     }
 
 }

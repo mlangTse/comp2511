@@ -95,21 +95,8 @@ public abstract class DungeonLoader {
         dungeon.addEntity(entity);
     }
 
-    public abstract void onLoad(Entity player);
+    public abstract void onLoad(Entity entity);
 
-    public abstract void onLoad(Wall wall);
-
-    public abstract void onLoad(Exit exit);
-
-    public abstract void onLoad(Treasure treasure);
-
-    public abstract void onLoad(Door door);
-
-    public abstract void onLoad(Key key);
-
-    public abstract void onLoad(Boulder boulder);
-
-    public abstract void onLoad(Floorswitch floorswitch);
     // TODO Create additional abstract methods for the other entities
 
 }

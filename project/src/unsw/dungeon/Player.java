@@ -1,7 +1,12 @@
 package unsw.dungeon;
 
+import java.io.File;
+
+import javafx.scene.image.Image;
+
 /**
  * The player entity
+ *
  * @author Robert Clifton-Everest
  *
  */
@@ -16,6 +21,7 @@ public class Player extends Entity {
      */
     public Player(Dungeon dungeon, int x, int y) {
         super(x, y);
+        super.setImage(new Image((new File("images/human_new.png")).toURI().toString()));
         this.dungeon = dungeon;
     }
 
