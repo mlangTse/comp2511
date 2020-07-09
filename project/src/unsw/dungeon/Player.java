@@ -107,5 +107,4 @@ public class Player extends Entity implements Subject{
         observers.add(o);
 
     }
-
 }

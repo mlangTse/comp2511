@@ -103,6 +103,26 @@ public abstract class DungeonLoader {
             onLoad(floorswitch);
             entity = floorswitch;
             break;
+        case "portal":
+            Portal portal = new Portal(x, y);
+            onLoad(portal);
+            entity = portal;
+            break;
+        case "enemy":
+            Enemy enemy = new Enemy(x, y);
+            onLoad(enemy);
+            entity = enemy;
+            break;
+        case "sword":
+            Sword sword = new Sword(x, y);
+            onLoad(sword);
+            entity = sword;
+            break;
+        case "invincibility":
+            Potion invincibility = new Potion(x, y);
+            onLoad(invincibility);
+            entity = invincibility;
+            break;
         // TODO Handle other possible entities
         }
         dungeon.addEntity(entity);
