@@ -2,7 +2,6 @@ package unsw.dungeon;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
