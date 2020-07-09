@@ -2,6 +2,7 @@ package unsw.dungeon;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,6 +39,19 @@ public abstract class DungeonLoader {
 
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
+        }
+
+        // Let Boulder observer all entity except Player
+        // Let Enemy observer all entity except Player
+        // Let Player observer all entity except Player
+        for (Entity entity: dungeon.getEntities()) {
+            if (entity instanceof Boulder || entity instanceof Enemy || entity instanceof Player) {
+                for (Entity obs: dungeon.getEntities()) {
+                    if(!(obs instanceof Player)) {
+                        ((Subject) entity).attach((Observer) obs);
+                    }
+                }
+            }
         }
         return dungeon;
     }
@@ -81,7 +95,7 @@ public abstract class DungeonLoader {
             entity = key;
             break;
         case "boulder":
-            Boulder boulder = new Boulder(x, y);
+            Boulder boulder = new Boulder(dungeon, x, y);
             onLoad(boulder);
             entity = boulder;
             break;

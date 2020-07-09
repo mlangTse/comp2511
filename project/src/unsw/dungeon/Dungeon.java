@@ -54,5 +54,6 @@ public class Dungeon {
 
 	public void setEntities(List<Entity> entities) {
 		this.entities = entities;
-	}
+    }
+
 }

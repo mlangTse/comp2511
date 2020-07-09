@@ -2,6 +2,7 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -53,16 +54,24 @@ public class DungeonController {
     public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
         case UP:
-            player.moveUp();
+            if (player.Collid(player.getX(), (player.getY() - 1))) {
+                player.moveUp();
+            }
             break;
         case DOWN:
-            player.moveDown();
+            if (player.Collid(player.getX(), (player.getY() + 1))) {
+                player.moveDown();
+            }
             break;
         case LEFT:
-            player.moveLeft();
+            if (player.Collid((player.getX() - 1), player.getY())) {
+                player.moveLeft();
+            }
             break;
         case RIGHT:
-            player.moveRight();
+            if (player.Collid((player.getX() + 1), player.getY())) {
+                player.moveRight();
+            }
             break;
         default:
             break;
