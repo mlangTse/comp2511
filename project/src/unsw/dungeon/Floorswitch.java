@@ -20,7 +20,6 @@ public class Floorswitch extends Entity implements Observer{
     @Override
     public boolean Moveable(Subject obj, Entity entity) {
         if (obj instanceof Boulder && flag == true) {
-            flag = true;
             return false;
         }
         if (obj instanceof Boulder) {
@@ -28,9 +27,6 @@ public class Floorswitch extends Entity implements Observer{
         }
         if (obj instanceof Player && flag == true) {
             return false;
-        }
-        if (obj instanceof Player) {
-            flag = false;
         }
         return true;
     }

@@ -84,10 +84,13 @@ public class Player extends Entity implements Subject{
         this.key = key;
     }
 
-    public ArrayList<Observer> getObservers() {
-        return observers;
-    }
+    @Override
+    public void attach(Observer o) {
+        observers.add(o);
 
+    }
+    
+    @Override
     public boolean Collid(int x, int y) {
         for (Observer obs : observers) {
             if (((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
@@ -102,9 +105,4 @@ public class Player extends Entity implements Subject{
         return observer.Moveable(this, (Entity) observer);
     }
 
-    @Override
-    public void attach(Observer o) {
-        observers.add(o);
-
-    }
 }

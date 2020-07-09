@@ -37,6 +37,16 @@ public class Boulder extends Entity implements Observer, Subject{
             x().set(getX() + 1);
     }
 
+    @Override
+    public void attach(Observer o) {
+        if (((Entity) o) instanceof Floorswitch && ((Entity) o).getX() == this.getX() && ((Entity) o).getY() == this.getY()) {
+            ((Floorswitch) o).setFlag(true);
+        }
+        observers.add(o);
+
+    }
+
+    @Override
     public boolean Collid(int x, int y) {
         for (Observer obs : observers) {
             if (((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
@@ -44,6 +54,11 @@ public class Boulder extends Entity implements Observer, Subject{
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean notifyObserver(Observer observer) {
+        return observer.Moveable(this, (Entity) observer);
     }
 
     /**
@@ -88,20 +103,6 @@ public class Boulder extends Entity implements Observer, Subject{
             }
         }
         return flag;
-    }
-
-    @Override
-    public boolean notifyObserver(Observer observer) {
-        return observer.Moveable(this, (Entity) observer);
-    }
-
-    @Override
-    public void attach(Observer o) {
-        if (((Entity) o) instanceof Floorswitch && ((Entity) o).getX() == this.getX() && ((Entity) o).getY() == this.getY()) {
-            ((Floorswitch) o).setFlag(true);
-        }
-        observers.add(o);
-
     }
 
 }
