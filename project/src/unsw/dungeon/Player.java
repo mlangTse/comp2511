@@ -89,11 +89,11 @@ public class Player extends Entity implements Subject{
         observers.add(o);
 
     }
-    
+
     @Override
     public boolean Collid(int x, int y) {
         for (Observer obs : observers) {
-            if (((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
+            if (!(obs instanceof Floorswitch) && ((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
                 return notifyObserver(obs);
             }
         }

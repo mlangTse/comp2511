@@ -5,28 +5,29 @@ import java.io.File;
 import javafx.scene.image.Image;
 
 public class Floorswitch extends Entity implements Observer{
-    private boolean flag;
+    private boolean trigger;
 
     public Floorswitch(int x, int y) {
         super(x, y);
         super.setImage(new Image((new File("images/pressure_plate.png")).toURI().toString()));
-        flag = false;
+        trigger = false;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public void settrigger(boolean trigger) {
+        this.trigger = trigger;
+    }
+
+    public boolean istrigger() {
+        return trigger;
     }
 
     @Override
     public boolean Moveable(Subject obj, Entity entity) {
-        if (obj instanceof Boulder && flag == true) {
+        if (obj instanceof Boulder && trigger == true) {
             return false;
         }
         if (obj instanceof Boulder) {
-            flag = true;
-        }
-        if (obj instanceof Player && flag == true) {
-            return false;
+            ((Boulder) obj).setFloorswitch(this);
         }
         return true;
     }

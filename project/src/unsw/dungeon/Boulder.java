@@ -9,6 +9,7 @@ public class Boulder extends Entity implements Observer, Subject{
 
     private Dungeon dungeon;
     private ArrayList<Observer> observers;
+    private Floorswitch floorswitch;
 
     public Boulder(Dungeon dungeon, int x, int y) {
         super(x, y);
@@ -20,27 +21,45 @@ public class Boulder extends Entity implements Observer, Subject{
     public void moveUp() {
         if (getY() > 0)
             y().set(getY() - 1);
+            triggeredFloorswitch();
     }
 
     public void moveDown() {
         if (getY() < dungeon.getHeight() - 1)
             y().set(getY() + 1);
+            triggeredFloorswitch();
     }
 
     public void moveLeft() {
         if (getX() > 0)
             x().set(getX() - 1);
+            triggeredFloorswitch();
     }
 
     public void moveRight() {
         if (getX() < dungeon.getWidth() - 1)
             x().set(getX() + 1);
+            triggeredFloorswitch();
+    }
+
+    public void triggeredFloorswitch() {
+        if (floorswitch != null && floorswitch.istrigger() == true) {
+            floorswitch.settrigger(false);
+            floorswitch = null;
+        } else if (floorswitch != null && floorswitch.istrigger() == false) {
+            floorswitch.settrigger(true);
+        }
+    }
+
+    public void setFloorswitch(Floorswitch floorswitch) {
+        this.floorswitch = floorswitch;
     }
 
     @Override
     public void attach(Observer o) {
         if (((Entity) o) instanceof Floorswitch && ((Entity) o).getX() == this.getX() && ((Entity) o).getY() == this.getY()) {
-            ((Floorswitch) o).setFlag(true);
+            setFloorswitch((Floorswitch) o);
+            floorswitch.settrigger(true);
         }
         observers.add(o);
 
@@ -70,7 +89,7 @@ public class Boulder extends Entity implements Observer, Subject{
     @Override
     public boolean Moveable(Subject obj, Entity entity) {
         boolean flag;
-        if (obj instanceof Boulder) {
+        if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }
         // Since it's a Observer, so this function called
