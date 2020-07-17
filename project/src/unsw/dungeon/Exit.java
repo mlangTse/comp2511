@@ -13,8 +13,10 @@ public class Exit extends Entity implements Observer{
 
     @Override
     public boolean Moveable(Subject obj, Entity entity) {
-        // TODO Auto-generated method stub
-        return false;
+        if (obj instanceof Boulder || obj instanceof Enemy) {
+            return false;
+        }
+        return true;
     }
 
 }

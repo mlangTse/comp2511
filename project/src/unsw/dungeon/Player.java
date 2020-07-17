@@ -52,12 +52,29 @@ public class Player extends Entity implements Subject{
             x().set(getX() + 1);
     }
 
+    public void setPosition(int x, int y) {
+        x().set(x);
+        y().set(y);
+    }
+
     public Sword getSword() {
         return sword;
     }
 
-    public void setSword(Sword sword) {
-        this.sword = sword;
+    public void setSword(Observer obs) {
+        if (obs instanceof Sword && getSword() == null && ((Sword) obs).getTime() != 0) {
+            this.sword = (Sword) obs;
+        }
+        if (obs == null) {
+            this.sword = null;
+        }
+    }
+
+    public void useSword() {
+        sword.use();
+        if (sword.getTime() == 0) {
+            setSword(null);
+        }
     }
 
     public Potion getPotion() {
@@ -76,12 +93,14 @@ public class Player extends Entity implements Subject{
         this.treasure = treasure;
     }
 
-    public Key getKey() {
+    public Key getKey(){
         return key;
     }
 
-    public void setKey(Key key) {
-        this.key = key;
+    public void setKey(Observer obs) {
+        if (obs instanceof Key && getKey() == null) {
+            this.key = (Key) obs;
+        }
     }
 
     @Override
@@ -92,9 +111,14 @@ public class Player extends Entity implements Subject{
 
     @Override
     public boolean Collid(int x, int y) {
-        for (Observer obs : observers) {
-            if (!(obs instanceof Floorswitch) && ((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
-                return notifyObserver(obs);
+        for (Entity entity : dungeon.getEntities()) {
+            if (entity instanceof Observer) {
+                Observer obs = (Observer) entity;
+                if (!(obs instanceof Floorswitch) && ((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
+                    setSword(obs);
+                    setKey(obs);
+                    return notifyObserver(obs);
+                }
             }
         }
         return true;

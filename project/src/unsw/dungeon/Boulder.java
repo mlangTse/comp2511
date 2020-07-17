@@ -67,7 +67,8 @@ public class Boulder extends Entity implements Observer, Subject{
 
     @Override
     public boolean Collid(int x, int y) {
-        for (Observer obs : observers) {
+        for (Entity entity : dungeon.getEntities()) {
+            Observer obs = (Observer) entity;
             if (((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
                 return notifyObserver(obs);
             }
@@ -93,7 +94,7 @@ public class Boulder extends Entity implements Observer, Subject{
             return false;
         }
         // Since it's a Observer, so this function called
-        // only if the player collided with this boulder
+        // only if a subject (the player) collided with this boulder
         // therefore, the location of this boulder is either the same as
         // the player's x position or the same as the player's y position
         if (dungeon.getPlayer().getX() != this.getX()) {
@@ -123,5 +124,4 @@ public class Boulder extends Entity implements Observer, Subject{
         }
         return flag;
     }
-
 }

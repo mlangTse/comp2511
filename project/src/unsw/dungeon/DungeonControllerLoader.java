@@ -28,7 +28,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 
     @Override
     public void onLoad(Entity entity) {
-        ImageView view = new ImageView(entity.getImage());
+        ImageView view = entity.getImage();
         addEntity(entity, view);
     }
 

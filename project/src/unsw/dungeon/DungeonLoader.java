@@ -2,6 +2,8 @@ package unsw.dungeon;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.ProcessBuilder.Redirect.Type;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,6 +21,9 @@ import org.json.JSONTokener;
 public abstract class DungeonLoader {
 
     private JSONObject json;
+    private Portal PortalnotMatching;
+    private ArrayList<Door> doors = new ArrayList<Door>();
+    private ArrayList<Key> keys = new ArrayList<Key>();
 
     public DungeonLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
@@ -42,18 +47,7 @@ public abstract class DungeonLoader {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
 
-        // Let Boulder observer all entity except Player
-        // Let Enemy observer all entity except Player
-        // Let Player observer all entity except Player
-        for (Entity entity: dungeon.getEntities()) {
-            if (entity instanceof Boulder || entity instanceof Enemy || entity instanceof Player) {
-                for (Entity obs: dungeon.getEntities()) {
-                    if(!(obs instanceof Player)) {
-                        ((Subject) entity).attach((Observer) obs);
-                    }
-                }
-            }
-        }
+        System.out.println(goal + " " + goal.getClass());
         return dungeon;
     }
 
@@ -87,11 +81,25 @@ public abstract class DungeonLoader {
             break;
         case "door":
             Door door = new Door(x, y);
+            if (!keys.isEmpty()) {
+                door.setKey(keys.get(0));
+                keys.remove(0);
+            } else {
+                doors.add(door);
+            }
             onLoad(door);
             entity = door;
             break;
         case "key":
             Key key = new Key(x, y);
+            if (!doors.isEmpty()) {
+                Door d = doors.get(0);
+                System.out.println(d);
+                d.setKey(key);
+                doors.remove(0);
+            } else {
+                keys.add(key);
+            }
             onLoad(key);
             entity = key;
             break;
@@ -107,11 +115,18 @@ public abstract class DungeonLoader {
             break;
         case "portal":
             Portal portal = new Portal(x, y);
+            if (PortalnotMatching == null) {
+                PortalnotMatching = portal;
+            } else if (PortalnotMatching.getPortal() == null) {
+                PortalnotMatching.setPortal(portal);
+                portal.setPortal(PortalnotMatching);
+                PortalnotMatching = null;
+            }
             onLoad(portal);
             entity = portal;
             break;
         case "enemy":
-            Enemy enemy = new Enemy(x, y);
+            Enemy enemy = new Enemy(dungeon, x, y);
             onLoad(enemy);
             entity = enemy;
             break;

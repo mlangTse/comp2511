@@ -3,9 +3,11 @@ package unsw.dungeon;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * An entity in the dungeon.
+ *
  * @author Robert Clifton-Everest
  *
  */
@@ -14,10 +16,11 @@ public class Entity {
     // IntegerProperty is used so that changes to the entities position can be
     // externally observed.
     private IntegerProperty x, y;
-    private Image image;
+    private ImageView imageView;
 
     /**
      * Create an entity positioned in square (x,y)
+     *
      * @param x
      * @param y
      */
@@ -42,11 +45,15 @@ public class Entity {
         return x().get();
     }
 
-    public Image getImage() {
-        return image;
+    public ImageView getImage() {
+        return imageView;
     }
 
     public void setImage(Image image) {
-        this.image = image;
+        if (imageView == null) {
+            imageView = new ImageView(image);
+        } else {
+            this.imageView.setImage(image);
+        }
     }
 }

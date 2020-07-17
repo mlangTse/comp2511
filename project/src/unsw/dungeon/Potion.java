@@ -13,8 +13,11 @@ public class Potion extends Entity implements Observer{
 
     @Override
     public boolean Moveable(Subject obj, Entity entity) {
-        // TODO Auto-generated method stub
-        return false;
+        if (obj instanceof Boulder || obj instanceof Enemy) {
+            return false;
+        }
+        super.setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()));
+        return true;
     }
 
 }

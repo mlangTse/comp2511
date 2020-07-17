@@ -928,6 +928,26 @@
       "type": "exit"
     },
     {
+      "x": 1,
+      "y": 3,
+      "type": "portal"
+    },
+    {
+      "x": 14,
+      "y": 8,
+      "type": "portal"
+    },
+    {
+      "x": 18,
+      "y": 8,
+      "type": "key"
+    },
+    {
+      "x": 18,
+      "y": 10,
+      "type": "door"
+    },
+    {
       "x": 19,
       "y": 16,
       "type": "wall"
