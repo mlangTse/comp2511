@@ -1,5 +1,6 @@
 package unsw.dungeon;
 
 public interface Component {
-    public int CalculateScore();
+    public int Calculate();
+    public void print();
 }

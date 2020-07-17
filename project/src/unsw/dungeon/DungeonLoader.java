@@ -21,6 +21,7 @@ public abstract class DungeonLoader {
 
     private JSONObject json;
     private Portal PortalnotMatching;
+    private Goal gameGoal;
     private ArrayList<Door> doors = new ArrayList<Door>();
     private ArrayList<Key> keys = new ArrayList<Key>();
     private ArrayList<Floorswitch> floorswitchs = new ArrayList<Floorswitch>();
@@ -61,7 +62,8 @@ public abstract class DungeonLoader {
             }
         }
 
-        System.out.println(goal + " " + goal.getClass());
+        gameGoal = new Goal(goal);
+        dungeon.setGoal(gameGoal);
         return dungeon;
     }
 

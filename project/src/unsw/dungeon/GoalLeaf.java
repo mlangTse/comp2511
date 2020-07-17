@@ -3,12 +3,15 @@ package unsw.dungeon;
 public class GoalLeaf implements Component{
 
     @Override
-    public int CalculateScore() {
+    public int Calculate() {
         // TODO Auto-generated method stub
         return 0;
     }
 
-    public GoalLeaf() {
+    @Override
+    public void print() {
+        // TODO Auto-generated method stub
+
     }
 
 }

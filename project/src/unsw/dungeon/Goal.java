@@ -1,32 +1,56 @@
 package unsw.dungeon;
 
-import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Goal{
-    private ArrayList<Component> components = new ArrayList<Component>();
+    private GoalComposite composite = new GoalComposite();
 
     public Goal(JSONObject goal) {
-        setGoal(goal);
+        composite = (GoalComposite) setGoal(goal);
+        composite.print();
     }
 
-    public void setGoal(JSONObject goal) {
+    public Component setGoal(JSONObject goal) {
         try {
             JSONArray subgoals = goal.getJSONArray("subgoals");
+            GoalComposite composite = new GoalComposite();
             for (int i = 0; i < subgoals.length(); i++) {
-
+                JSONObject sub_goal = subgoals.getJSONObject(i);
+                String operator = sub_goal.getString("goal");
+                if (operator.equals("AND") || operator.equals("OR")) {
+                    Component combine = setGoal(sub_goal);
+                    composite.add(combine);
+                    continue;
+                }
+                System.out.println(operator);
+                GoalLeaf leaf = new GoalLeaf();
+                composite.add(leaf);
             }
+            return composite;
         } catch (Exception e) {
             GoalLeaf leaf = new GoalLeaf();
-            components.add(leaf);
+            return leaf;
         }
 
     }
 
-    public void add(Component component) {
-        this.components.add(component);
-    }
+    // public State createState(String goal) {
+    //     switch(goal) {
+    //         case "exit":
+    //             State state = new ExitState();
+    //             break;
+    //         case "enemies":
+    //             State state = new EnemytState();
+    //             break;
+    //         case "boulders":
+    //             State state = new BoulderState();
+    //             break;
+    //         case "treasure":
+    //             State state = new TreasureState();
+    //             break;
+    //     }
+
+    // }
 
 }

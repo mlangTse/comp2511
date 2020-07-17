@@ -4,18 +4,16 @@ import java.io.File;
 
 import javafx.scene.image.Image;
 
-public class Enemy extends Entity implements Observer, Subject, Component{
+public class Enemy extends Entity implements Observer, Subject{
 
     private Dungeon dungeon;
     private boolean destroyed;
-    private int sorce;
 
     public Enemy(Dungeon dungeon, int x, int y) {
         super(x, y);
         super.setImage(new Image((new File("images/deep_elf_master_archer.png")).toURI().toString()));
         this.dungeon = dungeon;
         this.destroyed = false;
-        this.sorce = 250;
     }
 
     public void moveUp() {
@@ -82,10 +80,4 @@ public class Enemy extends Entity implements Observer, Subject, Component{
         }
         return false;
     }
-
-    @Override
-    public int CalculateScore() {
-        return sorce;
-    }
-
 }

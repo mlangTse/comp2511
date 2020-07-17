@@ -20,12 +20,14 @@ public class Dungeon {
     private int width, height;
     private List<Entity> entities;
     private Player player;
+    private Goal goal;
 
     public Dungeon(int width, int height) {
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<>();
         this.player = null;
+        this.goal = null;
     }
 
     public int getWidth() {
@@ -51,4 +53,12 @@ public class Dungeon {
 	public List<Entity> getEntities() {
 		return entities;
 	}
+
+    public Goal getGoal() {
+        return goal;
+    }
+
+    public void setGoal(Goal goal) {
+        this.goal = goal;
+    }
 }
