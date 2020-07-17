@@ -32,13 +32,12 @@ public class Door extends Entity implements Observer{
 
     @Override
     public boolean Moveable(Subject obj) {
-        if (obj instanceof Boulder || obj instanceof Enemy) {
-            return false;
-        }
         if (isOpened()) {
             return true;
         }
-
+        if (obj instanceof Boulder || obj instanceof Enemy) {
+            return false;
+        }
         if (obj instanceof Player) {
             if (((Player) obj).getKey() == getKey()) {
                 ((Player) obj).setKey(null);
@@ -49,5 +48,4 @@ public class Door extends Entity implements Observer{
         }
         return false;
     }
-
 }

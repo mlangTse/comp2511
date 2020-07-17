@@ -46,10 +46,7 @@ public class DungeonController {
 
         for (ImageView entity : initialEntities)
             squares.getChildren().add(entity);
-
-        // make the player in front of everything
-        squares.getChildren().remove(player.getImage());
-        squares.getChildren().add(player.getImage());
+        player.getImage().toFront();
     }
 
     @FXML

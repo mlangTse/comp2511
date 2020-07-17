@@ -19,12 +19,15 @@ import org.json.JSONTokener;
  */
 public abstract class DungeonLoader {
 
-    private final JSONObject json;
+    private JSONObject json;
     private Portal PortalnotMatching;
-    private final ArrayList<Door> doors = new ArrayList<Door>();
-    private final ArrayList<Key> keys = new ArrayList<Key>();
+    private ArrayList<Door> doors = new ArrayList<Door>();
+    private ArrayList<Key> keys = new ArrayList<Key>();
+    private ArrayList<Floorswitch> floorswitchs = new ArrayList<Floorswitch>();
+    private ArrayList<Treasure> treasures = new ArrayList<Treasure>();
+    private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-    public DungeonLoader(final String filename) throws FileNotFoundException {
+    public DungeonLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
     }
 
@@ -33,53 +36,66 @@ public abstract class DungeonLoader {
      * @return
      */
     public Dungeon load() {
-        final int width = json.getInt("width");
-        final int height = json.getInt("height");
+        int width = json.getInt("width");
+        int height = json.getInt("height");
 
-        final Dungeon dungeon = new Dungeon(width, height);
+        Dungeon dungeon = new Dungeon(width, height);
 
-        final JSONArray jsonEntities = json.getJSONArray("entities");
+        JSONArray jsonEntities = json.getJSONArray("entities");
 
-        final JSONObject goal = json.getJSONObject("goal-condition");
+        JSONObject goal = json.getJSONObject("goal-condition");
 
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
+        }
+
+        // A boulder initial position is the same as one of floorswitch
+        for (Entity entity: dungeon.getEntities()) {
+            if (entity instanceof Boulder) {
+                for (Floorswitch floorswitch : floorswitchs) {
+                    if (entity.getX() == floorswitch.getX() && entity.getY() == floorswitch.getY()) {
+                        ((Boulder) entity).setFloorswitch(floorswitch);
+                        ((Boulder) entity).triggeredFloorswitch();
+                    }
+                }
+            }
         }
 
         System.out.println(goal + " " + goal.getClass());
         return dungeon;
     }
 
-    private void loadEntity(final Dungeon dungeon, final JSONObject json) {
-        final String type = json.getString("type");
-        final int x = json.getInt("x");
-        final int y = json.getInt("y");
+    private void loadEntity(Dungeon dungeon, JSONObject json) {
+        String type = json.getString("type");
+        int x = json.getInt("x");
+        int y = json.getInt("y");
 
         Entity entity = null;
         switch (type) {
             case "player":
-                final Player player = new Player(dungeon, x, y);
+                Player player = new Player(dungeon, x, y);
                 dungeon.setPlayer(player);
                 onLoad(player);
                 entity = player;
                 break;
             case "wall":
-                final Wall wall = new Wall(x, y);
+                Wall wall = new Wall(x, y);
                 onLoad(wall);
                 entity = wall;
                 break;
             case "exit":
-                final Exit exit = new Exit(x, y);
+                Exit exit = new Exit(x, y);
                 onLoad(exit);
                 entity = exit;
                 break;
             case "treasure":
-                final Treasure treasure = new Treasure(x, y);
+                Treasure treasure = new Treasure(x, y);
+                treasures.add(treasure);
                 onLoad(treasure);
                 entity = treasure;
                 break;
             case "door":
-                final Door door = new Door(x, y);
+                Door door = new Door(x, y);
                 if (!keys.isEmpty()) {
                     door.setKey(keys.get(0));
                     keys.remove(0);
@@ -90,9 +106,9 @@ public abstract class DungeonLoader {
                 entity = door;
                 break;
             case "key":
-                final Key key = new Key(x, y);
+                Key key = new Key(x, y);
                 if (!doors.isEmpty()) {
-                    final Door d = doors.get(0);
+                    Door d = doors.get(0);
                     System.out.println(d);
                     d.setKey(key);
                     doors.remove(0);
@@ -103,17 +119,18 @@ public abstract class DungeonLoader {
                 entity = key;
                 break;
             case "boulder":
-                final Boulder boulder = new Boulder(dungeon, x, y);
+                Boulder boulder = new Boulder(dungeon, x, y);
                 onLoad(boulder);
                 entity = boulder;
                 break;
             case "switch":
-                final Floorswitch floorswitch = new Floorswitch(x, y);
+                Floorswitch floorswitch = new Floorswitch(x, y);
+                floorswitchs.add(floorswitch);
                 onLoad(floorswitch);
                 entity = floorswitch;
                 break;
             case "portal":
-                final Portal portal = new Portal(x, y);
+                Portal portal = new Portal(x, y);
                 if (PortalnotMatching == null) {
                     PortalnotMatching = portal;
                 } else if (PortalnotMatching.getPortal() == null) {
@@ -125,17 +142,18 @@ public abstract class DungeonLoader {
                 entity = portal;
                 break;
             case "enemy":
-                final Enemy enemy = new Enemy(dungeon, x, y);
+                Enemy enemy = new Enemy(dungeon, x, y);
+                enemies.add(enemy);
                 onLoad(enemy);
                 entity = enemy;
                 break;
             case "sword":
-                final Sword sword = new Sword(x, y);
+                Sword sword = new Sword(x, y);
                 onLoad(sword);
                 entity = sword;
                 break;
             case "invincibility":
-                final Potion invincibility = new Potion(x, y);
+                Potion invincibility = new Potion(x, y);
                 onLoad(invincibility);
                 entity = invincibility;
                 break;

@@ -1,21 +1,18 @@
 package unsw.dungeon;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import javafx.scene.image.Image;
 
 public class Boulder extends Entity implements Observer, Subject{
 
     private Dungeon dungeon;
-    private ArrayList<Observer> observers;
     private Floorswitch floorswitch;
 
     public Boulder(Dungeon dungeon, int x, int y) {
         super(x, y);
         super.setImage(new Image((new File("images/boulder.png")).toURI().toString()));
         this.dungeon = dungeon;
-        observers = new ArrayList<Observer>();
     }
 
     public void moveUp() {

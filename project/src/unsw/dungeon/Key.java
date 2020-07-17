@@ -31,7 +31,7 @@ public class Key extends Entity implements Observer{
         }
         if (obj instanceof Player) {
             if (((Player) obj).getKey() == this) {
-                super.setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()));
+                super.destory();
                 setCollected(true);
             }
         }

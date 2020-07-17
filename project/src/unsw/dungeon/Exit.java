@@ -16,7 +16,7 @@ public class Exit extends Entity implements Observer{
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }
-        return true;
+        return false;
     }
 
 }

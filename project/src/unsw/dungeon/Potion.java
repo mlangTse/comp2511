@@ -28,7 +28,7 @@ public class Potion extends Entity implements Observer{
         if (isCollected()) {
             return true;
         }
-        super.setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()));
+        super.destory();
         return true;
     }
 

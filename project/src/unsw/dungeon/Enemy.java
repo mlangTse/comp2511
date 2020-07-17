@@ -1,7 +1,6 @@
 package unsw.dungeon;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import javafx.scene.image.Image;
 
@@ -73,7 +72,7 @@ public class Enemy extends Entity implements Observer, Subject, Component{
         }
         if (obj instanceof Player) {
             if (((Player) obj).getSword() != null) {
-                super.setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()));
+                super.destory();
                 ((Player) obj).useSword();
                 setDestroyed(true);
                 return true;

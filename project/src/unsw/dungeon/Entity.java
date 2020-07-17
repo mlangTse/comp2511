@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import java.io.File;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
@@ -55,5 +57,9 @@ public class Entity {
         } else {
             this.imageView.setImage(image);
         }
+    }
+
+    public void destory() {
+        setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()));
     }
 }

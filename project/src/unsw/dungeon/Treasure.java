@@ -18,7 +18,7 @@ public class Treasure extends Entity implements Observer, Component{
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }
-        super.setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()));
+        super.destory();
         return true;
     }
 
