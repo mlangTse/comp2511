@@ -22,7 +22,7 @@ public class Floorswitch extends Entity implements Observer{
     }
 
     @Override
-    public boolean Moveable(Subject obj, Entity entity) {
+    public boolean Moveable(Subject obj) {
         if (obj instanceof Boulder && trigger == true) {
             return false;
         }

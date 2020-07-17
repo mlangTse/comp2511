@@ -5,6 +5,7 @@ import java.io.File;
 import javafx.scene.image.Image;
 
 public class Sword extends Entity implements Observer{
+    private boolean collected;
     private int time;
 
     public Sword(int x, int y) {
@@ -21,15 +22,29 @@ public class Sword extends Entity implements Observer{
         this.time -= 1;
     }
 
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
+    }
+
     @Override
-    public boolean Moveable(Subject obj, Entity entity) {
+    public boolean Moveable(Subject obj) {
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
-        }if (obj instanceof Player) {
+        }
+        if (isCollected()) {
+            return true;
+        }
+        if (obj instanceof Player) {
             if (((Player) obj).getSword() == this) {
                 super.setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()));
+                setCollected(true);
             }
         }
         return true;
     }
+
 }

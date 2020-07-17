@@ -31,7 +31,7 @@ public class Door extends Entity implements Observer{
     }
 
     @Override
-    public boolean Moveable(Subject obj, Entity entity) {
+    public boolean Moveable(Subject obj) {
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }

@@ -5,18 +5,38 @@ import java.util.ArrayList;
 
 import javafx.scene.image.Image;
 
-public class Enemy extends Entity implements Observer, Subject{
+public class Enemy extends Entity implements Observer, Subject, Component{
 
     private Dungeon dungeon;
     private boolean destroyed;
-    private ArrayList<Observer> observers;
+    private int sorce;
 
     public Enemy(Dungeon dungeon, int x, int y) {
         super(x, y);
         super.setImage(new Image((new File("images/deep_elf_master_archer.png")).toURI().toString()));
         this.dungeon = dungeon;
         this.destroyed = false;
-        observers = new ArrayList<Observer>();
+        this.sorce = 250;
+    }
+
+    public void moveUp() {
+        if (getY() > 0)
+            y().set(getY() - 1);
+    }
+
+    public void moveDown() {
+        if (getY() < dungeon.getHeight() - 1)
+            y().set(getY() + 1);
+    }
+
+    public void moveLeft() {
+        if (getX() > 0)
+            x().set(getX() - 1);
+    }
+
+    public void moveRight() {
+        if (getX() < dungeon.getWidth() - 1)
+            x().set(getX() + 1);
     }
 
     public boolean isDestroyed() {
@@ -28,14 +48,8 @@ public class Enemy extends Entity implements Observer, Subject{
     }
 
     @Override
-    public void attach(Observer o) {
-        observers.add(o);
-
-    }
-
-    @Override
     public boolean notifyObserver(Observer observer) {
-        return observer.Moveable(this, (Entity) observer);
+        return observer.Moveable(this);
     }
 
     @Override
@@ -50,7 +64,7 @@ public class Enemy extends Entity implements Observer, Subject{
     }
 
     @Override
-    public boolean Moveable(Subject obj, Entity entity) {
+    public boolean Moveable(Subject obj) {
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }
@@ -63,9 +77,16 @@ public class Enemy extends Entity implements Observer, Subject{
                 ((Player) obj).useSword();
                 setDestroyed(true);
                 return true;
+            } else {
+                // the game end
             }
         }
         return false;
+    }
+
+    @Override
+    public int CalculateScore() {
+        return sorce;
     }
 
 }

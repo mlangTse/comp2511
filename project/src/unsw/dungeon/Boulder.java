@@ -43,10 +43,10 @@ public class Boulder extends Entity implements Observer, Subject{
     }
 
     public void triggeredFloorswitch() {
-        if (floorswitch != null && floorswitch.istrigger() == true) {
+        if (floorswitch != null && floorswitch.istrigger()) {
             floorswitch.settrigger(false);
             floorswitch = null;
-        } else if (floorswitch != null && floorswitch.istrigger() == false) {
+        } else if (floorswitch != null && !(floorswitch.istrigger())) {
             floorswitch.settrigger(true);
         }
     }
@@ -56,21 +56,13 @@ public class Boulder extends Entity implements Observer, Subject{
     }
 
     @Override
-    public void attach(Observer o) {
-        if (((Entity) o) instanceof Floorswitch && ((Entity) o).getX() == this.getX() && ((Entity) o).getY() == this.getY()) {
-            setFloorswitch((Floorswitch) o);
-            floorswitch.settrigger(true);
-        }
-        observers.add(o);
-
-    }
-
-    @Override
     public boolean Collid(int x, int y) {
         for (Entity entity : dungeon.getEntities()) {
-            Observer obs = (Observer) entity;
-            if (((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
-                return notifyObserver(obs);
+            if (entity instanceof Observer) {
+                Observer obs = (Observer) entity;
+                if (((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
+                    return notifyObserver(obs);
+                }
             }
         }
         return true;
@@ -78,7 +70,7 @@ public class Boulder extends Entity implements Observer, Subject{
 
     @Override
     public boolean notifyObserver(Observer observer) {
-        return observer.Moveable(this, (Entity) observer);
+        return observer.Moveable(this);
     }
 
     /**
@@ -88,7 +80,7 @@ public class Boulder extends Entity implements Observer, Subject{
      * @return
      */
     @Override
-    public boolean Moveable(Subject obj, Entity entity) {
+    public boolean Moveable(Subject obj) {
         boolean flag;
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;

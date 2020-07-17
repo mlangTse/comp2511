@@ -18,7 +18,6 @@ public class Player extends Entity implements Subject{
     private Potion potion;
     private Treasure treasure;
     private Key key;
-    private ArrayList<Observer> observers;
 
     /**
      * Create a player positioned in square (x,y)
@@ -29,7 +28,6 @@ public class Player extends Entity implements Subject{
         super(x, y);
         super.setImage(new Image((new File("images/human_new.png")).toURI().toString()));
         this.dungeon = dungeon;
-        observers = new ArrayList<Observer>();
     }
 
     public void moveUp() {
@@ -104,12 +102,6 @@ public class Player extends Entity implements Subject{
     }
 
     @Override
-    public void attach(Observer o) {
-        observers.add(o);
-
-    }
-
-    @Override
     public boolean Collid(int x, int y) {
         for (Entity entity : dungeon.getEntities()) {
             if (entity instanceof Observer) {
@@ -126,7 +118,7 @@ public class Player extends Entity implements Subject{
 
     @Override
     public boolean notifyObserver(Observer observer) {
-        return observer.Moveable(this, (Entity) observer);
+        return observer.Moveable(this);
     }
 
 }
