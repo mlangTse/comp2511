@@ -176,7 +176,6 @@ public class Enemy extends Entity implements Observer, Subject{
             } else {
                 // the game end
                 ((Player) obj).destory();
-                super.getImage().toFront();
                 System.exit(0);
             }
         }
