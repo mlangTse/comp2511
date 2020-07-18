@@ -4,10 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Goal{
-    private GoalComposite composite = new GoalComposite();
+    private Component composite = new GoalComposite();
 
     public Goal(JSONObject goal) {
-        composite = (GoalComposite) setGoal(goal);
+        composite = setGoal(goal);
         composite.print();
     }
 

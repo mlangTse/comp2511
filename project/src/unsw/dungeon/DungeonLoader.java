@@ -24,7 +24,7 @@ public abstract class DungeonLoader {
     private Goal gameGoal;
     private ArrayList<Door> doors = new ArrayList<Door>();
     private ArrayList<Key> keys = new ArrayList<Key>();
-    private ArrayList<Floorswitch> floorswitchs = new ArrayList<Floorswitch>();
+    private ArrayList<Floorswitch> floorswitches = new ArrayList<Floorswitch>();
     private ArrayList<Treasure> treasures = new ArrayList<Treasure>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
@@ -53,7 +53,7 @@ public abstract class DungeonLoader {
         // A boulder initial position is the same as one of floorswitch
         for (Entity entity: dungeon.getEntities()) {
             if (entity instanceof Boulder) {
-                for (Floorswitch floorswitch : floorswitchs) {
+                for (Floorswitch floorswitch : floorswitches) {
                     if (entity.getX() == floorswitch.getX() && entity.getY() == floorswitch.getY()) {
                         ((Boulder) entity).setFloorswitch(floorswitch);
                         ((Boulder) entity).triggeredFloorswitch();
@@ -127,7 +127,7 @@ public abstract class DungeonLoader {
                 break;
             case "switch":
                 Floorswitch floorswitch = new Floorswitch(x, y);
-                floorswitchs.add(floorswitch);
+                floorswitches.add(floorswitch);
                 onLoad(floorswitch);
                 entity = floorswitch;
                 break;

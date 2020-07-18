@@ -1,2 +1,7 @@
+*.class
+*.log
+hs_err_pid*
 /bin/
+/.metadata/
+.project
 .classpath

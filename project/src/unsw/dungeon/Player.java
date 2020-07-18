@@ -15,7 +15,6 @@ public class Player extends Entity implements Subject{
     private Dungeon dungeon;
     private Sword sword;
     private Potion potion;
-    private Treasure treasure;
     private Key key;
 
     /**
@@ -80,14 +79,6 @@ public class Player extends Entity implements Subject{
 
     public void setPotion(Potion potion) {
         this.potion = potion;
-    }
-
-    public Treasure getTreasure() {
-        return treasure;
-    }
-
-    public void setTreasure(Treasure treasure) {
-        this.treasure = treasure;
     }
 
     public Key getKey(){
