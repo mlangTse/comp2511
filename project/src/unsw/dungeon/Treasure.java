@@ -22,6 +22,9 @@ public class Treasure extends Entity implements Observer{
 
     @Override
     public boolean Moveable(Subject obj) {
+        if (isCollected()) {
+            return true;
+        }
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }
