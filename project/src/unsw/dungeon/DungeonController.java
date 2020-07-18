@@ -46,34 +46,36 @@ public class DungeonController {
 
         for (ImageView entity : initialEntities)
             squares.getChildren().add(entity);
+
+        // set player to front
         player.getImage().toFront();
     }
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
-        case UP:
-            if (player.Collid(player.getX(), (player.getY() - 1))) {
-                player.moveUp();
-            }
-            break;
-        case DOWN:
-            if (player.Collid(player.getX(), (player.getY() + 1))) {
-                player.moveDown();
-            }
-            break;
-        case LEFT:
-            if (player.Collid((player.getX() - 1), player.getY())) {
-                player.moveLeft();
-            }
-            break;
-        case RIGHT:
-            if (player.Collid((player.getX() + 1), player.getY())) {
-                player.moveRight();
-            }
-            break;
-        default:
-            break;
+            case UP:
+                if (player.Collid(player.getX(), (player.getY() - 1))) {
+                    player.moveUp();
+                }
+                break;
+            case DOWN:
+                if (player.Collid(player.getX(), (player.getY() + 1))) {
+                    player.moveDown();
+                }
+                break;
+            case LEFT:
+                if (player.Collid((player.getX() - 1), player.getY())) {
+                    player.moveLeft();
+                }
+                break;
+            case RIGHT:
+                if (player.Collid((player.getX() + 1), player.getY())) {
+                    player.moveRight();
+                }
+                break;
+            default:
+                break;
         }
     }
 

@@ -58,7 +58,7 @@ public class Player extends Entity implements Subject{
     }
 
     public void setSword(Observer obs) {
-        if (obs instanceof Sword && getSword() == null && ((Sword) obs).getTime() != 0) {
+        if (obs instanceof Sword && getSword() == null) {
             this.sword = (Sword) obs;
         }
         if (obs == null) {
