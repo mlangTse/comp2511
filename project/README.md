@@ -382,11 +382,11 @@ Marks will be deducted for poor git and GitLab usage. For example, meaningless c
 
 ### Week-05
 
-Fill in here.
+Equivalent workload.
 
 ### Week-06
 
-Fill in here.
+Equivalent workload.
 
 ### Week-07
 

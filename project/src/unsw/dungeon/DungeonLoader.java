@@ -62,7 +62,10 @@ public abstract class DungeonLoader {
             }
         }
 
-        gameGoal = new Goal(goal);
+        dungeon.setFloorswitchs(floorswitches);
+        dungeon.setTreasures(treasures);
+        dungeon.setEnemies(enemies);
+        gameGoal = new Goal(dungeon, goal);
         dungeon.setGoal(gameGoal);
         return dungeon;
     }
@@ -86,7 +89,7 @@ public abstract class DungeonLoader {
                 entity = wall;
                 break;
             case "exit":
-                Exit exit = new Exit(x, y);
+                Exit exit = new Exit(dungeon, x, y);
                 onLoad(exit);
                 entity = exit;
                 break;
@@ -111,7 +114,6 @@ public abstract class DungeonLoader {
                 Key key = new Key(x, y);
                 if (!doors.isEmpty()) {
                     Door d = doors.get(0);
-                    System.out.println(d);
                     d.setKey(key);
                     doors.remove(0);
                 } else {
@@ -148,6 +150,7 @@ public abstract class DungeonLoader {
                 enemies.add(enemy);
                 onLoad(enemy);
                 entity = enemy;
+                enemy.moving();
                 break;
             case "sword":
                 Sword sword = new Sword(x, y);

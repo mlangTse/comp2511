@@ -1,16 +1,27 @@
 package unsw.dungeon;
 
 public class GoalLeaf implements Component{
+    GoalState state;
 
-    @Override
-    public int Calculate() {
-        // TODO Auto-generated method stub
-        return 0;
+    public GoalLeaf(GoalState state) {
+        this.state = state;
     }
 
     @Override
-    public void print() {
-        // TODO Auto-generated method stub
-        System.out.println(this);
+    public boolean isFinish(String operator) {
+        System.out.println();
+        System.out.println("hi: ");
+        System.out.println(state.getClass() + " " + state.finish() + " operator" + operator);
+        System.out.println("bye!! ");
+        System.out.println();
+        if (state.finish()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void update() {
+        state.update();
     }
 }

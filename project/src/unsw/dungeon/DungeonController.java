@@ -77,6 +77,9 @@ public class DungeonController {
             default:
                 break;
         }
+        if (dungeon.check_progress()) {
+            System.exit(0);
+        }
     }
 
 }

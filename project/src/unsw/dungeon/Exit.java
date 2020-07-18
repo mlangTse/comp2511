@@ -2,14 +2,24 @@ package unsw.dungeon;
 
 import java.io.File;
 
-import javafx.application.Platform;
 import javafx.scene.image.Image;
 
 public class Exit extends Entity implements Observer{
+    private Dungeon dungeon;
+    private boolean exit;
 
-    public Exit(int x, int y) {
+    public Exit(Dungeon dungeon, int x, int y) {
         super(x, y);
         super.setImage(new Image((new File("images/exit.png")).toURI().toString()));
+        this.dungeon = dungeon;
+    }
+
+    public boolean isExited() {
+        return exit;
+    }
+
+    public void setExit(boolean exit) {
+        this.exit = exit;
     }
 
     @Override
@@ -17,8 +27,13 @@ public class Exit extends Entity implements Observer{
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }
-        Platform.exit();
-        System.exit(0);
-        return false;
+
+        setExit(true);
+        if (dungeon.check_progress()) {
+            return true;
+        }
+        setExit(false);
+        return true;
     }
+
 }

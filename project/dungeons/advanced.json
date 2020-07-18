@@ -610,17 +610,21 @@
       "x": 17,
       "y": 15,
       "type": "wall"
+    },
+    {
+      "x": 15,
+      "y": 13,
+      "type": "exit"
     }
   ],
-  "goal-condition": {
-    "goal": "AND",
-    "subgoals": [
-      {
-        "goal": "enemies"
-      },
-      {
-        "goal": "treasure"
+  "goal-condition": { "goal": "AND", "subgoals":
+    [ { "goal": "exit" },
+      { "goal": "OR", "subgoals":
+        [ {"goal": "enemies" },
+          {"goal": "treasure" }
+        ]
       }
     ]
   }
+
 }

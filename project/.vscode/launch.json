@@ -9,9 +9,9 @@
             "type": "java",
             "name": "CodeLens (Launch) - DungeonApplication",
             "request": "launch",
-            "vmArgs": "--module-path ./lib/ --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path ./lib --add-modules javafx.controls,javafx.fxml",
             "mainClass": "unsw.dungeon.DungeonApplication",
-            "console": "internalConsole"
+            "console":"integratedTerminal"
         }
     ]
 }

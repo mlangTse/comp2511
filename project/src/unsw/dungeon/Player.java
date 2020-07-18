@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
  * @author Robert Clifton-Everest
  *
  */
-public class Player extends Entity implements Subject{
+public class Player extends Entity implements Observer, Subject{
 
     private Dungeon dungeon;
     private Sword sword;
@@ -109,6 +109,14 @@ public class Player extends Entity implements Subject{
     @Override
     public boolean notifyObserver(Observer observer) {
         return observer.Moveable(this);
+    }
+
+    @Override
+    public boolean Moveable(Subject obj) {
+        if (obj instanceof Enemy) {
+            return ((Observer) obj).Moveable(this);
+        }
+        return false;
     }
 
 }

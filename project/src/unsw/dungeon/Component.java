@@ -1,6 +1,6 @@
 package unsw.dungeon;
 
 public interface Component {
-    public int Calculate();
-    public void print();
+    public boolean isFinish(String operator);
+    public void update();
 }
