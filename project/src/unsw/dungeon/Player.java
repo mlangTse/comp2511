@@ -1,8 +1,6 @@
 package unsw.dungeon;
 
-import java.io.File;
-
-import javafx.scene.image.Image;
+import java.time.LocalDateTime;
 
 /**
  * The player entity
@@ -14,7 +12,8 @@ public class Player extends Entity implements Observer, Subject{
 
     private Dungeon dungeon;
     private Sword sword;
-    private Potion potion;
+    private boolean potion;
+    private LocalDateTime end;
     private Key key;
 
     /**
@@ -24,8 +23,8 @@ public class Player extends Entity implements Observer, Subject{
      */
     public Player(Dungeon dungeon, int x, int y) {
         super(x, y);
-        super.setImage(new Image((new File("images/human_new.png")).toURI().toString()));
         this.dungeon = dungeon;
+        this.potion = false;
     }
 
     public void moveUp() {
@@ -49,8 +48,14 @@ public class Player extends Entity implements Observer, Subject{
     }
 
     public void setPosition(int x, int y) {
-        x().set(x);
-        y().set(y);
+        if (x < dungeon.getWidth() - 1)
+            x().set(x);
+        if (y < dungeon.getWidth() - 1)
+            y().set(y);
+    }
+
+    public LocalDateTime getEnd() {
+        return end;
     }
 
     public Sword getSword() {
@@ -73,12 +78,18 @@ public class Player extends Entity implements Observer, Subject{
         }
     }
 
-    public Potion getPotion() {
+    public boolean getPotion() {
         return potion;
     }
 
-    public void setPotion(Potion potion) {
-        this.potion = potion;
+    public void setPotion(Observer obs) {
+        if (obs instanceof Potion) {
+            this.end = LocalDateTime.now().plusSeconds(15);
+            this.potion = true;
+        }
+        if (obs == null) {
+            this.potion = false;
+        }
     }
 
     public Key getKey(){
@@ -88,19 +99,20 @@ public class Player extends Entity implements Observer, Subject{
     public void setKey(Observer obs) {
         if (obs instanceof Key && getKey() == null) {
             this.key = (Key) obs;
+        } else if (obs == null) {
+            this.key = null;
         }
     }
 
     @Override
-    public boolean Collid(int x, int y) {
+    public boolean notCollid(int x, int y) {
         for (Entity entity : dungeon.getEntities()) {
-            if (entity instanceof Observer) {
-                Observer obs = (Observer) entity;
-                if (!(obs instanceof Floorswitch) && ((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
-                    setSword(obs);
-                    setKey(obs);
-                    return notifyObserver(obs);
-                }
+            Observer obs = (Observer) entity;
+            if (!(obs instanceof Floorswitch) && ((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
+                setSword(obs);
+                setKey(obs);
+                setPotion(obs);
+                return notifyObserver(obs);
             }
         }
         return true;
@@ -114,6 +126,10 @@ public class Player extends Entity implements Observer, Subject{
     @Override
     public boolean Moveable(Subject obj) {
         if (obj instanceof Enemy) {
+            LocalDateTime now = LocalDateTime.now();
+            if (getPotion() && end.isAfter(now)) {
+                return false;
+            }
             return ((Observer) obj).Moveable(this);
         }
         return false;

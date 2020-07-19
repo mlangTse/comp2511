@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -23,6 +25,11 @@ public class DungeonControllerLoader extends DungeonLoader {
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
         super(filename);
+        entities = new ArrayList<>();
+    }
+    
+    public DungeonControllerLoader(JSONObject json) {
+        super(json);
         entities = new ArrayList<>();
     }
 

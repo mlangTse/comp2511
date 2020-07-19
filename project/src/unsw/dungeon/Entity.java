@@ -51,15 +51,18 @@ public class Entity {
         return imageView;
     }
 
-    public void setImage(Image image) {
+    public void setImage(Image image, Boolean toBack) {
         if (imageView == null) {
             imageView = new ImageView(image);
-        } else {
-            this.imageView.setImage(image);
+        }
+        imageView.setImage(image);
+        if (toBack) {
+            imageView.toBack();
         }
     }
 
     public void destory() {
-        setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()));
+        if (imageView == null) return;
+        setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()), true);
     }
 }

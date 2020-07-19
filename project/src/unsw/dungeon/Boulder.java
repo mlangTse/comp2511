@@ -1,9 +1,5 @@
 package unsw.dungeon;
 
-import java.io.File;
-
-import javafx.scene.image.Image;
-
 public class Boulder extends Entity implements Observer, Subject{
 
     private Dungeon dungeon;
@@ -11,7 +7,6 @@ public class Boulder extends Entity implements Observer, Subject{
 
     public Boulder(Dungeon dungeon, int x, int y) {
         super(x, y);
-        super.setImage(new Image((new File("images/boulder.png")).toURI().toString()));
         this.dungeon = dungeon;
     }
 
@@ -53,13 +48,11 @@ public class Boulder extends Entity implements Observer, Subject{
     }
 
     @Override
-    public boolean Collid(int x, int y) {
+    public boolean notCollid(int x, int y) {
         for (Entity entity : dungeon.getEntities()) {
-            if (entity instanceof Observer) {
-                Observer obs = (Observer) entity;
-                if (((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
-                    return notifyObserver(obs);
-                }
+            Observer obs = (Observer) entity;
+            if (((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
+                return notifyObserver(obs);
             }
         }
         return true;
@@ -83,29 +76,29 @@ public class Boulder extends Entity implements Observer, Subject{
             return false;
         }
         // Since it's a Observer, so this function called
-        // only if a subject (the player) collided with this boulder
+        // only if a subject (the player) notCollided with this boulder
         // therefore, the location of this boulder is either the same as
         // the player's x position or the same as the player's y position
         if (dungeon.getPlayer().getX() != this.getX()) {
             if (dungeon.getPlayer().getX() == (this.getX() - 1)) {
-                flag = Collid((this.getX() + 1), this.getY());
+                flag = notCollid((this.getX() + 1), this.getY());
                 if (flag) {
                     moveRight();
                 }
             } else {
-                flag = Collid((this.getX() - 1), this.getY());
+                flag = notCollid((this.getX() - 1), this.getY());
                 if (flag) {
                     moveLeft();
                 }
             }
         } else  {
             if (dungeon.getPlayer().getY() == (this.getY() - 1)) {
-                flag = Collid(this.getX(), (this.getY() + 1));
+                flag = notCollid(this.getX(), (this.getY() + 1));
                 if (flag) {
                     moveDown();
                 }
             } else {
-                flag = Collid(this.getX(), (this.getY() - 1));
+                flag = notCollid(this.getX(), (this.getY() - 1));
                 if (flag) {
                     moveUp();
                 }

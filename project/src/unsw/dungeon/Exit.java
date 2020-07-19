@@ -1,16 +1,11 @@
 package unsw.dungeon;
 
-import java.io.File;
-
-import javafx.scene.image.Image;
-
 public class Exit extends Entity implements Observer{
     private Dungeon dungeon;
     private boolean exit;
 
     public Exit(Dungeon dungeon, int x, int y) {
         super(x, y);
-        super.setImage(new Image((new File("images/exit.png")).toURI().toString()));
         this.dungeon = dungeon;
     }
 
