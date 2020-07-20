@@ -44,7 +44,7 @@ public class Goal{
     }
 
     public GoalState createState(String goal) {
-        switch(goal) {
+        switch (goal) {
             case "exit":
                 ExitGoal exitGoal = new ExitGoal();
                 for (Entity e:dungeon.getEntities()) {

@@ -8,6 +8,13 @@ public class Boulder extends Entity implements Observer, Subject {
     private Floorswitch floorswitch;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
+    /**
+     * Create an boulder positioned in square (x,y)
+     *
+     * @param dungeon
+     * @param x
+     * @param y
+     */
     public Boulder(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
@@ -17,7 +24,6 @@ public class Boulder extends Entity implements Observer, Subject {
         if (getY() > 0){
             if (notCollid(getX(), (getY() - 1))) {
                 y().set(getY() - 1);
-                triggeredFloorswitch();
             }
         }
     }
@@ -26,7 +32,6 @@ public class Boulder extends Entity implements Observer, Subject {
         if (getY() < dungeon.getHeight() - 1) {
             if (notCollid(getX(), (getY() + 1))) {
                 y().set(getY() + 1);
-                triggeredFloorswitch();
             }
         }
     }
@@ -35,7 +40,6 @@ public class Boulder extends Entity implements Observer, Subject {
         if (getX() > 0) {
             if (notCollid((getX() - 1), getY())) {
                 x().set(getX() - 1);
-                triggeredFloorswitch();
             }
         }
     }
@@ -44,22 +48,30 @@ public class Boulder extends Entity implements Observer, Subject {
         if (getX() < dungeon.getWidth() - 1) {
             if (notCollid((getX() + 1), getY())) {
                 x().set(getX() + 1);
-                triggeredFloorswitch();
             }
         }
     }
 
-
+    /**
+     * if will be call only the boulder is moved
+     *
+     * untrigger the floorswitch
+     * if this boulder is move out from a floorswitch
+     */
     public void triggeredFloorswitch() {
-        if (floorswitch != null && floorswitch.istrigger()) {
+        if (floorswitch == null) return;
+        if (floorswitch.getX() != getX() || floorswitch.getY() != getY()) {
             floorswitch.settrigger(false);
             floorswitch = null;
-        } else if (floorswitch != null && !(floorswitch.istrigger())) {
-            floorswitch.settrigger(true);
         }
     }
 
+    /**
+     * set the bould to trigger the floorswitch
+     * @param floorswitch
+     */
     public void setFloorswitch(Floorswitch floorswitch) {
+        floorswitch.settrigger(true);
         this.floorswitch = floorswitch;
     }
 
@@ -73,12 +85,16 @@ public class Boulder extends Entity implements Observer, Subject {
         return true;
     }
 
+    /**
+     * attch to observer, if the observer is a floorswitch, checkit the bould is on this floorswitch
+     *
+     * @param obs the Observer that observe this subject
+     */
     @Override
     public void attach(Observer obs) {
         Entity entity = (Entity) obs;
         if (obs instanceof Floorswitch && this.getX() == entity.getX() && this.getY() == entity.getY()) {
             this.setFloorswitch((Floorswitch) obs);
-            this.triggeredFloorswitch();
         }
         this.observers.add(obs);
     }
@@ -117,6 +133,7 @@ public class Boulder extends Entity implements Observer, Subject {
         } else {
             moveUp();
         }
+        triggeredFloorswitch();
         return curr_x != getX() || curr_y != getY();
     }
 }

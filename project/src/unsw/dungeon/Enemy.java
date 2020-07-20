@@ -68,12 +68,35 @@ public class Enemy extends Entity implements Observer, Subject{
         this.destroyed = destroyed;
     }
 
+    public Dungeon getDungeon() {
+        return dungeon;
+    }
+
+    public boolean runAway() {
+        if (getDungeon().getPlayer().hasPotion()) {
+            LocalDateTime now = LocalDateTime.now();
+            if (getDungeon().getPlayer().getEnd().isAfter(now)) {
+                return true;
+            }
+            else {
+                getDungeon().getPlayer().setPotion(null);
+            }
+        }
+        return false;
+    }
+
     public void moving(Enemy enemy) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                Platform.runLater(()-> enemy.move());
+                Platform.runLater(()-> {
+                    if (enemy.runAway()) {
+                        moveBackward();
+                    } else {
+                        enemy.move();
+                    }
+                });
             }
         }, 0, 500);
     }
@@ -89,6 +112,21 @@ public class Enemy extends Entity implements Observer, Subject{
             return;
         }
         if ((getX() < dungeon.getPlayer().getX()) && moveRight()) {
+            return;
+        }
+    }
+
+    public void moveBackward() {
+        if ((getY() > dungeon.getPlayer().getY()) && moveDown()) {
+            return;
+        }
+        if ((getY() < dungeon.getPlayer().getY()) && moveUp()){
+            return;
+        }
+        if ((getX() > dungeon.getPlayer().getX()) && moveRight()) {
+            return;
+        }
+        if ((getX() < dungeon.getPlayer().getX()) && moveLeft()) {
             return;
         }
     }
@@ -125,15 +163,9 @@ public class Enemy extends Entity implements Observer, Subject{
             return true;
         }
         if (obj instanceof Player) {
-            if (((Player) obj).hasPotion()) {
-                LocalDateTime now = LocalDateTime.now();
-                if (((Player) obj).getEnd().isAfter(now)) {
-                    setDestroyed(true);
-                    return true;
-                }
-                else {
-                    ((Player)obj).setPotion(null);
-                }
+            if (this.runAway()) {
+                setDestroyed(true);
+                return true;
             }
             if (((Player) obj).getSword() != null) {
                 ((Player) obj).useSword();
