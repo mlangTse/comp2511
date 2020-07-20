@@ -16,6 +16,7 @@ public class Player extends Entity implements Observer, Subject{
     private boolean potion;
     private LocalDateTime end;
     private Key key;
+    private ArrayList<Treasure> treasures = new ArrayList<Treasure>();
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     /**
@@ -100,6 +101,7 @@ public class Player extends Entity implements Observer, Subject{
         if (obs instanceof Potion) {
             this.end = LocalDateTime.now().plusSeconds(15);
             this.potion = true;
+            return;
         }
         if (obs == null) {
             this.potion = false;
@@ -118,6 +120,14 @@ public class Player extends Entity implements Observer, Subject{
         }
     }
 
+    public ArrayList<Treasure> getTreasures() {
+        return treasures;
+    }
+
+    public void addTreasures(Treasure treasure) {
+        this.treasures.add(treasure);
+    }
+
     @Override
     public boolean notCollid(int x, int y) {
         for (Observer obs : observers) {
@@ -125,6 +135,9 @@ public class Player extends Entity implements Observer, Subject{
                 setSword(obs);
                 setKey(obs);
                 setPotion(obs);
+                if (obs instanceof Treasure) {
+                    addTreasures((Treasure) obs);
+                }
                 return obs.Moveable(this);
             }
         }

@@ -5,6 +5,7 @@ public class Potion extends Entity implements Observer{
 
     public Potion(int x, int y) {
         super(x, y);
+        this.collected = false;
     }
 
     public boolean isCollected() {
@@ -24,6 +25,7 @@ public class Potion extends Entity implements Observer{
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }
+        ((Player) obj).detach(this);
         setCollected(true);
         return true;
     }

@@ -24,6 +24,7 @@ public class Treasure extends Entity implements Observer{
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }
+        ((Player) obj).detach(this);
         setCollected(true);
         return true;
     }

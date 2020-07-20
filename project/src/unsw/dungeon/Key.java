@@ -27,6 +27,7 @@ public class Key extends Entity implements Observer{
         }
         if (obj instanceof Player) {
             if (((Player) obj).getKey() == this) {
+                ((Player) obj).detach(this);
                 setCollected(true);
             }
         }

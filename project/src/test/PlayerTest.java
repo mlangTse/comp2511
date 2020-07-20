@@ -108,4 +108,20 @@ public class PlayerTest {
         player.setKey(null);
         assertEquals(player.getKey(), null);
     }
+
+    @Test
+    public void testPlayerGetTreasure() {
+        Dungeon dungeon = new Dungeon(2, 2);
+        Player player = new Player(dungeon, 0, 0);
+        Treasure treasure = new Treasure(0, 1);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(treasure);
+
+        player.attach(treasure);
+
+        player.moveDown();
+
+        assertEquals(player.getY(), 1);
+        assertEquals(player.getTreasures().get(0), treasure);
+    }
 }

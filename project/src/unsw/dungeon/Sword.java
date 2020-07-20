@@ -22,6 +22,7 @@ public class Sword extends Entity implements Observer{
     }
 
     public void setCollected(boolean collected) {
+        super.destroy();
         this.collected = collected;
     }
 
@@ -35,7 +36,7 @@ public class Sword extends Entity implements Observer{
         }
         if (obj instanceof Player) {
             if (((Player) obj).getSword() == this) {
-                super.destroy();
+                ((Player) obj).detach(this);
                 setCollected(true);
             }
         }

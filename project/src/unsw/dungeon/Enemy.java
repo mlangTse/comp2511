@@ -19,36 +19,44 @@ public class Enemy extends Entity implements Observer, Subject{
         this.destroyed = false;
     }
 
-    public void moveUp() {
+    public boolean moveUp() {
         if (getY() > 0){
             if (notCollid(getX(), (getY() - 1))) {
                 y().set(getY() - 1);
+                return true;
             }
         }
+        return false;
     }
 
-    public void moveDown() {
+    public boolean moveDown() {
         if (getY() < dungeon.getHeight() - 1) {
             if (notCollid(getX(), (getY() + 1))) {
                 y().set(getY() + 1);
+                return true;
             }
         }
+        return false;
     }
 
-    public void moveLeft() {
+    public boolean moveLeft() {
         if (getX() > 0) {
             if (notCollid((getX() - 1), getY())) {
                 x().set(getX() - 1);
+                return true;
             }
         }
+        return false;
     }
 
-    public void moveRight() {
+    public boolean moveRight() {
         if (getX() < dungeon.getWidth() - 1) {
             if (notCollid((getX() + 1), getY())) {
                 x().set(getX() + 1);
+                return true;
             }
         }
+        return false;
     }
 
     public boolean isDestroyed() {
@@ -71,17 +79,17 @@ public class Enemy extends Entity implements Observer, Subject{
     }
 
     public void move() {
-        if ((getY() > dungeon.getPlayer().getY())) {
-            moveUp();
+        if ((getY() > dungeon.getPlayer().getY()) && moveUp()) {
+            return;
         }
-        else if ((getY() < dungeon.getPlayer().getY())){
-            moveDown();
+        if ((getY() < dungeon.getPlayer().getY()) && moveDown()){
+            return;
         }
-        else if ((getX() > dungeon.getPlayer().getX())) {
-            moveLeft();
+        if ((getX() > dungeon.getPlayer().getX()) && moveLeft()) {
+            return;
         }
-        else if ((getX() < dungeon.getPlayer().getX())) {
-            moveRight();
+        if ((getX() < dungeon.getPlayer().getX()) && moveRight()) {
+            return;
         }
     }
 
