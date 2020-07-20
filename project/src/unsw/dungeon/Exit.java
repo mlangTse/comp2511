@@ -19,16 +19,12 @@ public class Exit extends Entity implements Observer{
 
     @Override
     public boolean Moveable(Subject obj) {
-        if (obj instanceof Boulder || obj instanceof Enemy) {
-            return false;
-        }
-
         setExit(true);
         if (dungeon.check_progress()) {
             return true;
         }
         setExit(false);
-        return true;
+        return false;
     }
 
 }
