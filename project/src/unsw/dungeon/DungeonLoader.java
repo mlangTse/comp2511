@@ -1,6 +1,5 @@
 package unsw.dungeon;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -8,8 +7,6 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
-import javafx.scene.image.Image;
 
 /**
  * Loads a dungeon from a .json file.
