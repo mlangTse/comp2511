@@ -1,11 +1,17 @@
 package unsw.dungeon;
 
 public class ExitGoal implements GoalState{
+    /**
+     * This is the state of the goal
+     */
     private int state;
-    private Exit exit;
+    /**
+     * This is the dungeon
+     */
+    private Dungeon dungeon;
 
-    public void setExit(Exit exit) {
-        this.exit = exit;
+    public ExitGoal(Dungeon dungeon) {
+        this.dungeon = dungeon;
     }
 
     @Override
@@ -24,12 +30,12 @@ public class ExitGoal implements GoalState{
 
     @Override
     public int update() {
-        if (exit.isExited()) {
-            setState(FINISHED_STATE);
-            return 1;
+        for (Entity e:dungeon.getEntities()) {
+            if (e instanceof Exit && ((Exit) e).isExited()) {
+                setState(FINISHED_STATE);
+                return 1;
+            }
         }
-        setState(DOING_STATE);
         return 0;
     }
-
 }

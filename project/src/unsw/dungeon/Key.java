@@ -1,8 +1,16 @@
 package unsw.dungeon;
 
 public class Key extends Entity implements Observer{
+    /**
+     * This is a sign of the key whether it is collected
+     */
     private boolean collected;
 
+    /**
+     * create a key in square (x, y)
+     * @param x
+     * @param y
+     */
     public Key(int x, int y) {
         super(x, y);
         this.collected = false;
@@ -26,6 +34,7 @@ public class Key extends Entity implements Observer{
             return false;
         }
         if (obj instanceof Player) {
+            // if the player is collecting this key
             if (((Player) obj).getKey() == this) {
                 ((Player) obj).detach(this);
                 setCollected(true);

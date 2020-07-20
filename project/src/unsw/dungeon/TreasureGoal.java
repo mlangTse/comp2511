@@ -1,14 +1,15 @@
 package unsw.dungeon;
 
-import java.util.ArrayList;
-
 public class TreasureGoal implements GoalState{
+    /**
+     * This is the state of the goal
+     */
     private int state;
-    private ArrayList<Treasure> treasures = new ArrayList<Treasure>();
+    private Dungeon dungeon;
 
-    public void setTreasures(ArrayList<Treasure> treasures) {
-        this.treasures = treasures;
-    }
+    public TreasureGoal(Dungeon dungeon) {
+        this.dungeon = dungeon;
+	}
 
     @Override
     public void setState(int state) {
@@ -27,8 +28,8 @@ public class TreasureGoal implements GoalState{
     @Override
     public int update() {
         int NotDestory_N = 0;
-        for (Treasure t: treasures) {
-            if (!t.isCollected()) {
+        for (Entity entity: dungeon.getEntities()) {
+            if (entity instanceof Treasure && !((Treasure) entity).isCollected()) {
                 NotDestory_N += 1;
             }
         }

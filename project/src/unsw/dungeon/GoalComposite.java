@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class GoalComposite implements Component {
     private ArrayList<Component> components = new ArrayList<Component>();
+    /**
+     * operator of te goal
+     */
     private String operator;
 
     public void add (Component component) {
@@ -18,6 +21,9 @@ public class GoalComposite implements Component {
         this.operator = operator;
     }
 
+    /**
+     * This function go through 'components' array, and check whether is finish
+     */
     @Override
     public boolean isFinish(String operator) {
         boolean flag = false;
@@ -43,6 +49,9 @@ public class GoalComposite implements Component {
         return flag;
     }
 
+    /**
+     * This function update the goal
+     */
     @Override
     public void update() {
         for (Component component : components) {

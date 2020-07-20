@@ -5,7 +5,13 @@ import java.io.File;
 import javafx.scene.image.Image;
 
 public class Door extends Entity implements Observer {
+    /**
+     * This is the key of the door
+     */
     Key key;
+    /**
+     * This is a sign of the door to show it's opened
+     */
     boolean opened;
 
     public Door(int x, int y) {
@@ -26,6 +32,11 @@ public class Door extends Entity implements Observer {
         return opened;
     }
 
+    /**
+     * set the door be opened
+     *
+     * @param opened open door's sign
+     */
     public void setOpened(boolean opened) {
         if (super.getImage() != null) {
             super.setImage(new Image((new File("images/open_door.png")).toURI().toString()), false);
@@ -42,6 +53,7 @@ public class Door extends Entity implements Observer {
             return false;
         }
         if (obj instanceof Player) {
+            // if the player have the corresponding key for this door
             if (((Player) obj).getKey() == getKey()) {
                 ((Player) obj).setKey(null);
                 this.setOpened(true);

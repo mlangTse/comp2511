@@ -8,9 +8,17 @@ import java.util.TimerTask;
 import java.time.LocalDateTime;
 
 public class Enemy extends Entity implements Observer, Subject{
-
+    /**
+     * This is the dungeon
+     */
     private Dungeon dungeon;
+    /**
+     * This is a sign to show the enemy be destroyed
+     */
     private boolean destroyed;
+    /**
+     * This is a list of observers who watch the enemy
+     */
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     public Enemy(Dungeon dungeon, int x, int y) {
@@ -63,6 +71,11 @@ public class Enemy extends Entity implements Observer, Subject{
         return destroyed;
     }
 
+    /**
+     * The enemy be destroyed
+     *
+     * @param destroyed
+     */
     public void setDestroyed(boolean destroyed) {
         super.destroy();
         this.destroyed = destroyed;
@@ -72,6 +85,12 @@ public class Enemy extends Entity implements Observer, Subject{
         return dungeon;
     }
 
+    /**
+     * the enemy will run away from the player if the player has potion
+     * this function check if the enemy should run away from the player
+     *
+     * @return runaway or not
+     */
     public boolean runAway() {
         if (getDungeon().getPlayer().hasPotion()) {
             LocalDateTime now = LocalDateTime.now();
@@ -85,6 +104,13 @@ public class Enemy extends Entity implements Observer, Subject{
         return false;
     }
 
+    /**
+     * enemy keep moving while the game start
+     * whether move toward the player or
+     * move away from the player
+     *
+     * @param enemy this enemy object
+     */
     public void moving(Enemy enemy) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask(){
@@ -101,6 +127,10 @@ public class Enemy extends Entity implements Observer, Subject{
         }, 0, 500);
     }
 
+    /**
+     * move function call when the player hasn't collect potion
+     * the enemy move toward to the player
+     */
     public void move() {
         if ((getY() > dungeon.getPlayer().getY()) && moveUp()) {
             return;
@@ -116,6 +146,9 @@ public class Enemy extends Entity implements Observer, Subject{
         }
     }
 
+    /**
+     * This function make the enemy run away from the player
+     */
     public void moveBackward() {
         if ((getY() > dungeon.getPlayer().getY()) && moveDown()) {
             return;
@@ -154,6 +187,12 @@ public class Enemy extends Entity implements Observer, Subject{
         this.observers.remove(obs);
     }
 
+    /**
+     * if obj is the player, check whether the enemy destroy the player
+     * or the player be destroy by the enemy
+     *
+     * @param obj a subject be observed
+     */
     @Override
     public boolean Moveable(Subject obj) {
         if (obj instanceof Boulder || obj instanceof Enemy) {
@@ -167,6 +206,7 @@ public class Enemy extends Entity implements Observer, Subject{
                 setDestroyed(true);
                 return true;
             }
+            // check if the player has sword
             if (((Player) obj).getSword() != null) {
                 ((Player) obj).useSword();
                 setDestroyed(true);

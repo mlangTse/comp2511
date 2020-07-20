@@ -1,6 +1,9 @@
 package unsw.dungeon;
 
 public class Floorswitch extends Entity implements Observer{
+    /**
+     * This is a sign to show whether the switch be triggered
+     */
     private boolean trigger;
 
     public Floorswitch(int x, int y) {
@@ -16,6 +19,10 @@ public class Floorswitch extends Entity implements Observer{
         return trigger;
     }
 
+    /**
+     * everything can move through a floorswitch,
+     * execpt the boulder have to make some requirements
+     */
     @Override
     public boolean Moveable(Subject obj) {
         if (obj instanceof Boulder && istrigger()) {

@@ -1,6 +1,9 @@
 package unsw.dungeon;
 
 public class Treasure extends Entity implements Observer{
+    /**
+     * This is a sign of whether the treasure be collected
+     */
     private boolean collected;
 
     public Treasure(int x, int y) {

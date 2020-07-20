@@ -57,39 +57,6 @@ public class DungeonTest {
     }
 
     @Test
-    public void TestDungeonSwitch() {
-        Dungeon dungeon = new Dungeon(2, 2);
-        Floorswitch floorswitch = new Floorswitch(0, 0);
-        ArrayList<Floorswitch> floorswitches = new ArrayList<Floorswitch>();
-        floorswitches.add(floorswitch);
-
-        dungeon.setFloorswitchs(floorswitches);
-        assertEquals(floorswitches, dungeon.getFloorswitchs());
-    }
-
-    @Test
-    public void TestDungeonTreasure() {
-        Dungeon dungeon = new Dungeon(2, 2);
-        Treasure treasure = new Treasure(0, 0);
-        ArrayList<Treasure> treasures = new ArrayList<Treasure>();
-        treasures.add(treasure);
-
-        dungeon.setTreasures(treasures);
-        assertEquals(treasures, dungeon.getTreasures());
-    }
-
-    @Test
-    public void TestDungeonEnemies() {
-        Dungeon dungeon = new Dungeon(2, 2);
-        Enemy enemy = new Enemy(dungeon, 0, 0);
-        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-        enemies.add(enemy);
-
-        dungeon.setEnemies(enemies);
-        assertEquals(enemies, dungeon.getEnemies());
-    }
-
-    @Test
     public void TestDungeonGoal() {
         Dungeon dungeon = new Dungeon(2, 2);
         Exit exit = new Exit(dungeon, 0, 0);

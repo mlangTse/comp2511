@@ -3,9 +3,17 @@ package unsw.dungeon;
 import java.util.ArrayList;
 
 public class Boulder extends Entity implements Observer, Subject {
-
+    /**
+     * This is the dungeon
+     */
     private Dungeon dungeon;
-    private Floorswitch floorswitch;
+    /**
+     * This is the floorswitch that the boulder stand on
+     */
+    private Floorswitch onfloorswitch;
+    /**
+     * This is a list of observers who watch the boulder
+     */
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     /**
@@ -56,13 +64,13 @@ public class Boulder extends Entity implements Observer, Subject {
      * if will be call only the boulder is moved
      *
      * untrigger the floorswitch
-     * if this boulder is move out from a floorswitch
+     * if this boulder is move out from a floorswitch, untrigger the floorswitch
      */
     public void triggeredFloorswitch() {
-        if (floorswitch == null) return;
-        if (floorswitch.getX() != getX() || floorswitch.getY() != getY()) {
-            floorswitch.settrigger(false);
-            floorswitch = null;
+        if (onfloorswitch == null) return;
+        if (onfloorswitch.getX() != getX() || onfloorswitch.getY() != getY()) {
+            onfloorswitch.settrigger(false);
+            onfloorswitch = null;
         }
     }
 
@@ -72,7 +80,7 @@ public class Boulder extends Entity implements Observer, Subject {
      */
     public void setFloorswitch(Floorswitch floorswitch) {
         floorswitch.settrigger(true);
-        this.floorswitch = floorswitch;
+        this.onfloorswitch = floorswitch;
     }
 
     @Override
@@ -106,9 +114,9 @@ public class Boulder extends Entity implements Observer, Subject {
 
     /**
      *
-     * @param obj
-     * @param entity
-     * @return
+     *
+     * @param obj a subject be observed
+     * @return moveable or not
      */
     @Override
     public boolean Moveable(Subject obj) {

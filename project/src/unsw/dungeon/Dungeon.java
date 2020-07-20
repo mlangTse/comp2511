@@ -17,21 +17,27 @@ import java.util.List;
  */
 public class Dungeon {
 
+    /**
+     * This is the width, height of the dungeon
+     */
     private int width, height;
+    /**
+     * This is a list of entities in the dungeon
+     */
     private List<Entity> entities;
+    /**
+     * This is the player in the dungeon
+     */
     private Player player;
+    /**
+     * This is the goal to finish the dungeon
+     */
     private Goal goal;
-    private ArrayList<Floorswitch> floorswitchs;
-    private ArrayList<Treasure> treasures;
-    private ArrayList<Enemy> enemies;
 
     public Dungeon(int width, int height) {
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<Entity>();
-        this.floorswitchs = new ArrayList<Floorswitch>();
-        this.treasures = new ArrayList<Treasure>();
-        this.enemies = new ArrayList<Enemy>();
         this.player = null;
         this.goal = null;
     }
@@ -60,6 +66,11 @@ public class Dungeon {
 		return entities;
 	}
 
+    /**
+     * update the game state and check whether the goal is finished
+     *
+     * @return goal finish or not
+     */
     public boolean check_progress() {
         goal.update();
         return goal.isFinish();
@@ -67,29 +78,5 @@ public class Dungeon {
 
     public void setGoal(Goal goal) {
         this.goal = goal;
-    }
-
-    public ArrayList<Floorswitch> getFloorswitchs() {
-        return floorswitchs;
-    }
-
-    public void setFloorswitchs(ArrayList<Floorswitch> floorswitchs) {
-        this.floorswitchs = floorswitchs;
-    }
-
-    public ArrayList<Treasure> getTreasures() {
-        return treasures;
-    }
-
-    public void setTreasures(ArrayList<Treasure> treasures) {
-        this.treasures = treasures;
-    }
-
-    public ArrayList<Enemy> getEnemies() {
-        return enemies;
-    }
-
-    public void setEnemies(ArrayList<Enemy> enemies) {
-        this.enemies = enemies;
     }
 }

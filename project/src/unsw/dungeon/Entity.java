@@ -51,6 +51,12 @@ public class Entity {
         return imageView;
     }
 
+    /**
+     * this function set a image for the entity
+     *
+     * @param image image need to set to a entity
+     * @param toBack a sign to know set the image to back or not
+     */
     public void setImage(Image image, Boolean toBack) {
         if (imageView == null) {
             imageView = new ImageView(image);
@@ -61,6 +67,9 @@ public class Entity {
         }
     }
 
+    /**
+     * change the image to groud, so that the entity show as destroyed
+     */
     public void destroy() {
         if (imageView == null) return;
         setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()), true);

@@ -10,13 +10,33 @@ import java.util.ArrayList;
  *
  */
 public class Player extends Entity implements Observer, Subject{
-
+    /**
+     * This is the dungeon
+     */
     private Dungeon dungeon;
+    /**
+     * This is the sword that player is wearing
+     */
     private Sword sword;
+    /**
+     * This is sign of whether the player collected a potion
+     */
     private boolean potion;
+    /**
+     * This is the end time of the potion
+     */
     private LocalDateTime end;
+    /**
+     * This is the key that player is wearing
+     */
     private Key key;
+    /**
+     * This is a list of treasure collected by the player
+     */
     private ArrayList<Treasure> treasures = new ArrayList<Treasure>();
+    /**
+     * This is a list of observers who watch the player
+     */
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     /**

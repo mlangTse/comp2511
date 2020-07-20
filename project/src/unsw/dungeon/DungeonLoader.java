@@ -24,9 +24,6 @@ public abstract class DungeonLoader {
     private Goal gameGoal;
     private ArrayList<Door> doors = new ArrayList<Door>();
     private ArrayList<Key> keys = new ArrayList<Key>();
-    private ArrayList<Floorswitch> floorswitches = new ArrayList<Floorswitch>();
-    private ArrayList<Treasure> treasures = new ArrayList<Treasure>();
-    private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
     public DungeonLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
@@ -63,9 +60,6 @@ public abstract class DungeonLoader {
             }
         }
 
-        dungeon.setFloorswitchs(floorswitches);
-        dungeon.setTreasures(treasures);
-        dungeon.setEnemies(enemies);
         gameGoal = new Goal(dungeon, goal);
         dungeon.setGoal(gameGoal);
         return dungeon;
@@ -96,7 +90,6 @@ public abstract class DungeonLoader {
                 break;
             case "treasure":
                 Treasure treasure = new Treasure(x, y);
-                treasures.add(treasure);
                 onLoad(treasure);
                 entity = treasure;
                 break;
@@ -130,7 +123,6 @@ public abstract class DungeonLoader {
                 break;
             case "switch":
                 Floorswitch floorswitch = new Floorswitch(x, y);
-                floorswitches.add(floorswitch);
                 onLoad(floorswitch);
                 entity = floorswitch;
                 break;
@@ -148,7 +140,6 @@ public abstract class DungeonLoader {
                 break;
             case "enemy":
                 Enemy enemy = new Enemy(dungeon, x, y);
-                enemies.add(enemy);
                 onLoad(enemy);
                 entity = enemy;
                 enemy.moving(enemy);

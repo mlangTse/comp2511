@@ -3,10 +3,19 @@ package unsw.dungeon;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Goal{
+public class Goal {
+    /**
+     * This is the dungeon
+     */
     private Dungeon dungeon;
     private Component composite = new GoalComposite();
 
+    /**
+     * Create a goal, and convert the json
+     *
+     * @param dungeon the dungeon
+     * @param goal a json object
+     */
     public Goal(Dungeon dungeon, JSONObject goal) {
         this.dungeon = dungeon;
         composite = setGoal(goal);
@@ -16,6 +25,12 @@ public class Goal{
         }
     }
 
+    /**
+     * read the JSONObject, convert the goal
+     *
+     * @param goal a JSONObject of the goal
+     * @return a Component object
+     */
     public Component setGoal(JSONObject goal) {
         try {
             JSONArray subgoals = goal.getJSONArray("subgoals");
@@ -43,31 +58,28 @@ public class Goal{
 
     }
 
+    /**
+     * This function choose a GoalState object acorrding to the given string
+     *
+     * @param goal a string of goal
+     * @return a GoalState
+     */
     public GoalState createState(String goal) {
         switch (goal) {
             case "exit":
-                ExitGoal exitGoal = new ExitGoal();
-                for (Entity e:dungeon.getEntities()) {
-                    if (e instanceof Exit) {
-                        exitGoal.setExit((Exit) e);
-                        break;
-                    }
-                }
+                ExitGoal exitGoal = new ExitGoal(dungeon);
                 exitGoal.setState(GoalState.DOING_STATE);
                 return exitGoal;
             case "enemies":
-                EnemiesGoal enemiesGoal = new EnemiesGoal();
-                enemiesGoal.setEnemies(dungeon.getEnemies());
+                EnemiesGoal enemiesGoal = new EnemiesGoal(dungeon);
                 enemiesGoal.setState(GoalState.DOING_STATE);
                 return enemiesGoal;
             case "boulders":
-                BouldersGoal bouldersGoal = new BouldersGoal();
-                bouldersGoal.setFloorswitches(dungeon.getFloorswitchs());
+                BouldersGoal bouldersGoal = new BouldersGoal(dungeon);
                 bouldersGoal.setState(GoalState.DOING_STATE);
                 return bouldersGoal;
             case "treasure":
-                TreasureGoal treasureGoal = new TreasureGoal();
-                treasureGoal.setTreasures(dungeon.getTreasures());
+                TreasureGoal treasureGoal = new TreasureGoal(dungeon);
                 treasureGoal.setState(GoalState.DOING_STATE);
                 return treasureGoal;
             default:
@@ -75,6 +87,11 @@ public class Goal{
         }
     }
 
+    /**
+     * This function check is all goal are finished
+     *
+     * @return finished or not
+     */
     public boolean isFinish() {
         if (composite instanceof GoalComposite) {
             return composite.isFinish(((GoalComposite) composite).getOperator());
@@ -82,6 +99,9 @@ public class Goal{
         return composite.isFinish(" ");
     }
 
+    /**
+     * This function update the goal state
+     */
     public void update() {
         composite.update();
     }

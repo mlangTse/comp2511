@@ -1,6 +1,9 @@
 package unsw.dungeon;
 
 public class Potion extends Entity implements Observer{
+    /**
+     * This is a sign of whether the potion be collected
+     */
     private boolean collected;
 
     public Potion(int x, int y) {

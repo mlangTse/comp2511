@@ -1,7 +1,13 @@
 package unsw.dungeon;
 
 public class Sword extends Entity implements Observer{
+    /**
+     * This is a sign of whether the sword be collected
+     */
     private boolean collected;
+    /**
+     * This is the number of time a sword can be used
+     */
     private int time;
 
     public Sword(int x, int y) {
@@ -35,6 +41,7 @@ public class Sword extends Entity implements Observer{
             return false;
         }
         if (obj instanceof Player) {
+            // if the player is getting this sword
             if (((Player) obj).getSword() == this) {
                 ((Player) obj).detach(this);
                 setCollected(true);

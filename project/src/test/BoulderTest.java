@@ -29,6 +29,35 @@ public class BoulderTest {
     }
 
     @Test
+    public void testBoulderMovement() {
+        Dungeon dungeon = new Dungeon(3, 3);
+        Wall wall = new Wall(1, 0);
+        Boulder boulder = new Boulder(dungeon, 1, 1);
+        Floorswitch floorswitch = new Floorswitch(0, 2);
+        dungeon.addEntity(wall);
+        dungeon.addEntity(boulder);
+        dungeon.addEntity(floorswitch);
+        boulder.attach(wall);
+        boulder.attach(floorswitch);
+
+        boulder.moveUp();
+        assertEquals(boulder.getX(), 1);
+        assertEquals(boulder.getY(), 1);
+
+        boulder.moveLeft();
+        assertEquals(boulder.getX(), 0);
+        assertEquals(boulder.getY(), 1);
+
+        boulder.moveDown();
+        assertEquals(boulder.getX(), 0);
+        assertEquals(boulder.getY(), 2);
+
+        boulder.moveRight();
+        assertEquals(boulder.getX(), 1);
+        assertEquals(boulder.getY(), 2);
+    }
+
+    @Test
     public void testBoulderOnSwitch() {
         Dungeon dungeon = new Dungeon(3, 3);
         Boulder boulder = new Boulder(dungeon, 0, 1);

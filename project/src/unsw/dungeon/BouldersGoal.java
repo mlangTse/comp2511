@@ -1,14 +1,15 @@
 package unsw.dungeon;
 
-import java.util.ArrayList;
-
 public class BouldersGoal implements GoalState{
+    /**
+     * This is the state of the goal
+     */
     private int state;
-    private ArrayList<Floorswitch> floorswitches = new ArrayList<Floorswitch>();
+    private Dungeon dungeon;
 
-    public void setFloorswitches(ArrayList<Floorswitch> floorswitches) {
-        this.floorswitches = floorswitches;
-    }
+    public BouldersGoal(Dungeon dungeon) {
+        this.dungeon = dungeon;
+	}
 
     @Override
     public void setState(int state) {
@@ -27,8 +28,8 @@ public class BouldersGoal implements GoalState{
     @Override
     public int update() {
         int NotDestory_N = 0;
-        for (Floorswitch f: floorswitches) {
-            if (!f.istrigger()) {
+        for (Entity entity:dungeon.getEntities()) {
+            if (entity instanceof Floorswitch && !((Floorswitch) entity).istrigger()) {
                 NotDestory_N += 1;
             }
         }

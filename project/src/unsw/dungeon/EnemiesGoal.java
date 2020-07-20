@@ -1,14 +1,18 @@
 package unsw.dungeon;
 
-import java.util.ArrayList;
-
 public class EnemiesGoal implements GoalState {
+    /**
+     * This is the state of the goal
+     */
     private int state;
-    private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-
-    public void setEnemies(ArrayList<Enemy> enemies) {
-        this.enemies = enemies;
-    }
+    /**
+     * This is the dungeon
+     */
+    private Dungeon dungeon;
+    
+    public EnemiesGoal(Dungeon dungeon) {
+        this.dungeon = dungeon;
+	}
 
     @Override
     public void setState(int state) {
@@ -27,8 +31,8 @@ public class EnemiesGoal implements GoalState {
     @Override
     public int update() {
         int NotDestory_N = 0;
-        for (Enemy e: enemies) {
-            if (!e.isDestroyed()) {
+        for (Entity entity : dungeon.getEntities()) {
+            if (entity instanceof Enemy && !((Enemy) entity).isDestroyed()) {
                 NotDestory_N += 1;
             }
         }
