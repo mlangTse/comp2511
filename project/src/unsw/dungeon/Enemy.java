@@ -1,6 +1,8 @@
 package unsw.dungeon;
 
 import javafx.application.Platform;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.time.LocalDateTime;
@@ -9,6 +11,7 @@ public class Enemy extends Entity implements Observer, Subject{
 
     private Dungeon dungeon;
     private boolean destroyed;
+    private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     public Enemy(Dungeon dungeon, int x, int y) {
         super(x, y);
@@ -17,23 +20,35 @@ public class Enemy extends Entity implements Observer, Subject{
     }
 
     public void moveUp() {
-        if (getY() > 0)
-            y().set(getY() - 1);
+        if (getY() > 0){
+            if (notCollid(getX(), (getY() - 1))) {
+                y().set(getY() - 1);
+            }
+        }
     }
 
     public void moveDown() {
-        if (getY() < dungeon.getHeight() - 1)
-            y().set(getY() + 1);
+        if (getY() < dungeon.getHeight() - 1) {
+            if (notCollid(getX(), (getY() + 1))) {
+                y().set(getY() + 1);
+            }
+        }
     }
 
     public void moveLeft() {
-        if (getX() > 0)
-            x().set(getX() - 1);
+        if (getX() > 0) {
+            if (notCollid((getX() - 1), getY())) {
+                x().set(getX() - 1);
+            }
+        }
     }
 
     public void moveRight() {
-        if (getX() < dungeon.getWidth() - 1)
-            x().set(getX() + 1);
+        if (getX() < dungeon.getWidth() - 1) {
+            if (notCollid((getX() + 1), getY())) {
+                x().set(getX() + 1);
+            }
+        }
     }
 
     public boolean isDestroyed() {
@@ -41,7 +56,7 @@ public class Enemy extends Entity implements Observer, Subject{
     }
 
     public void setDestroyed(boolean destroyed) {
-        super.destory();
+        super.destroy();
         this.destroyed = destroyed;
     }
 
@@ -56,36 +71,41 @@ public class Enemy extends Entity implements Observer, Subject{
     }
 
     public void move() {
-        if (!isDestroyed()) {
-            if ((getY() > dungeon.getPlayer().getY()) && notCollid(getX(), getY() - 1)) {
-                moveUp();
-            }
-            else if ((getY() < dungeon.getPlayer().getY()) && notCollid(getX(), getY() + 1)){
-                moveDown();
-            }
-            else if ((getX() > dungeon.getPlayer().getX()) && notCollid(getX() - 1, getY())) {
-                moveLeft();
-            }
-            else if ((getX() < dungeon.getPlayer().getX()) && notCollid(getX() + 1, getY())) {
-                moveRight();
-            }
+        if ((getY() > dungeon.getPlayer().getY())) {
+            moveUp();
         }
-    }
-
-    @Override
-    public boolean notifyObserver(Observer observer) {
-        return observer.Moveable(this);
+        else if ((getY() < dungeon.getPlayer().getY())){
+            moveDown();
+        }
+        else if ((getX() > dungeon.getPlayer().getX())) {
+            moveLeft();
+        }
+        else if ((getX() < dungeon.getPlayer().getX())) {
+            moveRight();
+        }
     }
 
     @Override
     public boolean notCollid(int x, int y) {
-        for (Entity entity : dungeon.getEntities()) {
-            Observer obs = (Observer) entity;
+        for (Observer obs : observers) {
             if (((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
-                return notifyObserver(obs);
+                return obs.Moveable(this);
             }
         }
         return true;
+    }
+
+    @Override
+    public void attach(Observer obs) {
+        if (obs instanceof Floorswitch) {
+            return;
+        }
+        this.observers.add(obs);
+    }
+
+    @Override
+    public void detach(Observer obs) {
+        this.observers.remove(obs);
     }
 
     @Override
@@ -97,7 +117,7 @@ public class Enemy extends Entity implements Observer, Subject{
             return true;
         }
         if (obj instanceof Player) {
-            if (((Player) obj).getPotion()) {
+            if (((Player) obj).hasPotion()) {
                 LocalDateTime now = LocalDateTime.now();
                 if (((Player) obj).getEnd().isAfter(now)) {
                     setDestroyed(true);
@@ -113,7 +133,7 @@ public class Enemy extends Entity implements Observer, Subject{
                 return true;
             } else {
                 // the game end
-                ((Player) obj).destory();
+                ((Player) obj).destroy();
                 System.exit(0);
             }
         }

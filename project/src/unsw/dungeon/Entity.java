@@ -61,7 +61,7 @@ public class Entity {
         }
     }
 
-    public void destory() {
+    public void destroy() {
         if (imageView == null) return;
         setImage(new Image((new File("images/dirt_0_new.png")).toURI().toString()), true);
     }

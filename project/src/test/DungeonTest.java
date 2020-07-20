@@ -22,7 +22,7 @@ public class DungeonTest {
     @ParameterizedTest
     @ValueSource(ints = { 1, 2, 3, 4, 100, 544 })
     public void testWidth(int input) {
-        Dungeon dungeon = new Dungeon(1, 2);
+        Dungeon dungeon = new Dungeon(input, 2);
         int width = dungeon.getWidth();
         assertEquals(width, dungeon.getWidth());
     }
@@ -30,7 +30,7 @@ public class DungeonTest {
     @ParameterizedTest
     @ValueSource(ints = { 1, 2, 3, 4, 100, 544 })
     public void testHeight(int input) {
-        Dungeon dungeon = new Dungeon(1, 2);
+        Dungeon dungeon = new Dungeon(1, input);
         int width = dungeon.getHeight();
         assertEquals(width, dungeon.getHeight());
     }

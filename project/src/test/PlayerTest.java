@@ -59,8 +59,9 @@ public class PlayerTest {
         dungeon.setPlayer(player);
         dungeon.addEntity(sword);
 
-        if (player.notCollid(0, 1))
-            player.moveDown();
+        player.attach(sword);
+
+        player.moveDown();
 
         assertEquals(player.getY(), 1);
         assertEquals(player.getSword(), sword);
@@ -73,20 +74,21 @@ public class PlayerTest {
     }
 
     @Test
-    public void testPlayerGetPotion() {
+    public void testPlayerhasPostion() {
         Dungeon dungeon = new Dungeon(2, 2);
         Player player = new Player(dungeon, 0, 0);
         Potion potion = new Potion(0, 1);
         dungeon.setPlayer(player);
         dungeon.addEntity(potion);
 
-        if (player.notCollid(0, 1))
-            player.moveDown();
+        player.attach(potion);
+
+        player.moveDown();
 
         assertEquals(player.getY(), 1);
-        assertEquals(player.getPotion(), potion);
+        assertEquals(player.hasPotion(), true);
         player.setPotion(null);
-        assertEquals(player.getPotion(), null);
+        assertEquals(player.hasPotion(), false);
     }
 
     @Test
@@ -97,8 +99,9 @@ public class PlayerTest {
         dungeon.setPlayer(player);
         dungeon.addEntity(key);
 
-        if (player.notCollid(0, 1))
-            player.moveDown();
+        player.attach(key);
+
+        player.moveDown();
 
         assertEquals(player.getY(), 1);
         assertEquals(player.getKey(), key);

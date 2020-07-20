@@ -1,6 +1,7 @@
 package unsw.dungeon;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * The player entity
@@ -15,6 +16,7 @@ public class Player extends Entity implements Observer, Subject{
     private boolean potion;
     private LocalDateTime end;
     private Key key;
+    private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     /**
      * Create a player positioned in square (x,y)
@@ -28,29 +30,41 @@ public class Player extends Entity implements Observer, Subject{
     }
 
     public void moveUp() {
-        if (getY() > 0)
-            y().set(getY() - 1);
+        if (getY() > 0){
+            if (notCollid(getX(), (getY() - 1))) {
+                y().set(getY() - 1);
+            }
+        }
     }
 
     public void moveDown() {
-        if (getY() < dungeon.getHeight() - 1)
-            y().set(getY() + 1);
+        if (getY() < dungeon.getHeight() - 1) {
+            if (notCollid(getX(), (getY() + 1))) {
+                y().set(getY() + 1);
+            }
+        }
     }
 
     public void moveLeft() {
-        if (getX() > 0)
-            x().set(getX() - 1);
+        if (getX() > 0) {
+            if (notCollid((getX() - 1), getY())) {
+                x().set(getX() - 1);
+            }
+        }
     }
 
     public void moveRight() {
-        if (getX() < dungeon.getWidth() - 1)
-            x().set(getX() + 1);
+        if (getX() < dungeon.getWidth() - 1) {
+            if (notCollid((getX() + 1), getY())) {
+                x().set(getX() + 1);
+            }
+        }
     }
 
     public void setPosition(int x, int y) {
-        if (x < dungeon.getWidth() - 1)
+        if (x < dungeon.getWidth())
             x().set(x);
-        if (y < dungeon.getWidth() - 1)
+        if (y < dungeon.getHeight())
             y().set(y);
     }
 
@@ -78,7 +92,7 @@ public class Player extends Entity implements Observer, Subject{
         }
     }
 
-    public boolean getPotion() {
+    public boolean hasPotion() {
         return potion;
     }
 
@@ -106,33 +120,39 @@ public class Player extends Entity implements Observer, Subject{
 
     @Override
     public boolean notCollid(int x, int y) {
-        for (Entity entity : dungeon.getEntities()) {
-            Observer obs = (Observer) entity;
-            if (!(obs instanceof Floorswitch) && ((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
+        for (Observer obs : observers) {
+            if (((Entity) obs).getX() == x && ((Entity) obs).getY() == y) {
                 setSword(obs);
                 setKey(obs);
                 setPotion(obs);
-                return notifyObserver(obs);
+                return obs.Moveable(this);
             }
         }
         return true;
     }
 
     @Override
-    public boolean notifyObserver(Observer observer) {
-        return observer.Moveable(this);
+    public void attach(Observer obs) {
+        if (obs instanceof Floorswitch) {
+            return;
+        }
+        this.observers.add(obs);
+    }
+
+    @Override
+    public void detach(Observer obs) {
+        this.observers.remove(obs);
     }
 
     @Override
     public boolean Moveable(Subject obj) {
         if (obj instanceof Enemy) {
             LocalDateTime now = LocalDateTime.now();
-            if (getPotion() && end.isAfter(now)) {
+            if (hasPotion() && end.isAfter(now)) {
                 return false;
             }
             return ((Observer) obj).Moveable(this);
         }
         return false;
     }
-
 }

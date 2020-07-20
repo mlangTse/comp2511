@@ -35,11 +35,10 @@ public class Sword extends Entity implements Observer{
         }
         if (obj instanceof Player) {
             if (((Player) obj).getSword() == this) {
-                super.destory();
+                super.destroy();
                 setCollected(true);
             }
         }
         return true;
     }
-
 }

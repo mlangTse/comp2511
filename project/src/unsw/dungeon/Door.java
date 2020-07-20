@@ -18,7 +18,8 @@ public class Door extends Entity implements Observer {
     }
 
     public void setKey(Key key) {
-        this.key = key;
+        if (getKey() == null)
+            this.key = key;
     }
 
     public boolean isOpened() {
@@ -26,6 +27,9 @@ public class Door extends Entity implements Observer {
     }
 
     public void setOpened(boolean opened) {
+        if (super.getImage() != null) {
+            super.setImage(new Image((new File("images/open_door.png")).toURI().toString()), false);
+        }
         this.opened = opened;
     }
 
@@ -40,9 +44,6 @@ public class Door extends Entity implements Observer {
         if (obj instanceof Player) {
             if (((Player) obj).getKey() == getKey()) {
                 ((Player) obj).setKey(null);
-                if (super.getImage() != null) {
-                    super.setImage(new Image((new File("images/open_door.png")).toURI().toString()), false);
-                }
                 this.setOpened(true);
                 return true;
             }

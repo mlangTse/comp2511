@@ -22,8 +22,8 @@ public class Portal extends Entity implements Observer{
             return false;
         }
         if (obj instanceof Player) {
-            ((Player) obj).setPosition(portal.getX(), portal.getY());
-            return false;
+                ((Player) obj).setPosition(portal.getX(), portal.getY());
+                return false;
         }
         return true;
     }

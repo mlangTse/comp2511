@@ -12,6 +12,7 @@ public class Treasure extends Entity implements Observer{
     }
 
     public void setCollected(boolean collected) {
+        super.destroy();
         this.collected = collected;
     }
 
@@ -23,7 +24,6 @@ public class Treasure extends Entity implements Observer{
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }
-        super.destory();
         setCollected(true);
         return true;
     }

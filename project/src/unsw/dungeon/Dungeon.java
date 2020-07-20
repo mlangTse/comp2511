@@ -28,7 +28,7 @@ public class Dungeon {
     public Dungeon(int width, int height) {
         this.width = width;
         this.height = height;
-        this.entities = new ArrayList<>();
+        this.entities = new ArrayList<Entity>();
         this.floorswitchs = new ArrayList<Floorswitch>();
         this.treasures = new ArrayList<Treasure>();
         this.enemies = new ArrayList<Enemy>();

@@ -59,12 +59,9 @@ public abstract class DungeonLoader {
 
         // A boulder initial position is the same as one of the floorswitch
         for (Entity entity: dungeon.getEntities()) {
-            if (entity instanceof Boulder) {
-                for (Floorswitch floorswitch : floorswitches) {
-                    if (entity.getX() == floorswitch.getX() && entity.getY() == floorswitch.getY()) {
-                        ((Boulder) entity).setFloorswitch(floorswitch);
-                        ((Boulder) entity).triggeredFloorswitch();
-                    }
+            if (entity instanceof Subject) {
+                for (Entity entity2: dungeon.getEntities()) {
+                    ((Subject) entity).attach(((Observer) entity2));
                 }
             }
         }
@@ -143,7 +140,7 @@ public abstract class DungeonLoader {
                 break;
             case "switch":
                 Floorswitch floorswitch = new Floorswitch(x, y);
-                floorswitch.setImage(new Image((new File("images/pressure_plate.png")).toURI().toString()), false);
+                floorswitch.setImage(new Image((new File("images/pressure_plate.png")).toURI().toString()), true);
                 floorswitches.add(floorswitch);
                 onLoad(floorswitch);
                 entity = floorswitch;
