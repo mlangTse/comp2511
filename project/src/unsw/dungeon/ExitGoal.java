@@ -36,6 +36,7 @@ public class ExitGoal implements GoalState{
                 return 1;
             }
         }
+        setState(DOING_STATE);
         return 0;
     }
 }

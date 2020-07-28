@@ -10,6 +10,8 @@ public class Enrolment implements Subject{
     private Student student;
     private List<Session> sessions;
     private List<Observer> listObervers = new ArrayList<Observer>();
+    private List<Mark> marks = new ArrayList<Mark>();
+    private int new_mark;
 
     public Enrolment(CourseOffering offering, Student student, Session... sessions) {
         this.offering = offering;
@@ -35,39 +37,52 @@ public class Enrolment implements Subject{
         return grade != null && grade.isPassing();
     }
 
-   // Whole course marks can no longer be assigned this way.
-   public void assignMark(markComposite m) {
-       this.grade = new Grade(m.getMark());
-       String assessment = m.toString();
-       notifyObserver(assessment);
-   }
+    public void remove_mark(Mark mark) {
+        this.marks.remove(mark);
+    }
 
-   @Override
-   public void attach(Observer o) {
-       listObervers.add(o);
+    public void assignMark(Mark mark) {
+        this.marks.add(mark);
+        int total = 0;
+        for (Mark m : marks) {
+            total += m.getMark();
+        }
+        this.grade = new Grade(total);
+        setNew_mark(mark.getMark());
+        String assessment = mark.toString();
+        notifyObserver(assessment);
+    }
 
-   }
+    @Override
+    public void attach(Observer o) {
+        listObervers.add(o);
+    }
 
-   @Override
-   public void detach(Observer o) {
+    @Override
+    public void detach(Observer o) {
         listObervers.remove(o);
+    }
 
-   }
-
-   @Override
-   public void notifyObserver(String assessment) {
+    @Override
+    public void notifyObserver(String assessment) {
         for (Observer obs: listObervers) {
             obs.update(this, assessment);
         }
+    }
 
-   }
+    public String getStudent() {
+        return student.getZID();
+    }
 
-   public String getStudent() {
-       return student.getZID();
-   }
+    public int getMark() {
+        return grade.getMark();
+    }
 
-   public int getMark() {
-    return grade.getMark();
-}
+    public int getNew_mark() {
+        return new_mark;
+    }
 
+    public void setNew_mark(int new_mark) {
+        this.new_mark = new_mark;
+    }
 }

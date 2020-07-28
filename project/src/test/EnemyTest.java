@@ -10,17 +10,35 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class EnemyTest {
     @Test
     public void testEnemyMove() {
-        Dungeon dungeon = new Dungeon(2, 2);
-        Enemy enemy = new Enemy(dungeon, 0, 0);
+        Dungeon dungeon = new Dungeon(4, 4);
+        Enemy enemy = new Enemy(dungeon, 1, 1);
+        Boulder b1 = new Boulder(dungeon, 1, 0);
+        Boulder b2 = new Boulder(dungeon, 3, 1);
+        Boulder b3 = new Boulder(dungeon, 2, 3);
+        Boulder b4 = new Boulder(dungeon, 0, 2);
         dungeon.addEntity(enemy);
+        dungeon.addEntity(b1);
+        dungeon.addEntity(b2);
+        dungeon.addEntity(b3);
+        dungeon.addEntity(b4);
+
+        enemy.attach(b1);
+        enemy.attach(b2);
+        enemy.attach(b3);
+        enemy.attach(b4);
+
         enemy.moveRight();
-        assertEquals(enemy.getX(), 1);
+        assertEquals(enemy.getX(), 2);
+        assertEquals(enemy.moveRight(), false);
         enemy.moveDown();
-        assertEquals(enemy.getY(), 1);
+        assertEquals(enemy.getY(), 2);
+        assertEquals(enemy.moveDown(), false);
         enemy.moveLeft();
-        assertEquals(enemy.getX(), 0);
+        assertEquals(enemy.getX(), 1);
+        assertEquals(enemy.moveLeft(), false);
         enemy.moveUp();
-        assertEquals(enemy.getY(), 0);
+        assertEquals(enemy.getY(), 1);
+        assertEquals(enemy.moveUp(), false);
     }
 
 
@@ -38,14 +56,47 @@ public class EnemyTest {
 
     @Test
     public void testEnemyMoveToPlayer() {
-        Dungeon dungeon = new Dungeon(4, 4);
-        Player player = new Player(dungeon, 0, 0);
-        Enemy enemy = new Enemy(dungeon, 3,3);
+        Dungeon dungeon = new Dungeon(5, 5);
+        Player player = new Player(dungeon, 2, 2);
+        Enemy enemy1 = new Enemy(dungeon, 2,0);
+        Enemy enemy2 = new Enemy(dungeon, 2,4);
+        Enemy enemy3 = new Enemy(dungeon, 0,2);
+        Enemy enemy4 = new Enemy(dungeon, 4,2);
+        Potion potion = new Potion(0, 0);
         dungeon.setPlayer(player);
-        enemy.attach(player);
-        enemy.move();
-        enemy.move();
-        assertEquals(enemy.getX(), 3);
-        assertEquals(enemy.getY(), 1);
+        dungeon.addEntity(enemy1);
+        dungeon.addEntity(enemy2);
+        dungeon.addEntity(enemy3);
+        dungeon.addEntity(enemy4);
+
+        player.attach(enemy1);
+        player.attach(enemy2);
+        player.attach(enemy3);
+        player.attach(enemy4);
+
+        enemy1.attach(player);
+        enemy2.attach(player);
+        enemy3.attach(player);
+        enemy4.attach(player);
+
+        enemy1.move();
+        enemy2.move();
+        enemy3.move();
+        enemy4.move();
+
+        assertEquals(enemy1.getY(), 1);
+        assertEquals(enemy2.getY(), 3);
+        assertEquals(enemy3.getX(), 1);
+        assertEquals(enemy4.getX(), 3);
+        player.setPotion(potion);
+        assertEquals(enemy1.runAway(), true);
+        enemy1.moveBackward();
+        enemy2.moveBackward();
+        enemy3.moveBackward();
+        enemy4.moveBackward();
+        assertEquals(enemy1.getY(), 0);
+        assertEquals(enemy2.getY(), 4);
+        assertEquals(enemy3.getX(), 0);
+        assertEquals(enemy4.getX(), 4);
     }
 }

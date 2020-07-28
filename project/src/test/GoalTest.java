@@ -8,12 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import javafx.embed.swing.JFXPanel;
 
 public class GoalTest {
     @Test
     public void testExitGoal() {
-        new JFXPanel();
         JSONArray entities = new JSONArray();
         JSONObject pEntity = new JSONObject();
         JSONObject eEntity = new JSONObject();
@@ -51,30 +49,18 @@ public class GoalTest {
 
     @Test
     public void testTreasureGoal() {
-        new JFXPanel();
-        JSONArray entities = new JSONArray();
-        JSONObject pEntity = new JSONObject();
-        JSONObject tEntity = new JSONObject();
-        pEntity.put("x", 0);
-        pEntity.put("y", 0);
-        pEntity.put("type", "player");
-        entities.put(pEntity);
-        tEntity.put("x", 1);
-        tEntity.put("y", 1);
-        tEntity.put("type", "treasure");
-        entities.put(tEntity);
+        Dungeon dungeon = new Dungeon(3, 3);
+        Player player = new Player(dungeon, 0, 0);
+        Treasure treasure = new Treasure(1, 1);
 
         JSONObject goal_condition = new JSONObject();
         goal_condition.put("goal", "treasure");
-        JSONObject json = new JSONObject();
-        json.put("width", 3);
-        json.put("height", 3);
-        json.put("entities", entities);
-        json.put("goal-condition", goal_condition);
+        Goal goal = new Goal(dungeon, goal_condition);
 
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(json);
-        Dungeon dungeon = dungeonLoader.load();
-        Player player = dungeon.getPlayer();
+        dungeon.setGoal(goal);
+        dungeon.setPlayer(player);
+
+        player.attach(treasure);
 
         player.moveDown();
         player.moveRight();
@@ -84,7 +70,6 @@ public class GoalTest {
 
     @Test
     public void testBoulderGoal() {
-        new JFXPanel();
         JSONArray entities = new JSONArray();
         JSONObject pEntity = new JSONObject();
         JSONObject bEntity = new JSONObject();
@@ -121,35 +106,23 @@ public class GoalTest {
 
     @Test
     public void testEnemyGoal() {
-        new JFXPanel();
-        JSONArray entities = new JSONArray();
-        JSONObject pEntity = new JSONObject();
-        JSONObject sEntity = new JSONObject();
-        JSONObject eEntity = new JSONObject();
-        pEntity.put("x", 0);
-        pEntity.put("y", 0);
-        pEntity.put("type", "player");
-        entities.put(pEntity);
-        sEntity.put("x", 0);
-        sEntity.put("y", 1);
-        sEntity.put("type", "sword");
-        entities.put(sEntity);
-        eEntity.put("x", 0);
-        eEntity.put("y", 2);
-        eEntity.put("type", "enemy");
-        entities.put(eEntity);
+        Dungeon dungeon = new Dungeon(3, 3);
+        Player player = new Player(dungeon, 0, 0);
+        Sword sword = new Sword(0, 1);
+        Enemy enemy = new Enemy(dungeon, 0, 2);
 
         JSONObject goal_condition = new JSONObject();
         goal_condition.put("goal", "enemies");
-        JSONObject json = new JSONObject();
-        json.put("width", 3);
-        json.put("height", 3);
-        json.put("entities", entities);
-        json.put("goal-condition", goal_condition);
+        Goal goal = new Goal(dungeon, goal_condition);
 
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(json);
-        Dungeon dungeon = dungeonLoader.load();
-        Player player = dungeon.getPlayer();
+        dungeon.setGoal(goal);
+        dungeon.setPlayer(player);
+
+        player.attach(sword);
+        player.attach(enemy);
+
+        enemy.attach(sword);
+        enemy.attach(player);
 
         player.moveDown();
         player.moveDown();
@@ -159,23 +132,10 @@ public class GoalTest {
 
     @Test
     public void testAndGoal() {
-        new JFXPanel();
-        JSONArray entities = new JSONArray();
-        JSONObject pEntity = new JSONObject();
-        JSONObject tEntity = new JSONObject();
-        JSONObject exEntity = new JSONObject();
-        pEntity.put("x", 0);
-        pEntity.put("y", 0);
-        pEntity.put("type", "player");
-        entities.put(pEntity);
-        tEntity.put("x", 0);
-        tEntity.put("y", 1);
-        tEntity.put("type", "treasure");
-        entities.put(tEntity);
-        exEntity.put("x", 0);
-        exEntity.put("y", 2);
-        exEntity.put("type", "exit");
-        entities.put(exEntity);
+        Dungeon dungeon = new Dungeon(3, 3);
+        Player player = new Player(dungeon, 0, 0);
+        Treasure treasure = new Treasure(0, 1);
+        Exit exit = new Exit(dungeon, 0, 2);
 
         JSONObject goal_condition = new JSONObject();
         goal_condition.put("goal", "AND");
@@ -187,16 +147,15 @@ public class GoalTest {
         subgoals.put(subgoal1);
         subgoals.put(subgoal2);
         goal_condition.put("subgoals", subgoals);
+        Goal goal = new Goal(dungeon, goal_condition);
 
-        JSONObject json = new JSONObject();
-        json.put("width", 3);
-        json.put("height", 3);
-        json.put("entities", entities);
-        json.put("goal-condition", goal_condition);
+        dungeon.setGoal(goal);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(treasure);
+        dungeon.addEntity(exit);
 
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(json);
-        Dungeon dungeon = dungeonLoader.load();
-        Player player = dungeon.getPlayer();
+        player.attach(treasure);
+        player.attach(exit);
 
         // get treasure
         player.moveDown();
@@ -215,23 +174,10 @@ public class GoalTest {
 
     @Test
     public void testORGoal() {
-        new JFXPanel();
-        JSONArray entities = new JSONArray();
-        JSONObject pEntity = new JSONObject();
-        JSONObject tEntity = new JSONObject();
-        JSONObject exEntity = new JSONObject();
-        pEntity.put("x", 0);
-        pEntity.put("y", 0);
-        pEntity.put("type", "player");
-        entities.put(pEntity);
-        tEntity.put("x", 0);
-        tEntity.put("y", 1);
-        tEntity.put("type", "treasure");
-        entities.put(tEntity);
-        exEntity.put("x", 0);
-        exEntity.put("y", 2);
-        exEntity.put("type", "exit");
-        entities.put(exEntity);
+        Dungeon dungeon = new Dungeon(3, 3);
+        Player player = new Player(dungeon, 0, 0);
+        Treasure treasure = new Treasure(0, 1);
+        Exit exit = new Exit(dungeon, 0, 2);
 
         JSONObject goal_condition = new JSONObject();
         goal_condition.put("goal", "OR");
@@ -243,16 +189,15 @@ public class GoalTest {
         subgoals.put(subgoal1);
         subgoals.put(subgoal2);
         goal_condition.put("subgoals", subgoals);
+        Goal goal = new Goal(dungeon, goal_condition);
 
-        JSONObject json = new JSONObject();
-        json.put("width", 3);
-        json.put("height", 3);
-        json.put("entities", entities);
-        json.put("goal-condition", goal_condition);
+        dungeon.setGoal(goal);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(treasure);
+        dungeon.addEntity(exit);
 
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(json);
-        Dungeon dungeon = dungeonLoader.load();
-        Player player = dungeon.getPlayer();
+        player.attach(treasure);
+        player.attach(exit);
 
         // get treasure
         player.moveDown();
@@ -265,28 +210,11 @@ public class GoalTest {
 
     @Test
     public void testMultiGoal() {
-        new JFXPanel();
-        JSONArray entities = new JSONArray();
-        JSONObject pEntity = new JSONObject();
-        JSONObject tEntity = new JSONObject();
-        JSONObject eEntity = new JSONObject();
-        JSONObject exEntity = new JSONObject();
-        pEntity.put("x", 0);
-        pEntity.put("y", 0);
-        pEntity.put("type", "player");
-        entities.put(pEntity);
-        tEntity.put("x", 0);
-        tEntity.put("y", 1);
-        tEntity.put("type", "treasure");
-        entities.put(tEntity);
-        eEntity.put("x", 0);
-        eEntity.put("y", 3);
-        eEntity.put("type", "enemy");
-        entities.put(eEntity);
-        exEntity.put("x", 0);
-        exEntity.put("y", 2);
-        exEntity.put("type", "exit");
-        entities.put(exEntity);
+        Dungeon dungeon = new Dungeon(3, 4);
+        Player player = new Player(dungeon, 0, 0);
+        Treasure treasure = new Treasure(0, 1);
+        Exit exit = new Exit(dungeon, 0, 2);
+        Enemy enemy = new Enemy(dungeon, 0, 3);
 
         JSONObject goal_condition = new JSONObject();
         goal_condition.put("goal", "AND");
@@ -310,16 +238,22 @@ public class GoalTest {
         subgoals1.put(subgoal_operate);
         goal_condition.put("subgoals", subgoals1);
 
-        JSONObject json = new JSONObject();
-        json.put("width", 3);
-        json.put("height", 4);
-        json.put("entities", entities);
-        json.put("goal-condition", goal_condition);
+        Goal goal = new Goal(dungeon, goal_condition);
 
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(json);
-        Dungeon dungeon = dungeonLoader.load();
-        Player player = dungeon.getPlayer();
+        dungeon.setGoal(goal);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(player);
+        dungeon.addEntity(treasure);
+        dungeon.addEntity(exit);
+        dungeon.addEntity(enemy);
 
+        player.attach(treasure);
+        player.attach(exit);
+        player.attach(enemy);
+
+        enemy.attach(treasure);
+        enemy.attach(exit);
+        enemy.attach(player);
 
         // get treasure
         player.moveDown();
@@ -335,5 +269,4 @@ public class GoalTest {
         assertEquals(player.getY(), 2);
         assertEquals(dungeon.check_progress(), true);
     }
-
 }

@@ -7,7 +7,6 @@ import unsw.enrolment.Course;
 import unsw.enrolment.CourseOffering;
 import unsw.enrolment.DisplMark;
 import unsw.enrolment.Enrolment;
-import unsw.enrolment.Grade;
 import unsw.enrolment.Lecture;
 import unsw.enrolment.Mark;
 import unsw.enrolment.Observer;
@@ -82,17 +81,21 @@ public class EnrolmentTest {
         ass2.add(milestone2);
         // TODO Give the student an assignment 2 mark which is the average of
         // milestone 1 and 2
+        ass2.setCompleted(true);
+        ass2.CalculateMark(true);
         prac.add(ass2);
         comp1511Enrolment.assignMark(ass2);
         // TODO Give the student a prac mark which is the sum of assignment 1
         // and 2
+        prac.setCompleted(true);
+        prac.CalculateMark(false);
+        comp1511Enrolment.remove_mark(ass2);
         comp1511Enrolment.assignMark(prac);
         // TODO Give the student a passing exam mark.
         Mark exam = new markLeaf();
         exam.setName("exam");
         exam.assignMark(30);
-        prac.add(exam);
-        comp1511Enrolment.assignMark(prac);
+        comp1511Enrolment.assignMark(exam);
 
         // Enrol the student in 2521 (this should succeed as they have met
         // the prereqs)

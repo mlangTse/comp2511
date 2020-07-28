@@ -13,6 +13,7 @@ public class Exit extends Entity implements Observer{
     public Exit(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
+        this.exit = false;
     }
 
     public boolean isExited() {
@@ -35,5 +36,4 @@ public class Exit extends Entity implements Observer{
         setExit(false);
         return false;
     }
-
 }
