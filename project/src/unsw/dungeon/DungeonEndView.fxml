@@ -13,7 +13,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Button fx:id="Mune" layoutX="22.0" layoutY="139.0" mnemonicParsing="false" onAction="#handle_mune" prefWidth="50.0" text="Mune" />
+      <Button fx:id="Menu" layoutX="22.0" layoutY="139.0" mnemonicParsing="false" onAction="#handle_menu" prefWidth="50.0" text="Menu" />
       <Button fx:id="Exit" layoutX="114.0" layoutY="139.0" mnemonicParsing="false" onAction="#handle_exit" prefWidth="50.0" text="Exit" />
       <Button fx:id="Again" layoutX="207.0" layoutY="139.0" mnemonicParsing="false" onAction="#handle_again" prefWidth="50.0" text="Again" />
    </children>

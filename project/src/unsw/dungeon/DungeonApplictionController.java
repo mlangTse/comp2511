@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class DungeonMainController {
+public class DungeonApplictionController {
     @FXML
     public Button Maze;
     @FXML
@@ -13,25 +13,38 @@ public class DungeonMainController {
     public Button Advanced;
 
 	public void handle_maze() throws Exception {
-        DungeonApplication game = new DungeonApplication();
-        game.setFilename("maze.json");
         Stage stage = (Stage) Maze.getScene().getWindow();
+        if (Maze.getText().equals("Play")) {
+            Maze.setText("Easy");
+            Boulder.setText("Medium");
+            Advanced.setText("Hard");
+            return;
+        }
+        DungeonGame game = new DungeonGame();
+        game.setFilename("maze.json");
         stage.close();
         game.show();
     }
 
 	public void handle_boulder() throws Exception {
-        DungeonApplication game = new DungeonApplication();
-        game.setFilename("boulders.json");
         Stage stage = (Stage) Boulder.getScene().getWindow();
+        if (Boulder.getText().equals("Help")) {
+            return;
+        }
+        DungeonGame game = new DungeonGame();
+        game.setFilename("boulders.json");
         stage.close();
         game.show();
     }
 
 	public void handle_advanced() throws Exception {
-        DungeonApplication game = new DungeonApplication();
-        game.setFilename("advanced.json");
         Stage stage = (Stage) Advanced.getScene().getWindow();
+        if (Advanced.getText().equals("Exit")) {
+            stage.close();
+            return;
+        }
+        DungeonGame game = new DungeonGame();
+        game.setFilename("advanced.json");
         stage.close();
         game.show();
     }

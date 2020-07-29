@@ -33,7 +33,7 @@ public class DungeonEndController {
     }
 
 	public void handle_menu() throws Exception {
-        DungeonMain menu = new DungeonMain();
+        DungeonApplication menu = new DungeonApplication();
         Stage stage = (Stage) Menu.getScene().getWindow();
         stage.close();
         game.close();
@@ -47,7 +47,7 @@ public class DungeonEndController {
     }
 
 	public void handle_again() throws Exception {
-        DungeonApplication new_game = new DungeonApplication();
+        DungeonGame new_game = new DungeonGame();
         new_game.setFilename(filename);
         Stage again = (Stage) Again.getScene().getWindow();
         again.close();

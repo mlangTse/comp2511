@@ -8,21 +8,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class DungeonMain extends Application {
+public class DungeonGame extends Application {
+    private String filename = "maze.json";
     Stage stage = new Stage();
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Dungeon");
 
-        DungeonMainController controller = new DungeonMainController();
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(filename);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonMainView.fxml"));
+        DungeonController controller = dungeonLoader.loadController();
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         loader.setController(controller);
-
         Parent root = loader.load();
         Scene scene = new Scene(root);
-
+        root.requestFocus();
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -33,5 +35,9 @@ public class DungeonMain extends Application {
 
     public void show() throws IOException {
         start(stage);
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }
