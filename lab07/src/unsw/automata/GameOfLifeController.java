@@ -1,6 +1,7 @@
 package unsw.automata;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -48,6 +49,7 @@ public class GameOfLifeController {
                 GridPane.setColumnIndex(checkBox, x);
                 GridPane.setRowIndex(checkBox, y);
                 game.cellProperty(x, y).bindBidirectional(checkBox.selectedProperty());
+                checkBox.selectedProperty().bindBidirectional(game.cellProperty(x, y));
                 this.gridPane.getChildren().add(checkBox);
             }
         }
