@@ -29,6 +29,9 @@ public class DungeonApplictionController {
 	public void handle_boulder() throws Exception {
         Stage stage = (Stage) Boulder.getScene().getWindow();
         if (Boulder.getText().equals("Help")) {
+            DungeonHelp help = new DungeonHelp();
+            help.show();
+            stage.close();
             return;
         }
         DungeonGame game = new DungeonGame();
