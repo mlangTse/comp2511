@@ -18,11 +18,15 @@ public class DungeonApplictionController {
     public Button Advanced;
     @FXML
     public ImageView Pointer;
+    @FXML
+    public ImageView Menu;
 
     @FXML
     public void initialize() {
         Image keyImage = new Image((new File("images/key.png")).toURI().toString());
+        Image menuImage = new Image((new File("images/main.png")).toURI().toString());
         Pointer.setImage(keyImage);
+        Menu.setImage(menuImage);
     }
 
     @FXML

@@ -46,9 +46,9 @@ public class DungeonControllerLoader extends DungeonLoader {
         exitImage = new Image((new File("images/exit.png")).toURI().toString());
         treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
         doorCloseImage = new Image((new File("images/closed_door.png")).toURI().toString());
-        keyImage = new Image((new File("images/gnome.png")).toURI().toString());
-        boulderImage = new Image((new File("images/bubbly.png")).toURI().toString());
-        switchImage = new Image((new File("images/hound.png")).toURI().toString());
+        keyImage = new Image((new File("images/key.png")).toURI().toString());
+        boulderImage = new Image((new File("images/boulder.png")).toURI().toString());
+        switchImage = new Image((new File("images/pressure_plate.png")).toURI().toString());
         portalImage = new Image((new File("images/portal.png")).toURI().toString());
         enemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
         swordImage = new Image((new File("images/greatsword_1_new.png")).toURI().toString());
