@@ -8,6 +8,7 @@ public class DungeonHelpController {
     @FXML
     public Button Menu;
 
+    @FXML
 	public void handle_menu() throws Exception {
         DungeonApplication menu = new DungeonApplication();
         Stage stage = (Stage) Menu.getScene().getWindow();

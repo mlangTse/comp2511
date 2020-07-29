@@ -34,6 +34,7 @@ public class DungeonEndController {
         }
     }
 
+    @FXML
 	public void handle_menu() throws Exception {
         DungeonApplication menu = new DungeonApplication();
         Stage stage = (Stage) Menu.getScene().getWindow();
@@ -42,12 +43,14 @@ public class DungeonEndController {
         menu.show();
     }
 
+    @FXML
 	public void handle_exit() throws Exception {
         Stage exit = (Stage) Exit.getScene().getWindow();
         game.close();
         exit.close();
     }
 
+    @FXML
 	public void handle_again() throws Exception {
         DungeonGame new_game = new DungeonGame();
         new_game.setFilename(filename);

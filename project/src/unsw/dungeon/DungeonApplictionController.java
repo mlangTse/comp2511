@@ -1,7 +1,12 @@
 package unsw.dungeon;
 
+import java.io.File;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class DungeonApplictionController {
@@ -11,7 +16,16 @@ public class DungeonApplictionController {
     public Button Boulder;
     @FXML
     public Button Advanced;
+    @FXML
+    public ImageView Pointer;
 
+    @FXML
+    public void initialize() {
+        Image keyImage = new Image((new File("images/key.png")).toURI().toString());
+        Pointer.setImage(keyImage);
+    }
+
+    @FXML
 	public void handle_maze() throws Exception {
         Stage stage = (Stage) Maze.getScene().getWindow();
         if (Maze.getText().equals("Play")) {
@@ -26,6 +40,7 @@ public class DungeonApplictionController {
         game.show();
     }
 
+    @FXML
 	public void handle_boulder() throws Exception {
         Stage stage = (Stage) Boulder.getScene().getWindow();
         if (Boulder.getText().equals("Help")) {
@@ -40,6 +55,7 @@ public class DungeonApplictionController {
         game.show();
     }
 
+    @FXML
 	public void handle_advanced() throws Exception {
         Stage stage = (Stage) Advanced.getScene().getWindow();
         if (Advanced.getText().equals("Exit")) {
@@ -50,5 +66,29 @@ public class DungeonApplictionController {
         game.setFilename("advanced.json");
         stage.close();
         game.show();
+    }
+
+    @FXML
+    public void handlePointer(KeyEvent event) {
+        switch (event.getCode()) {
+            case UP:
+                if (Pointer.getLayoutY() - 2 == Maze.getLayoutY()) return;
+                if (Pointer.getLayoutY() - 2 == Boulder.getLayoutY()) {
+                    Pointer.setLayoutY(Maze.getLayoutY() + 2);
+                } else if (Pointer.getLayoutY() - 2 == Advanced.getLayoutY()) {
+                    Pointer.setLayoutY(Boulder.getLayoutY() + 2);
+                }
+                break;
+            case DOWN:
+                if (Pointer.getLayoutY() - 2 == Advanced.getLayoutY()) return;
+                if (Pointer.getLayoutY() - 2 == Boulder.getLayoutY()) {
+                    Pointer.setLayoutY(Advanced.getLayoutY() + 2);
+                } else if (Pointer.getLayoutY() - 2 == Maze.getLayoutY()) {
+                    Pointer.setLayoutY(Boulder.getLayoutY() + 2);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
