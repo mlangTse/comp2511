@@ -2,6 +2,7 @@ package unsw.dungeon;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -28,7 +29,8 @@ public class DungeonEndController {
     @FXML
     public void initialize() {
         if (notSuccess) {
-            gameStatus.setText("Game Over!");
+            gameStatus.setText("   Game Over!");
+            ((Text) gameStatus).setFill(Paint.valueOf("#000000"));
         }
     }
 

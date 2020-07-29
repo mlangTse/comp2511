@@ -64,7 +64,7 @@ public class DungeonController {
             public void changed(ObservableValue<? extends Boolean> observable,
                     Boolean oldValue, Boolean newValue) {
 
-                if (dungeon.check_progress()) {
+                if (player.IsDestroyed().getValue()) {
                     try {
                         thisOne.gameEnd();
                     } catch (IOException e) {

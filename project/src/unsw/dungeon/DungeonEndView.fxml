@@ -8,7 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="204.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text fx:id="gameStatus" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="72.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulation!" textAlignment="CENTER">
+      <Text fx:id="gameStatus" boundsType="LOGICAL_VERTICAL_CENTER" fill="#d7c013" layoutX="72.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulation!" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
