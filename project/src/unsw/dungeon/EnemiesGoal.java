@@ -1,30 +1,27 @@
 package unsw.dungeon;
 
-public class EnemiesGoal implements GoalState {
+public class EnemiesGoal implements GoalStrategy {
     /**
      * This is the state of the goal
      */
-    private int state;
+    private boolean state;
     /**
      * This is the dungeon
      */
     private Dungeon dungeon;
-    
+
     public EnemiesGoal(Dungeon dungeon) {
         this.dungeon = dungeon;
+        state = false;
 	}
 
-    @Override
-    public void setState(int state) {
+    public void setState(boolean state) {
         this.state = state;
     }
 
     @Override
     public boolean finish() {
-        if (state == FINISHED_STATE) {
-            return true;
-        }
-        return false;
+        return state;
 
     }
 
@@ -37,7 +34,9 @@ public class EnemiesGoal implements GoalState {
             }
         }
         if (NotDestory_N == 0) {
-            setState(FINISHED_STATE);
+            setState(true);
+        } else {
+            setState(false);
         }
         return NotDestory_N;
     }

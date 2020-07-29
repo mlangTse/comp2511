@@ -4,9 +4,9 @@ public class GoalLeaf implements Component{
     /**
      * This a the state of goal
      */
-    GoalState state;
+    GoalStrategy state;
 
-    public GoalLeaf(GoalState state) {
+    public GoalLeaf(GoalStrategy state) {
         this.state = state;
     }
 

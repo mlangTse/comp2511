@@ -44,14 +44,14 @@ public class Goal {
                     composite.add(combine);
                     continue;
                 }
-                GoalState newGoal = createState(operator);
+                GoalStrategy newGoal = createState(operator);
                 GoalLeaf leaf = new GoalLeaf(newGoal);
                 composite.add(leaf);
             }
             return composite;
         } catch (Exception e) {
             String condition = goal.getString("goal");
-            GoalState newGoal = createState(condition);
+            GoalStrategy newGoal = createState(condition);
             GoalLeaf leaf = new GoalLeaf(newGoal);
             return leaf;
         }
@@ -64,23 +64,19 @@ public class Goal {
      * @param goal a string of goal
      * @return a GoalState
      */
-    public GoalState createState(String goal) {
+    public GoalStrategy createState(String goal) {
         switch (goal) {
             case "exit":
                 ExitGoal exitGoal = new ExitGoal(dungeon);
-                exitGoal.setState(GoalState.DOING_STATE);
                 return exitGoal;
             case "enemies":
                 EnemiesGoal enemiesGoal = new EnemiesGoal(dungeon);
-                enemiesGoal.setState(GoalState.DOING_STATE);
                 return enemiesGoal;
             case "boulders":
                 BouldersGoal bouldersGoal = new BouldersGoal(dungeon);
-                bouldersGoal.setState(GoalState.DOING_STATE);
                 return bouldersGoal;
             case "treasure":
                 TreasureGoal treasureGoal = new TreasureGoal(dungeon);
-                treasureGoal.setState(GoalState.DOING_STATE);
                 return treasureGoal;
             default:
                 return null;

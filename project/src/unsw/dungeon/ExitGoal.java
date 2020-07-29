@@ -1,10 +1,10 @@
 package unsw.dungeon;
 
-public class ExitGoal implements GoalState{
+public class ExitGoal implements GoalStrategy{
     /**
      * This is the state of the goal
      */
-    private int state;
+    private boolean state;
     /**
      * This is the dungeon
      */
@@ -12,19 +12,16 @@ public class ExitGoal implements GoalState{
 
     public ExitGoal(Dungeon dungeon) {
         this.dungeon = dungeon;
-    }
+        state = false;
+	}
 
-    @Override
-    public void setState(int state) {
+    public void setState(boolean state) {
         this.state = state;
     }
 
     @Override
     public boolean finish() {
-        if (state == FINISHED_STATE) {
-            return true;
-        }
-        return false;
+        return state;
 
     }
 
@@ -32,11 +29,11 @@ public class ExitGoal implements GoalState{
     public int update() {
         for (Entity e:dungeon.getEntities()) {
             if (e instanceof Exit && ((Exit) e).isExited()) {
-                setState(FINISHED_STATE);
+                setState(true);
                 return 1;
             }
         }
-        setState(DOING_STATE);
+        setState(false);
         return 0;
     }
 }
