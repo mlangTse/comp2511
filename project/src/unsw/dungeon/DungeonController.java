@@ -3,6 +3,8 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -55,6 +57,24 @@ public class DungeonController {
 
         // set player to front
         player.getImage().toFront();
+        player.IsDestroyed().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable,
+                    Boolean oldValue, Boolean newValue) {
+
+                if (dungeon.check_progress()) {
+                    Stage stage = (Stage) squares.getScene().getWindow();
+                    DungeonEnd end = new DungeonEnd(stage, filename);
+                    try {
+                        end.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        });
     }
 
     @FXML
@@ -75,12 +95,15 @@ public class DungeonController {
             default:
                 break;
         }
-        if (dungeon.check_progress() || player.isDestroyed()) {
-            Stage stage = (Stage) squares.getScene().getWindow();
-            DungeonEnd end = new DungeonEnd(stage, filename);
-            end.show();
+        if (dungeon.check_progress()) {
+            gameEnd();
         }
     }
 
+    public void gameEnd() throws IOException {
+        Stage stage = (Stage) squares.getScene().getWindow();
+        DungeonEnd end = new DungeonEnd(stage, filename);
+        end.show();
+    }
 }
 

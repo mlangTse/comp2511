@@ -72,6 +72,7 @@ public class Dungeon {
      * @return goal finish or not
      */
     public boolean check_progress() {
+        if (player.IsDestroyed().getValue()) return true;
         goal.update();
         return goal.isFinish();
     }

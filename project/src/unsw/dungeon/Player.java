@@ -3,6 +3,9 @@ package unsw.dungeon;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 /**
  * The player entity
  *
@@ -30,7 +33,7 @@ public class Player extends Entity implements Observer, Subject{
      * This is the key that player is wearing
      */
     private Key key;
-    private boolean isDestroyed;
+    private BooleanProperty isDestroyed;
     /**
      * This is a list of treasure collected by the player
      */
@@ -49,7 +52,7 @@ public class Player extends Entity implements Observer, Subject{
         super(x, y);
         this.dungeon = dungeon;
         this.potion = false;
-        this.isDestroyed = false;
+        this.isDestroyed = new SimpleBooleanProperty(false);
     }
 
     public void moveUp() {
@@ -142,15 +145,13 @@ public class Player extends Entity implements Observer, Subject{
         }
     }
 
-    public boolean isDestroyed() {
+    public BooleanProperty IsDestroyed() {
         return isDestroyed;
     }
 
-    public void setDestroyed(boolean isDestroyed) {
-        super.destroy();
-        this.isDestroyed = isDestroyed;
+    public void setDestroyed(Boolean destroyed) {
+        this.isDestroyed.set(destroyed);
     }
-
     public ArrayList<Treasure> getTreasures() {
         return treasures;
     }
