@@ -12,10 +12,12 @@ import javafx.stage.Stage;
 public class DungeonEnd extends Application {
     Stage game;
     private String filename;
+    private boolean notSuccess;
 
-    public DungeonEnd(Stage stage, String filename) {
+    public DungeonEnd(Stage stage, String filename, boolean notSuccess) {
         this.game = stage;
         this.filename = filename;
+        this.notSuccess = notSuccess;
     }
 
     Stage stage = new Stage();
@@ -23,7 +25,7 @@ public class DungeonEnd extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Dungeon");
 
-        DungeonEndController controller = new DungeonEndController(game, filename);
+        DungeonEndController controller = new DungeonEndController(game, filename, notSuccess);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonEndView.fxml"));
 

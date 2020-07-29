@@ -150,6 +150,7 @@ public class Player extends Entity implements Observer, Subject{
     }
 
     public void setDestroyed(Boolean destroyed) {
+        super.destroy();
         this.isDestroyed.set(destroyed);
     }
     public ArrayList<Treasure> getTreasures() {

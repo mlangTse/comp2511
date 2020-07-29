@@ -13,21 +13,24 @@ public class DungeonMainController {
     public Button Advanced;
 
 	public void handle_maze() throws Exception {
-        DungeonApplication game = new DungeonApplication("maze.json");
+        DungeonApplication game = new DungeonApplication();
+        game.setFilename("maze.json");
         Stage stage = (Stage) Maze.getScene().getWindow();
         stage.close();
         game.show();
     }
 
 	public void handle_boulder() throws Exception {
-        DungeonApplication game = new DungeonApplication("boulders.json");
+        DungeonApplication game = new DungeonApplication();
+        game.setFilename("boulders.json");
         Stage stage = (Stage) Boulder.getScene().getWindow();
         stage.close();
         game.show();
     }
 
 	public void handle_advanced() throws Exception {
-        DungeonApplication game = new DungeonApplication("advanced.json");
+        DungeonApplication game = new DungeonApplication();
+        game.setFilename("advanced.json");
         Stage stage = (Stage) Advanced.getScene().getWindow();
         stage.close();
         game.show();

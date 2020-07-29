@@ -57,12 +57,18 @@ public abstract class DungeonLoader {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
 
+        Player player = dungeon.getPlayer();
         // A boulder initial position is the same as one of the floorswitch
         for (Entity entity: dungeon.getEntities()) {
             if (entity instanceof Subject) {
                 for (Entity entity2: dungeon.getEntities()) {
+                    if (entity2 instanceof Player) continue;
                     ((Subject) entity).attach(((Observer) entity2));
                 }
+                // attach the player at the end
+                // avoid enemy goint to some entity (portal, sword etc.)
+                // because enemy is moveable to player
+                ((Subject) entity).attach(player);
             }
         }
 

@@ -214,6 +214,7 @@ public class Enemy extends Entity implements Observer, Subject{
             } else {
                 // the game end
                 ((Player) obj).setDestroyed(true);
+                return true;
             }
         }
         return false;

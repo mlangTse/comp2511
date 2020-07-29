@@ -9,12 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class DungeonApplication extends Application {
-    private String filename;
+    private String filename = "maze.json";
     Stage stage = new Stage();
-
-    public DungeonApplication(String filename) {
-        this.filename = filename;
-    }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -39,5 +35,9 @@ public class DungeonApplication extends Application {
 
     public void show() throws IOException {
         start(stage);
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

@@ -43,6 +43,7 @@ public class DungeonController {
 
     @FXML
     public void initialize() {
+        DungeonController thisOne = this;
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
 
         // Add the ground first so it is below all other entities
@@ -64,10 +65,8 @@ public class DungeonController {
                     Boolean oldValue, Boolean newValue) {
 
                 if (dungeon.check_progress()) {
-                    Stage stage = (Stage) squares.getScene().getWindow();
-                    DungeonEnd end = new DungeonEnd(stage, filename);
                     try {
-                        end.show();
+                        thisOne.gameEnd();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -102,7 +101,8 @@ public class DungeonController {
 
     public void gameEnd() throws IOException {
         Stage stage = (Stage) squares.getScene().getWindow();
-        DungeonEnd end = new DungeonEnd(stage, filename);
+        boolean notSuccess = player.IsDestroyed().getValue();
+        DungeonEnd end = new DungeonEnd(stage, filename, notSuccess);
         end.show();
     }
 }
