@@ -1,0 +1,9 @@
+*.class
+*.log
+hs_err_pid*
+/bin/
+/lib/
+/.metadata/
+.project
+.classpath
+/.vscode/

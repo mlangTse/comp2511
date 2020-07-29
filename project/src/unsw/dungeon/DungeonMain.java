@@ -8,27 +8,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class DungeonApplication extends Application {
-    private String filename;
+public class DungeonMain extends Application {
     Stage stage = new Stage();
-
-    public DungeonApplication(String filename) {
-        this.filename = filename;
-    }
-
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Dungeon");
 
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(filename);
+        DungeonMainController controller = new DungeonMainController();
 
-        DungeonController controller = dungeonLoader.loadController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonMainView.fxml"));
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         loader.setController(controller);
+
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        root.requestFocus();
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
