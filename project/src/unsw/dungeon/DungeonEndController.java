@@ -9,7 +9,7 @@ public class DungeonEndController {
     @FXML
     public Text gameStatus;
     @FXML
-    public Button Mune;
+    public Button Menu;
     @FXML
     public Button Exit;
     @FXML
@@ -32,16 +32,16 @@ public class DungeonEndController {
         }
     }
 
-	public void handle_mune() throws Exception {
-        DungeonMain mune = new DungeonMain();
-        Stage stage = (Stage) Mune.getScene().getWindow();
+	public void handle_menu() throws Exception {
+        DungeonMain menu = new DungeonMain();
+        Stage stage = (Stage) Menu.getScene().getWindow();
         stage.close();
         game.close();
-        mune.show();
+        menu.show();
     }
 
 	public void handle_exit() throws Exception {
-        Stage exit = (Stage) Mune.getScene().getWindow();
+        Stage exit = (Stage) Exit.getScene().getWindow();
         game.close();
         exit.close();
     }
