@@ -1,6 +1,3 @@
-/**
- *
- */
 package unsw.automata;
 
 import javafx.application.Application;
