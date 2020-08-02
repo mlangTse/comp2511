@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * The player entity
@@ -42,6 +44,10 @@ public class Player extends Entity implements Observer, Subject{
      * This is a list of observers who watch the player
      */
     private ArrayList<Observer> observers = new ArrayList<Observer>();
+    private IntegerProperty sTime;
+    private IntegerProperty Nkey;
+    private IntegerProperty Ntreasure;
+    private IntegerProperty NPotion;
 
     /**
      * Create a player positioned in square (x,y)
@@ -53,6 +59,10 @@ public class Player extends Entity implements Observer, Subject{
         this.dungeon = dungeon;
         this.potion = false;
         this.isDestroyed = new SimpleBooleanProperty(false);
+        this.sTime = new SimpleIntegerProperty(0);
+        this.Nkey = new SimpleIntegerProperty(0);
+        this.Ntreasure = new SimpleIntegerProperty(0);
+        this.NPotion = new SimpleIntegerProperty(0);
     }
 
     public void moveUp() {
@@ -105,15 +115,21 @@ public class Player extends Entity implements Observer, Subject{
     public void setSword(Observer obs) {
         if (obs instanceof Sword && getSword() == null) {
             this.sword = (Sword) obs;
+            this.sTime.bindBidirectional(((Sword) obs).getTime());
         }
         if (obs == null) {
+            this.sTime.unbindBidirectional(this.sword.getTime());
             this.sword = null;
         }
     }
 
+    public IntegerProperty SwordTime() {
+        return sTime;
+    }
+
     public void useSword() {
         sword.use();
-        if (sword.getTime() == 0) {
+        if (sword.getTime().getValue() == 0) {
             setSword(null);
         }
     }
@@ -126,11 +142,17 @@ public class Player extends Entity implements Observer, Subject{
         if (obs instanceof Potion) {
             this.end = LocalDateTime.now().plusSeconds(15);
             this.potion = true;
+            this.NPotion.setValue(1);
             return;
         }
         if (obs == null) {
             this.potion = false;
+            this.NPotion.setValue(0);
         }
+    }
+
+    public IntegerProperty numberOfPotion() {
+        return NPotion;
     }
 
     public Key getKey(){
@@ -140,9 +162,15 @@ public class Player extends Entity implements Observer, Subject{
     public void setKey(Observer obs) {
         if (obs instanceof Key && getKey() == null) {
             this.key = (Key) obs;
+            this.Nkey.setValue(1);
         } else if (obs == null) {
             this.key = null;
+            this.Nkey.setValue(0);
         }
+    }
+
+    public IntegerProperty numberOfKey() {
+        return Nkey;
     }
 
     public BooleanProperty IsDestroyed() {
@@ -153,12 +181,18 @@ public class Player extends Entity implements Observer, Subject{
         super.destroy();
         this.isDestroyed.set(destroyed);
     }
+
     public ArrayList<Treasure> getTreasures() {
         return treasures;
     }
 
     public void addTreasures(Treasure treasure) {
         this.treasures.add(treasure);
+        Ntreasure.setValue(this.treasures.size());
+    }
+
+    public IntegerProperty numberOfTreasure() {
+        return Ntreasure;
     }
 
     @Override

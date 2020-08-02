@@ -135,4 +135,23 @@ public class DoorTest {
         assertEquals(boulder.getX(), 0);
         assertEquals(boulder.getY(), 2);
     }
+
+    @Test
+    public void testDoorBoulder() {
+        Dungeon dungeon = new Dungeon(1, 3);
+        Player player = new Player(dungeon, 0, 0);
+        Boulder boulder = new Boulder(dungeon, 0, 1);
+        Enemy enemy = new Enemy(dungeon, 0, 1);
+        Door door = new Door(0, 2);
+        dungeon.addEntity(boulder);
+        dungeon.addEntity(door);
+        dungeon.setPlayer(player);
+        player.attach(boulder);
+        boulder.attach(door);
+        enemy.attach(door);
+        player.moveDown();
+        assertEquals(player.getY(), 0);
+        assertEquals(boulder.getY(), 1);
+        assertEquals(enemy.getY(), 1);
+    }
 }

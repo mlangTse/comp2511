@@ -124,4 +124,30 @@ public class PlayerTest {
         assertEquals(player.getY(), 1);
         assertEquals(player.getTreasures().get(0), treasure);
     }
+
+    @Test
+    public void testPlayerMoveing() {
+        Dungeon dungeon = new Dungeon(1, 3);
+        Player player = new Player(dungeon, 0, 0);
+        Potion potion = new Potion(0, 1);
+        Enemy enemy = new Enemy(dungeon, 0, 2);
+        dungeon.addEntity(potion);
+        dungeon.addEntity(enemy);
+        dungeon.setPlayer(player);
+        enemy.attach(player);
+        player.attach(potion);
+        player.moveDown();
+        assertEquals(player.hasPotion(), true);
+        System.out.println("Player is invincible");
+        assertEquals(player.getY(), 1);
+        assertEquals(enemy.moveUp(), false);
+        enemy.detach(player);
+        assertEquals(enemy.moveUp(), true);
+        enemy.moveDown();
+        enemy.attach(player);
+        player.moveDown();
+        player.setPotion(null);
+        System.out.println("Player is not invincible");
+        assertEquals(enemy.moveUp(), true);
+    }
 }

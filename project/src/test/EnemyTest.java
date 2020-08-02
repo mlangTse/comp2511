@@ -99,4 +99,26 @@ public class EnemyTest {
         assertEquals(enemy3.getX(), 0);
         assertEquals(enemy4.getX(), 4);
     }
+
+    @Test
+    public void testEnemyMoveing() {
+        Dungeon dungeon = new Dungeon(1, 4);
+        Player player = new Player(dungeon, 0, 0);
+        Boulder boulder = new Boulder(dungeon, 0, 1);
+        Enemy enemy1 = new Enemy(dungeon, 0, 2);
+        Enemy enemy2 = new Enemy(dungeon, 0, 3);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(enemy1);
+        dungeon.addEntity(enemy2);
+        dungeon.addEntity(boulder);
+        player.attach(boulder);
+        boulder.attach(enemy1);
+        enemy1.attach(enemy2);
+        enemy2.attach(enemy1);
+        player.moveDown();
+        assertEquals(player.getY(), 0);
+        assertEquals(boulder.getY(), 1);
+        assertEquals(enemy1.moveDown(), false);
+        assertEquals(enemy2.moveUp(), false);
+    }
 }

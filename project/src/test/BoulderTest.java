@@ -92,4 +92,42 @@ public class BoulderTest {
         assertEquals(boulder.getY(), 2);
         assertEquals(floorswitch.istrigger(), false);
     }
+
+    @Test
+    public void testBoulderMove() {
+        Dungeon dungeon = new Dungeon(7, 1);
+        Player player = new Player(dungeon, 3, 0);
+        Boulder boulder1 = new Boulder(dungeon, 0, 0);
+        Boulder boulder2 = new Boulder(dungeon, 2, 0);
+        Boulder boulder3 = new Boulder(dungeon, 4, 0);
+        Boulder boulder4 = new Boulder(dungeon, 6, 0);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder1);
+        dungeon.addEntity(boulder2);
+        dungeon.addEntity(boulder3);
+        dungeon.addEntity(boulder4);
+        player.attach(boulder1);
+        player.attach(boulder2);
+        player.attach(boulder3);
+        player.attach(boulder4);
+        boulder1.attach(boulder2);
+        boulder2.attach(boulder1);
+        boulder3.attach(boulder4);
+        boulder4.attach(boulder3);
+        player.moveRight();
+        assertEquals(player.getX(), 4);
+        assertEquals(boulder3.getX(), 5);
+        player.moveRight();
+        assertEquals(player.getX(), 4);
+        assertEquals(boulder3.getX(), 5);
+        assertEquals(boulder4.getX(), 6);
+        player.moveLeft();
+        player.moveLeft();
+        assertEquals(player.getX(), 2);
+        assertEquals(boulder2.getX(), 1);
+        player.moveLeft();
+        assertEquals(player.getX(), 2);
+        assertEquals(boulder2.getX(), 1);
+        assertEquals(boulder1.getX(), 0);
+      }
 }

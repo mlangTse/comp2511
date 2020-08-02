@@ -190,4 +190,42 @@ public class DungeonControllerLoaderTest {
         assertEquals(player.getY(), 1);
         assertEquals(player.hasPotion(), true);
     }
+
+    @Test
+    public void testOnload() {
+        JSONArray entities = new JSONArray();
+        JSONObject treasure = new JSONObject();
+        JSONObject eEntity = new JSONObject();
+        JSONObject sword = new JSONObject();
+        JSONObject potion = new JSONObject();
+        treasure.put("x", 0);
+        treasure.put("y", 0);
+        treasure.put("type", "treasure");
+        entities.put(treasure);
+        eEntity.put("x", 1);
+        eEntity.put("y", 1);
+        eEntity.put("type", "enemy");
+        entities.put(eEntity);
+        sword.put("x", 0);
+        sword.put("y", 2);
+        sword.put("type", "sword");
+        entities.put(sword);
+        potion.put("x", 0);
+        potion.put("y", 3);
+        potion.put("type", "invincibility");
+        entities.put(potion);
+
+        JSONObject goal_condition = new JSONObject();
+        goal_condition.put("goal", "exit");
+        JSONObject json = new JSONObject();
+        json.put("width", 3);
+        json.put("height", 4);
+        json.put("entities", entities);
+        json.put("goal-condition", goal_condition);
+
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(json);
+        Dungeon dungeon = dungeonLoader.load();
+        assertNotEquals(dungeon, null);
+        assertEquals(dungeon.getEntities().size(), 4);
+    }
 }

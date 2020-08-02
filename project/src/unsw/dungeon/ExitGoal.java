@@ -1,6 +1,6 @@
 package unsw.dungeon;
 
-public class ExitGoal implements GoalStrategy{
+public class ExitGoal implements GoalStrategy {
     /**
      * This is the state of the goal
      */

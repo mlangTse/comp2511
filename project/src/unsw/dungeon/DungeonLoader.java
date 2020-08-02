@@ -25,10 +25,20 @@ public abstract class DungeonLoader {
     private Goal gameGoal;
     private ArrayList<Door> doors = new ArrayList<Door>();
     private ArrayList<Key> keys = new ArrayList<Key>();
+    private int index;
+    private boolean hasSword;
+    private boolean hasKey;
+    private boolean hasPotion;
+    private boolean hasTreasure;
 
     public DungeonLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
         this.filename = filename;
+        index = 0;
+        hasSword = false;
+        hasKey = false;
+        hasPotion = false;
+        hasTreasure = false;
     }
 
     public DungeonLoader(JSONObject json) {
@@ -80,7 +90,7 @@ public abstract class DungeonLoader {
     private void loadEntity(Dungeon dungeon, JSONObject json) {
         String type = json.getString("type");
         int x = json.getInt("x");
-        int y = json.getInt("y");
+        int y = json.getInt("y") + 2;
 
         Entity entity = null;
         switch (type) {
@@ -101,6 +111,13 @@ public abstract class DungeonLoader {
                 entity = exit;
                 break;
             case "treasure":
+                if (!hasTreasure) {
+                    Treasure hTreasure = new Treasure(2*index, 1);
+                    onLoad(hTreasure);
+                    index += 1;
+                    hasTreasure = true;
+                    dungeon.addEntity((Entity) hTreasure);
+                }
                 Treasure treasure = new Treasure(x, y);
                 onLoad(treasure);
                 entity = treasure;
@@ -117,6 +134,13 @@ public abstract class DungeonLoader {
                 entity = door;
                 break;
             case "key":
+                if (!hasKey) {
+                    Key hkey = new Key(2*index, 1);
+                    onLoad(hkey);
+                    index += 1;
+                    hasKey = true;
+                    dungeon.addEntity((Entity) hkey);
+                }
                 Key key = new Key(x, y);
                 if (!doors.isEmpty()) {
                     Door d = doors.get(0);
@@ -157,11 +181,25 @@ public abstract class DungeonLoader {
                 enemy.moving(enemy);
                 break;
             case "sword":
+                if (!hasSword) {
+                    Sword hsword = new Sword(2*index, 1);
+                    onLoad(hsword);
+                    index += 1;
+                    hasSword = true;
+                    dungeon.addEntity((Entity) hsword);
+                }
                 Sword sword = new Sword(x, y);
                 onLoad(sword);
                 entity = sword;
                 break;
             case "invincibility":
+                if (!hasPotion) {
+                    Potion hinvincibility = new Potion(2*index, 1);
+                    onLoad(hinvincibility);
+                    index += 1;
+                    hasPotion = true;
+                    dungeon.addEntity((Entity) hinvincibility);
+                }
                 Potion invincibility = new Potion(x, y);
                 onLoad(invincibility);
                 entity = invincibility;

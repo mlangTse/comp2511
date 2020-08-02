@@ -1,5 +1,8 @@
 package unsw.dungeon;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Sword extends Entity implements Observer{
     /**
      * This is a sign of whether the sword be collected
@@ -8,19 +11,19 @@ public class Sword extends Entity implements Observer{
     /**
      * This is the number of time a sword can be used
      */
-    private int time;
+    private IntegerProperty time;
 
     public Sword(int x, int y) {
         super(x, y);
-        this.time = 5;
+        this.time = new SimpleIntegerProperty(5);
     }
 
-    public int getTime() {
+    public IntegerProperty getTime() {
         return time;
     }
 
     public void use() {
-        this.time -= 1;
+        this.time.setValue(time.getValue()-1);
     }
 
     public boolean isCollected() {
