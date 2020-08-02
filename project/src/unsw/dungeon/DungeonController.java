@@ -57,7 +57,7 @@ public class DungeonController {
         });
         text.setText(": " + siP.intValue());
         text.setFont(new Font(14));
-        squares.add(text, x + 1, 0);
+        squares.add(text, x + 1, 1);
     }
 
     @FXML
@@ -95,21 +95,21 @@ public class DungeonController {
 
         // Add the ground first so it is below all other entities
         for (int x = 0; x < dungeon.getWidth(); x++) {
-            for (int y = 2; y <= dungeon.getHeight()+1; y++) {
+            for (int y = 2; y < dungeon.getHeight(); y++) {
                 squares.add(new ImageView(ground), x, y);
             }
         }
 
         for (Entity e : dungeon.getEntities()) {
-            if (e instanceof Sword && e.getY() == 0) {
+            if (e instanceof Sword && e.getY() == 1) {
                 setPlayerInfo(e.getX(), player.SwordTime());
             }
-            if (e instanceof Key && e.getY() == 0) {
+            if (e instanceof Key && e.getY() == 1) {
                 setPlayerInfo(e.getX(), player.numberOfKey());
             }
-            if (e instanceof Treasure && e.getY() == 0) {
+            if (e instanceof Treasure && e.getY() == 1) {
                 setPlayerInfo(e.getX(), player.numberOfTreasure());
-            } else if (e instanceof Potion && e.getY() == 0) {
+            } else if (e instanceof Potion && e.getY() == 1) {
                 setPlayerInfo(e.getX(), player.numberOfPotion());
             }
         }

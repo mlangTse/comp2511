@@ -20,14 +20,13 @@ public class Enemy extends Entity implements Observer, Subject{
      * This is a list of observers who watch the enemy
      */
     private ArrayList<Observer> observers = new ArrayList<Observer>();
-    private int[][] maze, vis;
+    Timer timer;
 
     public Enemy(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
         this.destroyed = false;
-        this.maze = new int[dungeon.getWidth()][dungeon.getHeight()];
-        this.vis = new int[dungeon.getWidth()][dungeon.getHeight()];
+        this.timer = new Timer();
     }
 
     public boolean moveUp() {
@@ -82,6 +81,7 @@ public class Enemy extends Entity implements Observer, Subject{
     public void setDestroyed(boolean destroyed) {
         super.destroy();
         this.destroyed = destroyed;
+        timer.cancel();
     }
 
     public Dungeon getDungeon() {
@@ -115,7 +115,6 @@ public class Enemy extends Entity implements Observer, Subject{
      * @param enemy this enemy object
      */
     public void moving(Enemy enemy) {
-        Timer timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
@@ -123,66 +122,12 @@ public class Enemy extends Entity implements Observer, Subject{
                     if (enemy.runAway()) {
                         moveBackward();
                     } else {
-                        enemy.move();
+                        EnemyMovePath nextMove = new EnemyMovePath(dungeon.getPlayer(), enemy, dungeon);
+                        nextMove.move();
                     }
                 });
             }
-        }, 0, 500);
-    }
-
-    /**
-     * move function call when the player hasn't collect potion
-     * the enemy move toward to the player
-     */
-    public void move() {
-        if ((getY() > dungeon.getPlayer().getY()) && moveUp()) {
-            return;
-        }
-        if ((getY() < dungeon.getPlayer().getY()) && moveDown()){
-            return;
-        }
-        if ((getX() > dungeon.getPlayer().getX()) && moveLeft()) {
-            return;
-        }
-        if ((getX() < dungeon.getPlayer().getX()) && moveRight()) {
-            return;
-        }
-        // Maze();
-        // int direction = dfs(getX(), getY(), dungeon.getPlayer().getX(), dungeon.getPlayer().getY());
-    }
-
-    public void Maze() {
-        for (int i = 0; i < dungeon.getWidth(); i++) {
-            for (int j = 0; j< dungeon.getHeight(); j++) {
-                maze[i][j] = 0;
-                vis[i][j] = 0;
-            }
-        }
-
-        for (Entity e:dungeon.getEntities()) {
-            if (e.getY() == 0) continue;
-            if (e instanceof Player || e.equals(this)) continue;
-            maze[e.getX()][e.getY()-1] = 1;
-        }
-    }
-
-    public int dfs(int Ex, int Ey, int Px, int Py) {
-        if (Ex < 0 || Ey < 0 || Ex >= dungeon.getWidth()-1 || Ey >= dungeon.getHeight()-1 || (maze[Ex][Ey] == 1) || (vis[Ex][Ey] == 1)) return 0;
-
-        if (Ex == Px && Ey == Py) {
-            return 1;
-        }
-
-        vis[Ex][Ey] = 1;
-
-        dfs(Ex, Ey + 1, Px, Py);
-        dfs(Ex,Ey-1, Px, Py);
-        dfs(Ex+1,Ey, Px, Py);
-        dfs(Ex-1,Ey, Px, Py);
-
-        vis[Ex][Ey] = 0;
-
-        return 0;
+        }, 0, 200);
     }
 
     /**

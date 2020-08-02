@@ -55,7 +55,7 @@ public abstract class DungeonLoader {
      */
     public Dungeon load() {
         int width = json.getInt("width");
-        int height = json.getInt("height");
+        int height = json.getInt("height")+2;
 
         Dungeon dungeon = new Dungeon(width, height);
 
