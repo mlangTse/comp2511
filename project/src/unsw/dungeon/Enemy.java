@@ -120,32 +120,15 @@ public class Enemy extends Entity implements Observer, Subject{
             public void run(){
                 Platform.runLater(()-> {
                     if (enemy.runAway()) {
-                        moveBackward();
+                        EnemyMovePath nextMove = new EnemyMovePath(dungeon.getPlayer(), enemy, dungeon, true);
+                        nextMove.move();
                     } else {
-                        EnemyMovePath nextMove = new EnemyMovePath(dungeon.getPlayer(), enemy, dungeon);
+                        EnemyMovePath nextMove = new EnemyMovePath(dungeon.getPlayer(), enemy, dungeon, false);
                         nextMove.move();
                     }
                 });
             }
         }, 0, 200);
-    }
-
-    /**
-     * This function make the enemy run away from the player
-     */
-    public void moveBackward() {
-        if ((getY() > dungeon.getPlayer().getY()) && moveDown()) {
-            return;
-        }
-        if ((getY() < dungeon.getPlayer().getY()) && moveUp()){
-            return;
-        }
-        if ((getX() > dungeon.getPlayer().getX()) && moveRight()) {
-            return;
-        }
-        if ((getX() < dungeon.getPlayer().getX()) && moveLeft()) {
-            return;
-        }
     }
 
     @Override

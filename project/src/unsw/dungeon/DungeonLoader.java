@@ -25,7 +25,9 @@ public abstract class DungeonLoader {
     private Goal gameGoal;
     private ArrayList<Door> doors = new ArrayList<Door>();
     private ArrayList<Key> keys = new ArrayList<Key>();
-    private int index;
+    private ArrayList<String> files = new ArrayList<String>();
+    private int fileIndex;
+    private int barIndex;
     private boolean hasSword;
     private boolean hasKey;
     private boolean hasPotion;
@@ -34,19 +36,40 @@ public abstract class DungeonLoader {
     public DungeonLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
         this.filename = filename;
-        index = 0;
+        barIndex = 0;
         hasSword = false;
         hasKey = false;
         hasPotion = false;
         hasTreasure = false;
     }
 
+    // for test
     public DungeonLoader(JSONObject json) {
         this.json = json;
     }
 
+    // muli-level
+    public DungeonLoader(ArrayList<String> files, int fileIndex) throws FileNotFoundException {
+        this.files = files;
+        this.json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + this.files.get(fileIndex))));
+        this.barIndex = 0;
+        this.fileIndex = fileIndex;
+        this.hasSword = false;
+        this.hasKey = false;
+        this.hasPotion = false;
+        this.hasTreasure = false;
+    }
+
     public String getFilename() {
         return filename;
+    }
+
+    public ArrayList<String> getFiles() {
+        return files;
+    }
+
+    public int getIndex() {
+        return fileIndex;
     }
 
     /**
@@ -112,9 +135,9 @@ public abstract class DungeonLoader {
                 break;
             case "treasure":
                 if (!hasTreasure) {
-                    Treasure hTreasure = new Treasure(2*index, 1);
+                    Treasure hTreasure = new Treasure(2*barIndex, 1);
                     onLoad(hTreasure);
-                    index += 1;
+                    barIndex += 1;
                     hasTreasure = true;
                     dungeon.addEntity((Entity) hTreasure);
                 }
@@ -135,9 +158,9 @@ public abstract class DungeonLoader {
                 break;
             case "key":
                 if (!hasKey) {
-                    Key hkey = new Key(2*index, 1);
+                    Key hkey = new Key(2*barIndex, 1);
                     onLoad(hkey);
-                    index += 1;
+                    barIndex += 1;
                     hasKey = true;
                     dungeon.addEntity((Entity) hkey);
                 }
@@ -182,9 +205,9 @@ public abstract class DungeonLoader {
                 break;
             case "sword":
                 if (!hasSword) {
-                    Sword hsword = new Sword(2*index, 1);
+                    Sword hsword = new Sword(2*barIndex, 1);
                     onLoad(hsword);
-                    index += 1;
+                    barIndex += 1;
                     hasSword = true;
                     dungeon.addEntity((Entity) hsword);
                 }
@@ -194,9 +217,9 @@ public abstract class DungeonLoader {
                 break;
             case "invincibility":
                 if (!hasPotion) {
-                    Potion hinvincibility = new Potion(2*index, 1);
+                    Potion hinvincibility = new Potion(2*barIndex, 1);
                     onLoad(hinvincibility);
-                    index += 1;
+                    barIndex += 1;
                     hasPotion = true;
                     dungeon.addEntity((Entity) hinvincibility);
                 }

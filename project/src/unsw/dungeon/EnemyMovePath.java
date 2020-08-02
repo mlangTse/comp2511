@@ -4,18 +4,26 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class EnemyMovePath {
-    private Player player;
+    private int Px;
+    private int Py;
     private Enemy enemy;
     private Dungeon dungeon;
     private int[][][] maze;
     private boolean[][] visited;
+    private boolean runAway;
 
-    public EnemyMovePath(Player player, Enemy enemy, Dungeon dungeon) {
-        this.player = player;
+    public EnemyMovePath(Player player, Enemy enemy, Dungeon dungeon, boolean runAway) {
+        Px = player.getX();
+        Py = player.getY();
+        if (runAway) {
+            Px = dungeon.getWidth() - Px - 2;
+            Py = dungeon.getHeight() - Py - 2;
+        }
         this.enemy = enemy;
         this.dungeon = dungeon;
         this.maze = new int[dungeon.getWidth()][dungeon.getHeight()][3];
         this.visited = new boolean[dungeon.getWidth()][dungeon.getHeight()];
+        this.runAway = runAway;
         initial();
     }
 
@@ -24,8 +32,6 @@ public class EnemyMovePath {
         Queue<Integer> yQ = new LinkedList<>();
         int Ex = enemy.getX();
         int Ey = enemy.getY();
-        int Px = player.getX();
-        int Py = player.getY();
 
         boolean reached = false;
         visited[Ex][Ey] = true;
@@ -121,11 +127,13 @@ public class EnemyMovePath {
 
         for (Entity e:dungeon.getEntities()) {
             if (e.getY() < 2) continue;
-            if (e instanceof Player || e.getClass() == enemy.getClass()) continue;
+            if (e instanceof Player && !runAway) continue;
+            if (e.getClass() == enemy.getClass()) continue;
             if (e instanceof Sword && ((Sword) e).isCollected()) continue;
             if (e instanceof Potion && ((Potion) e).isCollected()) continue;
             if (e instanceof Treasure && ((Treasure) e).isCollected()) continue;
             if (e instanceof Key && ((Key) e).isCollected()) continue;
+            if (e instanceof Enemy && ((Enemy) e).isDestroyed()) continue;
             visited[e.getX()][e.getY()] = true;
         }
     }

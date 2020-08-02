@@ -1,6 +1,7 @@
 package unsw.dungeon;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,8 +39,7 @@ public class DungeonApplictionController {
             Advanced.setText("Hard");
             return;
         }
-        DungeonGame game = new DungeonGame();
-        game.setFilename("maze.json");
+        DungeonGame game = new DungeonGame("maze.json");
         stage.close();
         game.show();
     }
@@ -53,8 +53,7 @@ public class DungeonApplictionController {
             stage.close();
             return;
         }
-        DungeonGame game = new DungeonGame();
-        game.setFilename("boulders.json");
+        DungeonGame game = new DungeonGame("advanced.json");
         stage.close();
         game.show();
     }
@@ -66,8 +65,11 @@ public class DungeonApplictionController {
             stage.close();
             return;
         }
-        DungeonGame game = new DungeonGame();
-        game.setFilename("advanced.json");
+        ArrayList<String> mutli_game = new ArrayList<String>();
+        mutli_game.add("maze.json");
+        mutli_game.add("boulders.json");
+        mutli_game.add("advanced.json");
+        DungeonGame game = new DungeonGame(mutli_game, 0);
         stage.close();
         game.show();
     }

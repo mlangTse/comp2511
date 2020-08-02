@@ -38,11 +38,23 @@ public class DungeonController {
 
     private String filename;
 
+    private ArrayList<String> files = new ArrayList<String>();
+    private int fileIndex;
+
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, String filename) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.initialEntities = new ArrayList<>(initialEntities);
         this.filename = filename;
+    }
+
+    public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, ArrayList<String> files, int fileIndex) {
+        this.dungeon = dungeon;
+        this.player = dungeon.getPlayer();
+        this.initialEntities = new ArrayList<>(initialEntities);
+        this.files = files;
+        this.filename = files.get(fileIndex);
+        this.fileIndex = fileIndex;
     }
 
     public void setPlayerInfo(int x, IntegerProperty siP) {
@@ -69,25 +81,29 @@ public class DungeonController {
 
         menu.setOnAction(e->{
             DungeonApplication Menu = new DungeonApplication();
+            Stage stage = (Stage) squares.getScene().getWindow();
+            stage.close();
             try {
                 Menu.show();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            Stage stage = (Stage) squares.getScene().getWindow();
-            stage.close();
         });
 
         restart.setOnAction(e->{
-            DungeonGame game = new DungeonGame();
+            DungeonGame game;
+            if (!files.isEmpty()) {
+                game = new DungeonGame(files, fileIndex);
+            } else {
+                game = new DungeonGame(filename);
+            }
+            Stage stage = (Stage) squares.getScene().getWindow();
+            stage.close();
             try {
-                game.setFilename(filename);
                 game.show();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            Stage stage = (Stage) squares.getScene().getWindow();
-            stage.close();
         });
 
         squares.add(menu, 0, 0, 2, 1);
@@ -126,7 +142,7 @@ public class DungeonController {
             public void changed(ObservableValue<? extends Boolean> observable,
                     Boolean oldValue, Boolean newValue) {
 
-                if (player.IsDestroyed().getValue()) {
+                if (newValue) {
                     try {
                         thisOne.gameEnd();
                     } catch (IOException e) {
@@ -157,6 +173,10 @@ public class DungeonController {
                 break;
         }
         if (dungeon.check_progress()) {
+            if (!files.isEmpty() && fileIndex < files.size() - 1) {
+                nextLevel();
+                return;
+            }
             gameEnd();
         }
     }
@@ -164,8 +184,21 @@ public class DungeonController {
     public void gameEnd() throws IOException {
         Stage stage = (Stage) squares.getScene().getWindow();
         boolean notSuccess = player.IsDestroyed().getValue();
-        DungeonEnd end = new DungeonEnd(stage, filename, notSuccess);
+
+        DungeonEnd end;
+        if (!files.isEmpty()) {
+            end = new DungeonEnd(stage, files, fileIndex, notSuccess);
+        } else {
+            end = new DungeonEnd(stage, filename, notSuccess);
+        }
         end.show();
+    }
+
+    public void nextLevel() throws IOException {
+        Stage stage = (Stage) squares.getScene().getWindow();
+        DungeonGame next = new DungeonGame(files, fileIndex+1);
+        stage.close();
+        next.show();
     }
 }
 

@@ -1,6 +1,7 @@
 package unsw.dungeon;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,8 @@ import javafx.stage.Stage;
 public class DungeonEnd extends Application {
     Stage game;
     private String filename;
+    private ArrayList<String> files = new ArrayList<>();
+    private int fileIndex;
     private boolean notSuccess;
 
     public DungeonEnd(Stage stage, String filename, boolean notSuccess) {
@@ -20,12 +23,23 @@ public class DungeonEnd extends Application {
         this.notSuccess = notSuccess;
     }
 
+    public DungeonEnd(Stage stage, ArrayList<String> files, int fileIndex, boolean notSuccess) {
+        this.game = stage;
+        this.files = files;
+        this.fileIndex = fileIndex;
+        this.notSuccess = notSuccess;
+    }
+
     Stage stage = new Stage();
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Dungeon");
-
-        DungeonEndController controller = new DungeonEndController(game, filename, notSuccess);
+        DungeonEndController controller;
+        if (!files.isEmpty()) {
+            controller = new DungeonEndController(game, files, fileIndex, notSuccess);
+        } else {
+            controller = new DungeonEndController(game, filename, notSuccess);
+        }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonEndView.fxml"));
 

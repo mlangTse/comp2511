@@ -1,6 +1,7 @@
 package unsw.dungeon;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,13 +11,29 @@ import javafx.stage.Stage;
 
 public class DungeonGame extends Application {
     private String filename = "maze.json";
+    private ArrayList<String> files = new ArrayList<String>();
+    private int fileIndex;
     Stage stage = new Stage();
+
+    public DungeonGame(String filename) {
+        this.filename = filename;
+    }
+
+    public DungeonGame(ArrayList<String> files, int fileIndex) {
+        this.files = files;
+        this.fileIndex = fileIndex;
+    }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Dungeon");
 
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(filename);
+        DungeonControllerLoader dungeonLoader;
+        if (!files.isEmpty()) {
+            dungeonLoader = new DungeonControllerLoader(files, fileIndex);
+        } else {
+            dungeonLoader = new DungeonControllerLoader(filename);
+        }
 
         DungeonController controller = dungeonLoader.loadController();
 
@@ -35,9 +52,5 @@ public class DungeonGame extends Application {
 
     public void show() throws IOException {
         start(stage);
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
     }
 }

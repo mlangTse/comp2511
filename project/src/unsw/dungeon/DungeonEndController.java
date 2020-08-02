@@ -1,6 +1,7 @@
 package unsw.dungeon;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,6 +26,8 @@ public class DungeonEndController {
 
     Stage game;
     private String filename;
+    private ArrayList<String> files = new ArrayList<>();;
+    private int fileIndex;
     private boolean notSuccess;
 
     public DungeonEndController(Stage stage, String filename, boolean notSuccess) {
@@ -33,7 +36,15 @@ public class DungeonEndController {
         this.notSuccess = notSuccess;
     }
 
-    @FXML
+    public DungeonEndController(Stage stage, ArrayList<String> files, int fileIndex, boolean notSuccess) {
+        this.game = stage;
+        this.files = files;
+        this.fileIndex = fileIndex;
+        this.filename = files.get(fileIndex);
+        this.notSuccess = notSuccess;
+	}
+
+	@FXML
     public void initialize() {
         if (notSuccess) {
             gameStatus.setText("   Game Over!");
@@ -61,8 +72,12 @@ public class DungeonEndController {
 
     @FXML
 	public void handle_again() throws Exception {
-        DungeonGame new_game = new DungeonGame();
-        new_game.setFilename(filename);
+        DungeonGame new_game;
+        if (!files.isEmpty()) {
+            new_game = new DungeonGame(files, fileIndex);
+        } else {
+            new_game = new DungeonGame(filename);
+        }
         Stage again = (Stage) Again.getScene().getWindow();
         again.close();
         game.close();
