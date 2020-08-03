@@ -53,6 +53,7 @@ public class Door extends Entity implements Observer {
             // if the player have the corresponding key for this door
             if (((Player) obj).getKey() == getKey()) {
                 ((Player) obj).setKey(null);
+                ((Player) obj).update_detach(this);
                 this.setOpened(true);
                 return true;
             }
