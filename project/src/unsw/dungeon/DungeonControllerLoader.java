@@ -82,7 +82,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 
     @Override
     public void onLoad(Door door) {
-        door.setImage(doorCloseImage, false);
+        door.setImage(doorCloseImage, true);
         ImageView view = door.getImage();
         addEntity(door, view);
     }
@@ -110,7 +110,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 
     @Override
     public void onLoad(Portal portal) {
-        portal.setImage(portalImage, false);
+        portal.setImage(portalImage, true);
         ImageView view = portal.getImage();
         addEntity(portal, view);
     }
