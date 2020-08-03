@@ -103,7 +103,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 
     @Override
     public void onLoad(Floorswitch floorswitch) {
-        floorswitch.setImage(switchImage, false);
+        floorswitch.setImage(switchImage, true);
         ImageView view = floorswitch.getImage();
         addEntity(floorswitch, view);
     }
