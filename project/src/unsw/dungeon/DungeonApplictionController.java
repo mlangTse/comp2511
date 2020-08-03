@@ -53,7 +53,7 @@ public class DungeonApplictionController {
             stage.close();
             return;
         }
-        DungeonGame game = new DungeonGame("advanced.json");
+        DungeonGame game = new DungeonGame("mediumDungeon.json");
         stage.close();
         game.show();
     }

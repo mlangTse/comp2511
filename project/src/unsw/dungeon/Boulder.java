@@ -83,6 +83,11 @@ public class Boulder extends Entity implements Observer, Subject {
         this.onfloorswitch = floorswitch;
     }
 
+    public boolean onFloorswitch() {
+        if (this.onfloorswitch == null) return false;
+        return true;
+    }
+
     @Override
     public boolean notCollid(int x, int y) {
         for (Observer obs : observers) {
