@@ -160,7 +160,7 @@ public class Enemy extends Entity implements Observer, Subject {
      */
     @Override
     public boolean Moveable(Subject obj) {
-        if (obj instanceof Boulder || obj instanceof Enemy) {
+        if (obj instanceof Boulder || (obj instanceof Enemy && !((Enemy) obj).isDestroyed())) {
             return false;
         }
         if (isDestroyed()) {
