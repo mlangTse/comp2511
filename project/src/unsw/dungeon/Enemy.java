@@ -184,13 +184,4 @@ public class Enemy extends Entity implements Observer, Subject {
         }
         return false;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (obj.getClass() != getClass()) return false;
-        Enemy e = (Enemy) obj;
-        return e.getX() == getX() && e.getY() == getY();
-    }
-
 }
