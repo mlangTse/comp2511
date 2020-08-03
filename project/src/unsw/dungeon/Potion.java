@@ -28,7 +28,7 @@ public class Potion extends Entity implements Observer{
         if (obj instanceof Boulder || obj instanceof Enemy) {
             return false;
         }
-        ((Player) obj).detach(this);
+        ((Player) obj).update_detach(this);
         setCollected(true);
         return true;
     }

@@ -81,6 +81,7 @@ public class Enemy extends Entity implements Observer, Subject {
     public void setDestroyed(boolean destroyed) {
         super.destroy();
         this.destroyed = destroyed;
+        dungeon.update(this);
         timer.cancel();
     }
 
@@ -160,11 +161,11 @@ public class Enemy extends Entity implements Observer, Subject {
      */
     @Override
     public boolean Moveable(Subject obj) {
-        if (obj instanceof Boulder || (obj instanceof Enemy && !((Enemy) obj).isDestroyed())) {
-            return false;
-        }
         if (isDestroyed()) {
             return true;
+        }
+        if (obj instanceof Boulder || (obj instanceof Enemy && !((Enemy) obj).isDestroyed())) {
+            return false;
         }
         if (obj instanceof Player) {
             if (this.runAway()) {

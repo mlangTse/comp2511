@@ -195,6 +195,10 @@ public class Player extends Entity implements Observer, Subject{
         return Ntreasure;
     }
 
+    public void update_detach(Observer obs) {
+        dungeon.update(obs);
+    }
+    
     @Override
     public boolean notCollid(int x, int y) {
         for (Observer obs : observers) {
@@ -235,4 +239,5 @@ public class Player extends Entity implements Observer, Subject{
         }
         return false;
     }
+
 }

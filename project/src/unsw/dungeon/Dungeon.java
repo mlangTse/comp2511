@@ -66,6 +66,14 @@ public class Dungeon {
 		return entities;
 	}
 
+    public void update(Observer obs) {
+        for (Entity e : getEntities()) {
+            if (e instanceof Subject) {
+                ((Subject) e).detach(obs);
+            }
+        }
+    }
+
     /**
      * update the game state and check whether the goal is finished
      *

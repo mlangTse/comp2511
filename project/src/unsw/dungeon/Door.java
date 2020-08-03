@@ -49,9 +49,6 @@ public class Door extends Entity implements Observer {
         if (isOpened()) {
             return true;
         }
-        if (obj instanceof Boulder || obj instanceof Enemy) {
-            return false;
-        }
         if (obj instanceof Player) {
             // if the player have the corresponding key for this door
             if (((Player) obj).getKey() == getKey()) {
