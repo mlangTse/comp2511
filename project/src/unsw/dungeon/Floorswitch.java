@@ -29,7 +29,6 @@ public class Floorswitch extends Entity implements Observer{
             return false;
         }
         if (obj instanceof Boulder) {
-            if (((Boulder) obj).onFloorswitch()) ((Boulder) obj).triggeredFloorswitch();
             ((Boulder) obj).setFloorswitch(this);
         }
         return true;

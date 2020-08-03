@@ -79,13 +79,11 @@ public class Boulder extends Entity implements Observer, Subject {
      * @param floorswitch
      */
     public void setFloorswitch(Floorswitch floorswitch) {
-        floorswitch.settrigger(true);
+        if (this.onfloorswitch != null) {
+            this.onfloorswitch.settrigger(false);
+        }
         this.onfloorswitch = floorswitch;
-    }
-
-    public boolean onFloorswitch() {
-        if (this.onfloorswitch == null) return false;
-        return true;
+        this.onfloorswitch.settrigger(true);
     }
 
     @Override

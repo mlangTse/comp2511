@@ -39,7 +39,7 @@ public class DungeonApplictionController {
             Advanced.setText("Hard");
             return;
         }
-        DungeonGame game = new DungeonGame("maze.json");
+        DungeonGame game = new DungeonGame("boulders.json");
         stage.close();
         game.show();
     }
