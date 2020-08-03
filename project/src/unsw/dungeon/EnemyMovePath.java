@@ -44,7 +44,7 @@ public class EnemyMovePath {
             int y = yQ.remove();
 
             // up
-            if (y+1 < dungeon.getWidth()&& !visited[x][y+1]) {
+            if (y+1 < dungeon.getHeight()&& !visited[x][y+1]) {
                 xQ.add(x);
                 yQ.add(y+1);
                 update(x, y, x, y+1);
@@ -62,7 +62,7 @@ public class EnemyMovePath {
                 update(x, y, x, y-1);
             }
             // right
-            if (x+1 < dungeon.getHeight() && !visited[x+1][y]) {
+            if (x+1 < dungeon.getWidth() && !visited[x+1][y]) {
                 xQ.add(x+1);
                 yQ.add(y);
                 update(x, y, x+1, y);
@@ -138,5 +138,4 @@ public class EnemyMovePath {
             visited[e.getX()][e.getY()] = true;
         }
     }
-
 }
