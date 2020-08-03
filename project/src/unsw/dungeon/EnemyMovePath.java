@@ -16,8 +16,15 @@ public class EnemyMovePath {
         Px = player.getX();
         Py = player.getY();
         if (runAway) {
-            Px = dungeon.getWidth() - Px - 2;
-            Py = dungeon.getHeight() - Py - 2;
+            double top = calculatePath(0, 2, Px, Py);
+            double down = calculatePath(dungeon.getWidth()-1, dungeon.getHeight()-2, Px, Py);
+            if (top > down) {
+                Px = 1;
+                Py = 3;
+            } else {
+                Px = dungeon.getWidth()-1;
+                Py = dungeon.getHeight()-4;
+            }
         }
         this.enemy = enemy;
         this.dungeon = dungeon;
@@ -125,8 +132,12 @@ public class EnemyMovePath {
             }
         }
 
+        int Ex = enemy.getX();
+        int Ey = enemy.getY();
+
         for (Entity e:dungeon.getEntities()) {
             if (e.getY() < 2) continue;
+            if (runAway && (e.getX() < Ex - 2 || e.getX() > Ex + 2 || e.getY() < Ey - 2 || e.getY() > Ey + 2)) continue;
             if (e instanceof Player && !runAway) continue;
             if (e instanceof Sword && ((Sword) e).isCollected()) continue;
             if (e instanceof Potion && ((Potion) e).isCollected()) continue;
@@ -137,5 +148,11 @@ public class EnemyMovePath {
             if (e instanceof Floorswitch) continue;
             visited[e.getX()][e.getY()] = true;
         }
+    }
+
+    public double calculatePath(int Sx, int Sy, int Ex, int Ey) {
+        double x = Math.pow((Ex-Sx), 2);
+        double y = Math.pow((Ey-Sy), 2);
+        return Math.abs(Math.sqrt(x+y));
     }
 }
