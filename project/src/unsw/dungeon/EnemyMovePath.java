@@ -128,7 +128,6 @@ public class EnemyMovePath {
         for (Entity e:dungeon.getEntities()) {
             if (e.getY() < 2) continue;
             if (e instanceof Player && !runAway) continue;
-            if (enemy.equals(e)) continue;
             if (e instanceof Sword && ((Sword) e).isCollected()) continue;
             if (e instanceof Potion && ((Potion) e).isCollected()) continue;
             if (e instanceof Treasure && ((Treasure) e).isCollected()) continue;
