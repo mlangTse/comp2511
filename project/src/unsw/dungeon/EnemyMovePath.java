@@ -134,6 +134,7 @@ public class EnemyMovePath {
             if (e instanceof Key && ((Key) e).isCollected()) continue;
             if (e instanceof Enemy && ((Enemy) e).isDestroyed()) continue;
             if (e instanceof Door && ((Door) e).isOpened()) continue;
+            if (e instanceof Floorswitch) continue;
             visited[e.getX()][e.getY()] = true;
         }
     }
