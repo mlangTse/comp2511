@@ -26,6 +26,7 @@ public class TreasureGoal implements GoalStrategy{
     public int update() {
         int NotDestory_N = 0;
         for (Entity entity: dungeon.getEntities()) {
+            if (entity.getY() < 2) continue;
             if (entity instanceof Treasure && !((Treasure) entity).isCollected()) {
                 NotDestory_N += 1;
             }
