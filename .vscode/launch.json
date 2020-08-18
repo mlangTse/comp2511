@@ -6,6 +6,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - TestProduct",
+            "request": "launch",
+            "mainClass": "part3Q3.TestProduct"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TestBag",
+            "request": "launch",
+            "mainClass": "part3Q2.TestBag"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - GameOfLifeApplication",
             "request": "launch",
             "mainClass": "unsw.automata.GameOfLifeApplication"
