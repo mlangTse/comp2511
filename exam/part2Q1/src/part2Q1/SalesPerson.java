@@ -5,14 +5,15 @@ public class SalesPerson extends Employee {
 	private float commission;
 	private double salesAchieved;
 
-	public SalesPerson(String title, String firstName, String lastName, int quota) {
+	public SalesPerson(String title, String firstName, String lastName, int quota, double salesAchieved) {
 		super(title, firstName, lastName, quota);
+		this.salesAchieved = salesAchieved;
 	}
 	// this is duplicated code, to avoid this, we create a abstract  method in their super class
     @Override
 	public double calculateSalary() {
 		double totalSal;
-		totalSal = super.getBaseSalary() + commission * super.getSalesAchieved()
+		totalSal = super.getBaseSalary() + commission * getSalesAchieved()
 		         + super.calculateParkingFringeBenefits()
 		         - super.calculateTax();
 		return totalSal;
