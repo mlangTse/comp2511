@@ -20,7 +20,7 @@ public class SalesPerson extends Employee {
 
 	public String getSalesSummary() {
 		return super.getFirstName() + super.getLastName() + "Sales Target: " + super.getSalesTarget() + "$\n" +
-			    "Sales to date: " + super.getSalesAchieved() + "$";
+			    "Sales to date: " + getSalesAchieved() + "$";
 	}
 
 	public double getSalesAchieved() {
