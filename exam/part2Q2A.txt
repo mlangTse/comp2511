@@ -1,0 +1,1 @@
+I think the most appropriate design pattern for this situation is observer pattern, because the application want to monitors heart rate of a patient. So the application should update the change of the patient whenever his heart rate changed, and observer pattern is perfectly match for this.
