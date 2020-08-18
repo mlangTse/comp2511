@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 public class markComposite implements Mark {
     private String assessment;
-    private int mark = 0;
+    private int mark;
     private ArrayList<Mark> submarks = new ArrayList<Mark>();
-    boolean completed = false;
 
     public void add(Mark m) {
         submarks.add(m);
@@ -14,19 +13,6 @@ public class markComposite implements Mark {
 
     public ArrayList<Mark> getSubmarks() {
         return submarks;
-    }
-    
-    public void CalculateMark(Boolean avg) {
-        int total = 0;
-        for (Mark m : submarks) {
-            total += m.getMark();
-        }
-        if (avg) {
-            total /= submarks.size();
-        }
-        if (isCompleted()) {
-            this.assignMark(total);
-        }
     }
 
     @Override
@@ -36,6 +22,18 @@ public class markComposite implements Mark {
 
     @Override
     public int getMark() {
+        boolean flag = true;
+        int total = 0;
+        for (Mark m : submarks) {
+            if (m instanceof markComposite) {
+                flag = false;
+            }
+            total += m.getMark();
+        }
+        if (flag) {
+            total /= submarks.size();
+        }
+        this.assignMark(total);
         return mark;
     }
 
@@ -50,20 +48,4 @@ public class markComposite implements Mark {
 
     }
 
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
-    public void update_Completed() {
-        for (Mark m : submarks) {
-            if (m instanceof markComposite && !((markComposite) m).isCompleted()) {
-                return;
-            }
-        }
-        setCompleted(true);
-    }
 }

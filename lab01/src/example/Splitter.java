@@ -10,10 +10,11 @@ public class Splitter {
 
         String[] word = a.nextLine().split(" ");
 
-        for (String i : word){
-            System.out.println(i);
+        for (int i = 0; i < word.length; i++){
+            if (i != 0){
+                System.out.println();
+            }
+            System.out.print(word[i]);
         }
-        
-        a.close();
     }
 }

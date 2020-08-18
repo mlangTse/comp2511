@@ -21,6 +21,6 @@ public class Average {
             int[] nums = {1, 2, 3};
             Average a = new Average();
             float avg = a.computeAverage(nums);
-            System.out.println("The average is " + avg);
+            System.out.printf("The average is %.1f", avg);
         }
 }

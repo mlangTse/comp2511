@@ -49,7 +49,6 @@ public class GameOfLifeController {
                 GridPane.setColumnIndex(checkBox, x);
                 GridPane.setRowIndex(checkBox, y);
                 game.cellProperty(x, y).bindBidirectional(checkBox.selectedProperty());
-                checkBox.selectedProperty().bindBidirectional(game.cellProperty(x, y));
                 this.gridPane.getChildren().add(checkBox);
             }
         }

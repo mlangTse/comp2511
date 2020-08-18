@@ -17,7 +17,7 @@ public class DisplMark implements Observer{
         try {
             String name = ((Enrolment) obj).getCourse().getCourseCode() + "-" + ((Enrolment) obj).getTerm() + "-" + ((Enrolment) obj).getStudent();
             File logFile = new File(name);
-            String line = LocalDate.now() + " " + LocalTime.now() + " " + assessment + " " + ((Enrolment) obj).getNew_mark() + "\n";
+            String line = LocalDate.now() + " " + LocalTime.now() + " " + assessment + " " + ((Enrolment) obj).getMark() + "\n";
             FileWriter fw = new FileWriter(logFile, true);
             fw.write(line);
             fw.close();
