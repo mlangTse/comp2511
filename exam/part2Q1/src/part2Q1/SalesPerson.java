@@ -16,9 +16,9 @@ public class SalesPerson extends Employee {
 		         - super.calculateTax();
 		return totalSal;
 	}
-	
+
 	public String getSalesSummary() {
-		return salesPerson.getFirstName() + salesPerson.getLastName() + "Sales Target: " + salesPerson.getSalesTarget() + "$\n" +
-			    "Sales to date: " + salesPerson.getSalesAchieved() + "$";
+		return super.getFirstName() + super.getLastName() + "Sales Target: " + super.getSalesTarget() + "$\n" +
+			    "Sales to date: " + super.getSalesAchieved() + "$";
 	}
 }
