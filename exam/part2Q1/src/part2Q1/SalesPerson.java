@@ -3,6 +3,7 @@ package part2Q1;
 public class SalesPerson extends Employee {
 
 	private float commission;
+	private double salesAchieved;
 
 	public SalesPerson(String title, String firstName, String lastName, int quota) {
 		super(title, firstName, lastName, quota);
@@ -20,5 +21,9 @@ public class SalesPerson extends Employee {
 	public String getSalesSummary() {
 		return super.getFirstName() + super.getLastName() + "Sales Target: " + super.getSalesTarget() + "$\n" +
 			    "Sales to date: " + super.getSalesAchieved() + "$";
+	}
+
+	public double getSalesAchieved() {
+		return salesAchieved;
 	}
 }

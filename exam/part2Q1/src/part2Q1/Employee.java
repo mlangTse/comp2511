@@ -1,7 +1,7 @@
 package part2Q1;
 
 // change to abstract class for solve duplicated
-public class Employee {
+public abstract class Employee {
 	private String title;
 	private String firstName;
 	private String lastName;

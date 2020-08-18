@@ -1,8 +1,7 @@
-package part2Q1;
+/*package part2Q1;
 
 // This is a lazy class, because it just call everything from SalesPerson.java
 // simply delegating this method to SalesPerson.java
-/*
 public class SalesHistory {
 
 	private Employee salesPerson;
